@@ -43,7 +43,7 @@
     <div class="content-section" style="margin-left: 10rem; margin-right:10rem;">
     <p style="align-items:center"><h3>Orders Placed</h3></p>
 
-    <div class="content-section" style="background-color:lightcoral;">
+    <div id="content-1" class="content-section" style="background-color:lightcoral;">
         <!-- User -->
         <div class="content-section" style="display:inline-block;">
             Username
@@ -58,15 +58,15 @@
         </div>
         <!-- Decision -->
         <div class="content-section" style="display:inline-block">
-            <button class="decision-btn" style="color:chartreuse; border-color: chartreuse;">Accept</button>
-            <button class="decision-btn" style="color:red; border-color:red;">Decline</button>
+            <button id="accpet-btn-1" onclick="accepted('accpet-btn-1','decline-btn-1','complete-btn-1')" class="decision-btn" style="color:chartreuse; border-color: chartreuse;">Accept</button>
+            <button id="decline-btn-1" class="decision-btn" style="color:red; border-color:red;">Decline</button>
         </div>
         <!-- Complete order -->
         <div class="content-section" style="display:inline-block">
-            <button class="order-btn">Complete order</button>
+            <button id="complete-btn-1" onclick="completed('complete-btn-1','content-1')" class="order-btn" style="pointer-events:none; color: #868e96">Complete order</button>
         </div>
     </div>
-    <div class="content-section" style="background-color:lightcoral;">
+    <div id="content-2" class="content-section" style="background-color:lightcoral;">
         <!-- User -->
         <div class="content-section" style="display:inline-block;">
             Username
@@ -86,7 +86,7 @@
         </div>
         <!-- Complete order -->
         <div class="content-section" style="display:inline-block">
-            <button class="order-btn">Complete order</button>
+            <button id="complete-btn-2" onclick="completed('complete-btn-2','content-2')" class="order-btn">Complete order</button>
         </div>
     </div>
     <div class="content-section" style="background-color:lightslategray;">
@@ -115,3 +115,21 @@
     </div>
     
 </body>
+<script>
+    function completed(complete,content) {
+        document.getElementById(complete).innerHTML = "Completed";
+        document.getElementById(content).style.backgroundColor = "lightslategray"
+    }
+
+    function accepted(accept, decline, complete) {
+        document.getElementById(accept).innerHTML ="Accepted";
+        document.getElementById(decline).style.visibility = 'hidden';
+        document.getElementById(complete).style.pointerEvents = "all";
+        document.getElementById(complete).style.color = "#17a2b8";
+        
+    }
+
+    function decline() {
+
+    }
+</script>

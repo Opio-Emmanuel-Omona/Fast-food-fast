@@ -9,28 +9,28 @@
 </head>
 <body>
     <!-- nav bar -->
-    <header class="site-header" style="margin-bottom: 4rem">
-            <nav class="navigation">
-                <div class="center">
-                    <a class="in-navigation" href="/" style="text-decoration:none;">Fast food fast</a>
-                    <div style=" align-items:center; display: inline-block">
-                        <div class="navbar-nav" style="float:left; padding-right: 45rem;">
-                            <a class="nav-item nav-link" style="text-decoration:none; padding-right: 2rem;" href=home.html>Home</a>
-                            <a class="nav-item nav-link" style="text-decoration:none" href="about.html">About</a>
-                        </div>
-                        <!-- Navbar Right Side -->
-                        <div class="navbar-nav" style="float:right;">
-                            <a class="nav-item nav-link" style="text-decoration:none; padding-right: 2rem;" href="signin.html">Login</a>
-                            <a class="nav-item nav-link" style="text-decoration:none" href="signup.html">Register</a>
-                        </div>
+    <header class="site-header mb-4">
+        <nav class="navigation">
+            <div class="center">
+                <a class="in-navigation no-td" href="/">Fast food fast</a>
+                <div style=" align-items:center; display: inline-block">
+                    <div class="navbar-nav fl-pr">
+                        <a class="nav-item nav-link no-td padding-2" href=home.html>Home</a>
+                        <a class="nav-item nav-link no-td" href="about.html">About</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav fr">
+                        <a class="nav-item nav-link no-td padding-2" href="signin.html">Login</a>
+                        <a class="nav-item nav-link no-td" href="signup.html">Register</a>
                     </div>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
+    </header>
 
     <!-- sign in form -->
     <div>
-        <div style="width: 35%; margin-left: 10rem; margin-right: 15px; float:left;">
+        <div class="ml-10 mr-5">
             <div class="content-section" >
                 <form >
                     <fieldset style="border:0">
@@ -41,12 +41,12 @@
                     </fieldset>
                 </form>
                 <small>
-                    <a href="#" style="color: #17a2b8; text-decoration:none;">Forgot Password?</a>
+                    <a class="link" href="#">Forgot Password?</a>
                 </small>           
             </div>
-            <p style="color: #868e96">Need An Account? <a href="signup.html" style="color: #17a2b8; text-decoration:none;">Sign up Now</a></p>            
+            <p class="text-muted">Need An Account? <a class="link" href="signup.html">Sign up Now</a></p>            
         </div>
-        <div class="content-section" style="width: 30%; margin-right:10rem; float:right;">
+        <div class="content-section mr-10 fr-w-25">
             <img src="images/home.jpg" alt="picture of food" width="100%" height="480px">
         </div>
     </div>

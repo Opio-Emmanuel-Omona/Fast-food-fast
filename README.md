@@ -21,7 +21,7 @@ Note: There's no functionality yet, therefore one can access the various pages b
       To access the admin, use the link below:
        https://opio-emmanuel-omona.github.io/Fast-food-fast/UI/admin.html
 
-
+      Also most of the data is static and will be later changed
 
 link to pivaotal tracker:
 https://www.pivotaltracker.com/n/projects/2195460

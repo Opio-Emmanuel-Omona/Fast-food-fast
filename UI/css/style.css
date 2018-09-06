@@ -1,6 +1,10 @@
 
 
 
+.border-blue {
+    border: 5px solid #17a2b8;
+}
+
 .padding-2 {
     padding: 2px;
 }
@@ -40,7 +44,12 @@
 	padding: 10px 20px;
 	border: 1px solid #dddddd;
 	border-radius: 3px;
-	margin-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.content-area {
+    background: #ffffff;
+	border: 1px solid #dddddd;
 }
 
 

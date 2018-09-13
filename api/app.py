@@ -39,5 +39,12 @@ def place_order():
     return jsonify({'orders': orders})
 
 
+@app.route('/api/v1/orders/<string:id>', methods=['PUT'])
+def update_order(id):
+    order = [ordering for ordering in orders if ordering['id'] == id]
+    order[0]['username'] = request.json['username']
+    order[0]['item'] = request.json['item']
+    return jsonify({'orders': order[0]})
+
 if __name__ == "__main__":
     app.run(debug=True)

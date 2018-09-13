@@ -32,5 +32,10 @@ def one_order(id):
     return jsonify({'orders': order[0]})
 
 
+@app.route('/api/v1/orders', methods=['POST'])
+def place_order():
+    return jsonify({'orders': orders})
+
+
 if __name__ == "__main__":
     app.run(debug=True)

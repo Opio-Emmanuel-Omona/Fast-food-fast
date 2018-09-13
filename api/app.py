@@ -26,9 +26,9 @@ def all_orders():
     return jsonify({'orders': orders})
 
 
-@app.route('/api/v1/orders<int:id>', methods=['GET'])
+@app.route('/api/v1/orders/<string:id>', methods=['GET'])
 def one_order(id):
-    order = [order for order in orders if order['id'] == id]
+    order = [ordering for ordering in orders if ordering['id'] == id]
     return jsonify({'orders': order[0]})
 
 

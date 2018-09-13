@@ -9,10 +9,12 @@ def hello():
 
 orders = [
     {
+        'id': '1',
         'username': 'opix',
         'item': '1'
     },
     {
+        'id': '2',
         'username': 'phy',
         'item': '2'
     }

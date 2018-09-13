@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 
@@ -34,6 +34,8 @@ def one_order(id):
 
 @app.route('/api/v1/orders', methods=['POST'])
 def place_order():
+    order = {'name': request.json['name']}
+    orders.append(order)
     return jsonify({'orders': orders})
 
 

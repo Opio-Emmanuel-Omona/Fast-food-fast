@@ -1,0 +1,9 @@
+[
+  "test_api.py::test_dummy", 
+  "test_api.py::test_json", 
+  "test_api.py::test_getOrders", 
+  "test_api.py::test_placeOrder", 
+  "test_api.py::test_oneOrder", 
+  "test_api.py::test_updateOrder", 
+  "test_api.py::test_deleteOrder"
+]

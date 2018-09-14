@@ -1,0 +1,4 @@
+ pip install pytest
+
+script:
+  api/test_api

@@ -1,9 +1,9 @@
 [
-  "api/test_api.py::test_dummy", 
-  "api/test_api.py::test_json", 
-  "api/test_api.py::test_getOrders", 
-  "api/test_api.py::test_placeOrder", 
-  "api/test_api.py::test_oneOrder", 
-  "api/test_api.py::test_updateOrder", 
-  "api/test_api.py::test_deleteOrder"
+  "test_api.py::test_dummy", 
+  "test_api.py::test_json", 
+  "test_api.py::test_getOrders", 
+  "test_api.py::test_placeOrder", 
+  "test_api.py::test_oneOrder", 
+  "test_api.py::test_updateOrder", 
+  "test_api.py::test_deleteOrder"
 ]

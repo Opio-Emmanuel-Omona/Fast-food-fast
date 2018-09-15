@@ -1,4 +1,7 @@
- pip install pytest
+ languages: python
+ 
+ python:
+  -"2.7"
 
 script:
   api/test_api

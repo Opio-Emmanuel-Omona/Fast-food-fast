@@ -45,12 +45,12 @@ https://fast-food-fast-eomona.herokuapp.com
 
 Diferent endpoints were used and the work flow for testing is given below:
 
-endpoint                      methods           description
-/api/v1/orders                GET               returns all the orders placed
-/api/v1/orders                POST              for placing a new order
-/api/v1/orders/<id>           GET               returns a specifig order at the given id
-/api/v1/orders/<id>           PUT               to update an order at the given id
-/api/v1/orders/<id>           DELETE            to delete an order at the specified id
+            
+      1. /api/v1/orders                method = GET               returns all the orders placed
+      2. /api/v1/orders                method = POST              for placing a new order
+      3. /api/v1/orders/<id>           method = GET               returns a specifig order at the given id
+      4. /api/v1/orders/<id>           method = PUT               to update an order at the given id
+      5. /api/v1/orders/<id>           method = DELETE            to delete an order at the specified id
 
 
 Note: 1. When using postman append the end points to the url

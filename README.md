@@ -5,7 +5,7 @@ Travis CI badge
 [![Build Status](https://travis-ci.com/Opio-Emmanuel-Omona/Fast-food-fast.svg?branch=api)](https://travis-ci.com/Opio-Emmanuel-Omona/Fast-food-fast)
 
 
-The application can be accessed on the link below:
+The application User Interfaces can be accessed on the link below:
 https://opio-emmanuel-omona.github.io/Fast-food-fast/UI/
 
 
@@ -22,7 +22,7 @@ https://opio-emmanuel-omona.github.io/Fast-food-fast/UI/
 Note: There's no functionality yet, therefore one can access the various pages by
       the links in the navigation bar.
 
-      To access the admin, use the link below:
+      To access the admin user interface, use the link below:
        https://opio-emmanuel-omona.github.io/Fast-food-fast/UI/admin.html
 
       Also most of the data is static and will be later changed
@@ -33,3 +33,34 @@ https://www.pivotaltracker.com/n/projects/2195460
 
 link to github account:
 https://github.com/Opio-Emmanuel-Omona/Fast-food-fast
+
+
+API
+
+The API endpoints can be tested using the postman chrome extension.
+
+The url to submit in postman is given below:
+
+https://fast-food-fast-eomona.herokuapp.com
+
+Diferent endpoints were used and the work flow for testing is given below:
+
+endpoint                      methods           description
+/api/v1/orders                GET               returns all the orders placed
+/api/v1/orders                POST              for placing a new order
+/api/v1/orders/<id>           GET               returns a specifig order at the given id
+/api/v1/orders/<id>           PUT               to update an order at the given id
+/api/v1/orders/<id>           DELETE            to delete an order at the specified id
+
+
+Note: 1. When using postman append the end points to the url
+
+      2. It is recommended to view the output in raw json/application
+
+      3. Also when using POST or PUT methods in the body use raw/application and the format of a post should be
+      {"id": "value-int", "username": "value-str", "item": "value"}
+      The keys should be exact and identical to the ones used in this example.
+
+      4. For the DELETE method, only an id is provided as shown below
+      {"id": "1"}
+      to delete the request with id =1. You can only delete a request that has been posted using POST 

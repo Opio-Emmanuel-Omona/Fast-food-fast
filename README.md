@@ -5,6 +5,8 @@ Fast-Food-Fast is a food delivery service app for a restaurant.
 
 [![Coverage Status](https://coveralls.io/repos/github/Opio-Emmanuel-Omona/Fast-food-fast/badge.svg?branch=api)](https://coveralls.io/github/Opio-Emmanuel-Omona/Fast-food-fast?branch=api)
 
+<a href="https://codeclimate.com/github/Opio-Emmanuel-Omona/Fast-food-fast/maintainability"><img src="https://api.codeclimate.com/v1/badges/72822b2801edfcc8895b/maintainability" /></a>
+
 The application User Interfaces can be accessed on the link below:
 https://opio-emmanuel-omona.github.io/Fast-food-fast/UI/
 

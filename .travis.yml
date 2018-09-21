@@ -1,9 +1,13 @@
 language: python
- 
-python: 2.7.14
-
+python:
+  - "2.7.14"
 install:
-  - pip install -r requirements.txt 
-
-script:
-  - pytest
+  - pip install -r requirements.txt
+  - pip install pytest
+  - pip install pytest-cov
+  - pip install coveralls
+script: 
+  - pytest --cov=api/
+after-success:
+  - coverage report -m
+  - coveralls

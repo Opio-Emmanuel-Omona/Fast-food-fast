@@ -1,9 +1,9 @@
 # Fast-food-fast
 Fast-Food-Fast is a food delivery service app for a restaurant.
 
-Travis CI badge
 [![Build Status](https://travis-ci.com/Opio-Emmanuel-Omona/Fast-food-fast.svg?branch=api)](https://travis-ci.com/Opio-Emmanuel-Omona/Fast-food-fast)
 
+[![Coverage Status](https://coveralls.io/repos/github/Opio-Emmanuel-Omona/Fast-food-fast/badge.svg?branch=api)](https://coveralls.io/github/Opio-Emmanuel-Omona/Fast-food-fast?branch=api)
 
 The application User Interfaces can be accessed on the link below:
 https://opio-emmanuel-omona.github.io/Fast-food-fast/UI/

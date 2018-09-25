@@ -19,9 +19,6 @@ def client():
 
 class HelpAPI():
     #Helper methods for json tests
-    def __init__(self):
-        pass
-
     def post_json(self, client, url, json_dict):
         return client.post(url, data=json.dumps(json_dict), content_type='application/json')
 
@@ -39,9 +36,6 @@ class HelpAPI():
 #API TESTS
 class TestAPI():
     #Tests Begin
-    def __init__(self):
-        pass
-
     def test_dummy(self, client):
         response = client.get('/')
         assert b'Hello World!' in response.data
@@ -111,10 +105,7 @@ class TestItem():
 
 #TEST ORDERS
 class TestOrder():
-    def __init__(self):
-        pass
-
-    def test_place_order(self):
+ def test_place_order(self):
         new_order = order.Order()
         new_order.place_new_order("Emma", "Pizza", 2)
         assert new_order.ORDERS == [

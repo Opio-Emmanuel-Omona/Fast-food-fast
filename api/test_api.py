@@ -2,7 +2,6 @@
 import json
 import pytest
 from app import app
-import item
 import order
 
 
@@ -87,20 +86,6 @@ class TestAPI():
         assert response1.status_code == 200
         assert response2.status_code == 200
         orders_in.clear_orders()
-
-#ITEM TESTS
-class TestItem():
-    def __init__(self):
-        pass
-
-    def test_getItemQuantity(self):
-        items = item.Item()
-        assert items.get_item_quantity('Sandwich') == 0
-
-    def test_setQuantity(self):
-        items = item.Item()
-        items.set_item_quantity('Pizza', 10)
-        assert items.get_item_quantity('Pizza') == 10
 
 
 #TEST ORDERS

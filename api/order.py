@@ -12,13 +12,20 @@ class Order():
         self.quantity = 0
 
     def place_new_order(self, username, item_name, quantity):
-        order_dict = {
-            "order_id": self.order_id,
-            "username": username,
-            "item_name": item_name,
-            "quantity": quantity
-        }
-        self.ORDERS.append(order_dict)
+        '''First check whether the username and item_name exist then update the quantity'''
+        order = [ordering for ordering in self.ORDERS if ordering['username'] == username and ordering['item_name'] == item_name]
+        if not order:
+            order_dict = {
+                "order_id": self.order_id,
+                "username": username,
+                "item_name": item_name,
+                "quantity": quantity
+            }
+            self.ORDERS.append(order_dict)
+        else:
+            order[0]['quantity'] += quantity
+            updated = True
+
         self.order_id += 1
 
     def update_order(self, order_id, username, item_name, quantity):

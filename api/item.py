@@ -27,12 +27,12 @@ class Item():
             }
         ]
 
-    def getItemQuantity(self, name):
+    def get_item_quantity(self, name):
         for quantity in self.item_list:
             if quantity['name'] == name:
                 return quantity['quantity_available']
 
-    def setItemQuantity(self, name, quantity):
+    def set_item_quantity(self, name, quantity):
         for item in self.item_list:
             if item['name'] == name:
                 item['quantity_available'] = quantity

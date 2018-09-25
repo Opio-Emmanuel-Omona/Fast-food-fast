@@ -19,6 +19,9 @@ def client():
 
 class HelpAPI():
     #Helper methods for json tests
+    def __init__(self):
+        pass
+
     def post_json(self, client, url, json_dict):
         return client.post(url, data=json.dumps(json_dict), content_type='application/json')
 
@@ -36,6 +39,9 @@ class HelpAPI():
 #API TESTS
 class TestAPI():
     #Tests Begin
+    def __init__(self):
+        pass
+
     def test_dummy(self, client):
         response = client.get('/')
         assert b'Hello World!' in response.data
@@ -53,7 +59,7 @@ class TestAPI():
     def test_place_order_api(self, client):
         helper = HelpAPI()
         response = helper.post_json(client, '/api/v1/orders',
-                            {'username': 'simon', 'item_name': 'chips', 'quantity': 1})
+                                    {'username': 'simon', 'item_name': 'chips', 'quantity': 1})
         assert response.status_code == 200
         orders_in.clear_orders()
 
@@ -61,7 +67,9 @@ class TestAPI():
     def test_one_order_api(self, client):
         helper = HelpAPI()
         response1 = helper.post_json(client, '/api/v1/orders',
-                            {'username': 'peter', 'item_name': 'chips + chicken', 'quantity': 1})
+                                     {'username': 'peter',
+                                      'item_name': 'chips + chicken',
+                                      'quantity': 1})
         response2 = client.get('/api/v1/orders/1')
         assert response1.status_code == 200
         assert response2.status_code == 200
@@ -70,7 +78,7 @@ class TestAPI():
     def test_update_order_api(self, client):
         helper = HelpAPI()
         response1 = helper.post_json(client, '/api/v1/orders',
-                                    {'username': 'phiona', 'item_name': 'pork', 'quantity': 1})
+                                     {'username': 'phiona', 'item_name': 'pork', 'quantity': 1})
         response2 = helper.put_json(client, '/api/v1/orders/1',
                                     {'username': 'phiona', 'item_name': 'pizza', 'quantity': 1})
         assert response1.status_code == 200
@@ -80,7 +88,7 @@ class TestAPI():
     def test_delete_order_api(self, client):
         helper = HelpAPI()
         response1 = helper.post_json(client, '/api/v1/orders',
-                            {'username': 'wilful', 'item_name': 'matooke', 'quantity': 1})
+                                     {'username': 'wilful', 'item_name': 'matooke', 'quantity': 1})
         response2 = helper.delete_json(client, '/api/v1/orders/1')
         assert response1.status_code == 200
         assert response2.status_code == 200
@@ -88,22 +96,29 @@ class TestAPI():
 
 #ITEM TESTS
 class TestItem():
+    def __init__(self):
+        pass
+
     def test_getItemQuantity(self):
         items = item.Item()
-        assert items.getItemQuantity('Sandwich') == 0
+        assert items.get_item_quantity('Sandwich') == 0
 
     def test_setQuantity(self):
         items = item.Item()
-        items.setItemQuantity('Pizza', 10)
-        assert items.getItemQuantity('Pizza') == 10
+        items.set_item_quantity('Pizza', 10)
+        assert items.get_item_quantity('Pizza') == 10
 
 
 #TEST ORDERS
 class TestOrder():
+    def __init__(self):
+        pass
+
     def test_place_order(self):
         new_order = order.Order()
         new_order.place_new_order("Emma", "Pizza", 2)
-        assert new_order.ORDERS == [{'order_id': 1, 'username': 'Emma', 'item_name': 'Pizza', 'quantity': 2}]
+        assert new_order.ORDERS == [
+            {'order_id': 1, 'username': 'Emma', 'item_name': 'Pizza', 'quantity': 2}]
         orders_in.clear_orders()
 
 

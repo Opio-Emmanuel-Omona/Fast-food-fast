@@ -1,14 +1,14 @@
 '''The main application'''
 from flask import Flask, jsonify, request, Response, json
 import order
-app = Flask(__name__) #pylint: disable=invalid-name
+app = Flask(__name__)  # pylint: disable=invalid-name
 orders = order.Order()
 
 
-#pylint: disable=missing-docstring
-#pylint: disable=redefined-outer-name
+# pylint: disable=missing-docstring
+# pylint: disable=redefined-outer-name
 
-class JsonResponse(Response): #pylint: disable=too-many-ancestors
+class JsonResponse(Response):  # pylint: disable=too-many-ancestors
     def __init__(self, json_dict, status=200):
         super(JsonResponse, self).__init__(response=json.dumps(json_dict),
                                            status=status, mimetype='application/json')
@@ -33,26 +33,26 @@ def all_orders():
 
 @app.route('/api/v1/orders/<int:order_id>', methods=['GET'])
 def one_order(order_id):
-    order = [ordering for ordering in orders.ORDERS if ordering['order_id'] == order_id]
-    return jsonify({'orders': order})
+    return jsonify({'orders': orders.get_order(order_id)})
 
 
 @app.route('/api/v1/orders', methods=['POST'])
 def place_order():
-    orders.place_new_order(request.json['username'], request.json['item_name'], request.json['quantity'])
+    orders.place_new_order(
+        request.json['username'], request.json['item_name'], request.json['quantity'])
     return jsonify({'orders': orders.ORDERS})
 
 
 @app.route('/api/v1/orders/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
-    orders.update_order(order_id, request.json['username'], request.json['item_name'], request.json['quantity'])
+    orders.update_order(
+        order_id, request.json['username'], request.json['item_name'], request.json['quantity'])
     return jsonify({'orders': orders.ORDERS})
 
 
 @app.route('/api/v1/orders/<int:order_id>', methods=['DELETE'])
 def delete_order(order_id):
-    order = [ordering for ordering in orders.ORDERS if ordering['order_id'] == order_id]
-    orders.ORDERS.remove(order[0])
+    orders.delete_order(order_id)
     return jsonify({'orders': orders.ORDERS})
 
 

@@ -28,5 +28,15 @@ class Order():
         order[0]['item_name'] = item_name
         order[0]['quantity'] = quantity
 
+    def delete_order(self, order_id):
+        order = [
+            ordering for ordering in self.ORDERS if ordering['order_id'] == order_id]
+        self.ORDERS.remove(order[0])
+
+    def get_order(self, order_id):
+        order = [
+            ordering for ordering in self.ORDERS if ordering['order_id'] == order_id]
+        return order
+
     def clear_orders(self):
         self.ORDERS = []

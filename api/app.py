@@ -31,29 +31,27 @@ def all_orders():
     return jsonify({'orders': orders.ORDERS})
 
 
-@app.route('/api/v1/orders/<string:order_id>', methods=['GET'])
+@app.route('/api/v1/orders/<int:order_id>', methods=['GET'])
 def one_order(order_id):
-    order = [ordering for ordering in orders.ORDERS if ordering['id'] == order_id]
-    return jsonify({'orders': order[0]})
+    order = [ordering for ordering in orders.ORDERS if ordering['order_id'] == order_id]
+    return jsonify({'orders': order})
 
 
 @app.route('/api/v1/orders', methods=['POST'])
 def place_order():
-    orders.place_new_order(request.json['username'], request.json['item'], request.json['quantity'])
+    orders.place_new_order(request.json['username'], request.json['item_name'], request.json['quantity'])
     return jsonify({'orders': orders.ORDERS})
 
 
-@app.route('/api/v1/orders/<string:order_id>', methods=['PUT'])
+@app.route('/api/v1/orders/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
-    order = [ordering for ordering in orders.ORDERS if ordering['id'] == order_id]
-    order[0]['username'] = request.json['username']
-    order[0]['item'] = request.json['item']
-    return jsonify({'orders': order[0]})
+    orders.update_order(order_id, request.json['username'], request.json['item_name'], request.json['quantity'])
+    return jsonify({'orders': orders.ORDERS})
 
 
-@app.route('/api/v1/orders/<string:order_id>', methods=['DELETE'])
+@app.route('/api/v1/orders/<int:order_id>', methods=['DELETE'])
 def delete_order(order_id):
-    order = [ordering for ordering in orders.ORDERS if ordering['id'] == order_id]
+    order = [ordering for ordering in orders.ORDERS if ordering['order_id'] == order_id]
     orders.ORDERS.remove(order[0])
     return jsonify({'orders': orders.ORDERS})
 

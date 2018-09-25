@@ -20,3 +20,13 @@ class Order():
         }
         self.ORDERS.append(order_dict)
         self.order_id += 1
+
+    def update_order(self, order_id, username, item_name, quantity):
+        order = [
+            ordering for ordering in self.ORDERS if ordering['order_id'] == order_id]
+        order[0]['username'] = username
+        order[0]['item_name'] = item_name
+        order[0]['quantity'] = quantity
+
+    def clear_orders(self):
+        self.ORDERS = []

@@ -8,6 +8,8 @@ import order
 
 #pylint: disable=missing-docstring
 #pylint: disable=redefined-outer-name
+orders_in = order.Order()
+
 @pytest.fixture
 def client():
     '''define a test client'''
@@ -31,6 +33,7 @@ class HelpAPI():
 
     #END helper methods
 
+#API TESTS
 class TestAPI():
     #Tests Begin
     def test_dummy(self, client):
@@ -43,39 +46,45 @@ class TestAPI():
         assert response.status_code == 200
         assert helper.json_of_response(response) == {'answer': 'value' * 2}
 
-    def test_get_orders(self, client):
+    def test_get_orders_api(self, client):
         response = client.get('/api/v1/orders')
         assert response.status_code == 200
 
-    def test_place_order(self, client):
+    def test_place_order_api(self, client):
         helper = HelpAPI()
         response = helper.post_json(client, '/api/v1/orders',
-                            {'username': 'simon', 'item': 'chips', 'quantity': 1})
+                            {'username': 'simon', 'item_name': 'chips', 'quantity': 1})
         assert response.status_code == 200
+        orders_in.clear_orders()
 
-    def test_one_order(self, client):
+
+    def test_one_order_api(self, client):
         helper = HelpAPI()
         response1 = helper.post_json(client, '/api/v1/orders',
-                            {'username': 'peter', 'item': 'chips + chicken', 'quantity': 1})
+                            {'username': 'peter', 'item_name': 'chips + chicken', 'quantity': 1})
         response2 = client.get('/api/v1/orders/1')
         assert response1.status_code == 200
         assert response2.status_code == 200
+        orders_in.clear_orders()
 
-    def test_update_order(self, client):
+    def test_update_order_api(self, client):
         helper = HelpAPI()
         response1 = helper.post_json(client, '/api/v1/orders',
-                            {'username': 'phiona', 'item': 'pork', 'quantity': 1})
-        response2 = helper.put_json(client, '/api/v1/orders/3', {'username': 'phiona', 'item': 'pizza'})
+                                    {'username': 'phiona', 'item_name': 'pork', 'quantity': 1})
+        response2 = helper.put_json(client, '/api/v1/orders/1',
+                                    {'username': 'phiona', 'item_name': 'pizza', 'quantity': 1})
         assert response1.status_code == 200
         assert response2.status_code == 200
+        orders_in.clear_orders()
 
-    def test_delete_order(self, client):
+    def test_delete_order_api(self, client):
         helper = HelpAPI()
         response1 = helper.post_json(client, '/api/v1/orders',
-                            {'username': 'wilful', 'item': 'matooke', 'quantity': 1})
-        response2 = helper.delete_json(client, '/api/v1/orders/4')
+                            {'username': 'wilful', 'item_name': 'matooke', 'quantity': 1})
+        response2 = helper.delete_json(client, '/api/v1/orders/1')
         assert response1.status_code == 200
         assert response2.status_code == 200
+        orders_in.clear_orders()
 
 #ITEM TESTS
 class TestItem():
@@ -95,6 +104,7 @@ class TestOrder():
         new_order = order.Order()
         new_order.place_new_order("Emma", "Pizza", 2)
         assert new_order.ORDERS == [{'order_id': 1, 'username': 'Emma', 'item_name': 'Pizza', 'quantity': 2}]
+        orders_in.clear_orders()
 
 
 if __name__ == "__main__":

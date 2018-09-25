@@ -65,4 +65,4 @@ Note: 1. When using postman append the end points to the url
 
       4. For the DELETE method, only an id is provided as shown below
       {"id": "1"}
-      to delete the request with id =1. You can only delete a request that has been posted using POST 
+      to delete the request with id = 1. You can only delete a request that has been posted using POST 

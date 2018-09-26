@@ -60,7 +60,7 @@ Note: 1. When using postman append the end points to the url
       2. It is recommended to view the output in raw json/application
 
       3. Also when using POST or PUT methods in the body use raw/application and the format of a post should be
-      {"username": "value-str", "item-name": "value", "quantityi": value-int}
+      {"username": "value-str", "item-name": "value", "quantity": value-int}
       The keys should be exact and identical to the ones used in this example.
 
       4. For the DELETE method, only an id is provided as shown below

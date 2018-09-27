@@ -90,12 +90,37 @@ class TestAPI():
 
 #TEST ORDERS
 class TestOrder():
- def test_place_order(self):
+    def test_place_order(self):
         new_order = order.Order()
         new_order.place_new_order("Emma", "Pizza", 2)
         assert new_order.ORDERS == [
             {'order_id': 1, 'username': 'Emma', 'item_name': 'Pizza', 'quantity': 2}]
         orders_in.clear_orders()
+
+
+#DATABASE TESTS
+class TestDB():
+    helper = HelpAPI()
+    def test_register_new_user(self, client):
+        response = self.helper.post_json(client, '/api/v1/auth/signup',
+                                         {'username': 'phiona',
+                                          'email': 'nanaphiona9@gmail.com',
+                                          'phone_no': '+256758363563',
+                                          'password': 'password'})
+        assert response.status_code == 200
+
+    def test_login_new_user(self, client):
+        response = self.helper.post_json(client, '/api/v1/auth/login',
+                              {'username': 'phiona',
+                               'password': 'password'})
+        assert response.status_code == 200
+
+    def test_invalid_login(self, client):
+        response = self.helper.post_json(client, '/api/v1/auth/login',
+                              {'username': 'phiona',
+                               'password': 'passwords'})
+        assert response.status_code == 401
+
 
 
 if __name__ == "__main__":

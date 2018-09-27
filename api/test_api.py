@@ -98,7 +98,7 @@ class TestOrder():
 class TestDB():
     helper = HelpAPI()
     def test_register_new_user(self, client):
-        response = self.helper.post_json(client, '/api/v1/auth/signup',
+        response = self.helper.post_json(client, '/api/v2/auth/signup',
                                          {'username': 'phiona',
                                           'email': 'nanaphiona9@gmail.com',
                                           'phone_no': '+256758363563',
@@ -106,13 +106,13 @@ class TestDB():
         assert response.status_code == 200
 
     def test_login_new_user(self, client):
-        response = self.helper.post_json(client, '/api/v1/auth/login',
+        response = self.helper.post_json(client, '/api/v2/auth/login',
                               {'username': 'phiona',
                                'password': 'password'})
         assert response.status_code == 200
 
     def test_invalid_login(self, client):
-        response = self.helper.post_json(client, '/api/v1/auth/login',
+        response = self.helper.post_json(client, '/api/v2/auth/login',
                               {'username': 'phiona',
                                'password': 'passwords'})
         assert response.status_code == 401

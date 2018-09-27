@@ -78,7 +78,7 @@ def delete_order(order_id):
     return jsonify({'orders': orders.ORDERS})
 
 
-@app.route('/api/v1/auth/signup', methods=['POST'])
+@app.route('/api/v2/auth/signup', methods=['POST'])
 def register():
     #connect add the data to the database
     connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
@@ -90,7 +90,7 @@ def register():
     return ""
 
 
-@app.route('/api/v1/auth/login', methods=['POST'])
+@app.route('/api/v2/auth/login', methods=['POST'])
 def signin():
     #check if the creditentials posted are in the database
     connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
@@ -115,7 +115,7 @@ def signin():
     return resp #login failed
 
 
-@app.route('/api/v1/users/orders', methods=['POST'])
+@app.route('/api/v2/users/orders', methods=['POST'])
 @token_required
 def place_orders():
     connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")

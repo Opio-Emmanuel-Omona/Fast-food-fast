@@ -41,7 +41,7 @@ class TestAPI():
         assert b'Hello World!' in response.data
 
     def test_json(self, client):
-        response = slef.helper.post_json(client, '/add', {'key': 'value'})
+        response = self.helper.post_json(client, '/add', {'key': 'value'})
         assert response.status_code == 200
         assert self.helper.json_of_response(response) == {'answer': 'value' * 2}
 

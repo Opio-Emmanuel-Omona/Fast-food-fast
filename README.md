@@ -7,27 +7,6 @@ Fast-Food-Fast is a food delivery service app for a restaurant.
 
 <a href="https://codeclimate.com/github/Opio-Emmanuel-Omona/Fast-food-fast/maintainability"><img src="https://api.codeclimate.com/v1/badges/72822b2801edfcc8895b/maintainability" /></a>
 
-The application User Interfaces can be accessed on the link below:
-https://opio-emmanuel-omona.github.io/Fast-food-fast/UI/
-
-
-
-1. The flow is from Signup.html where an account is created
-
-2. After an account has been created, then one can log in form signin.html
-
-3. The home page is where the user can make orders and also view history
-
-4. The admin page is where the admin handles all the orders made by users. 
-
-
-Note: There's no functionality yet, therefore one can access the various pages by
-      the links in the navigation bar.
-
-      To access the admin user interface, use the link below:
-       https://opio-emmanuel-omona.github.io/Fast-food-fast/UI/admin.html
-
-      Also most of the data is static and will be later changed
 
 link to pivaotal tracker:
 https://www.pivotaltracker.com/n/projects/2195460

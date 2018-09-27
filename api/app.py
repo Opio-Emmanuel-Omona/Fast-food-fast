@@ -118,7 +118,13 @@ def signin():
 @app.route('/api/v1/users/orders', methods=['POST'])
 @token_required
 def place_orders():
-    return "Only people who have logged in!"
+    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    cursor = connection.cursor()
+    sql = "INSERT INTO \"order\" (username, item_name, quantity) VALUES('"+request.json['username']+"','"+request.json['item_name']+"','"+request.json['quantity']+"');"
+    cursor.execute(sql)
+    connection.commit()
+    connection.close()
+    return "" #the order placed
 
 
 if __name__ == "__main__":

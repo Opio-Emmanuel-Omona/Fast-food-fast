@@ -27,62 +27,70 @@ class HelpAPI():
     def delete_json(self, client, url):
         return client.delete(url)
 
-    def json_of_response(self, response):
-        return json.loads(response.data.decode('utf8'))
-
     #END helper methods
 
 #API TESTS
 class TestAPI():
     #Tests Begin
+    helper = HelpAPI()
     def test_dummy(self, client):
         response = client.get('/')
         assert b'Hello World!' in response.data
-
-    def test_json(self, client):
-        helper = HelpAPI()
-        response = helper.post_json(client, '/add', {'key': 'value'})
-        assert response.status_code == 200
-        assert helper.json_of_response(response) == {'answer': 'value' * 2}
 
     def test_get_orders_api(self, client):
         response = client.get('/api/v1/orders')
         assert response.status_code == 200
 
+    def test_clear_orders(self, client):
+        orders_in.clear_orders()
+        assert orders_in.ORDERS == []
+
     def test_place_order_api(self, client):
-        helper = HelpAPI()
-        response = helper.post_json(client, '/api/v1/orders',
-                                    {'username': 'simon', 'item_name': 'chips', 'quantity': 1})
+        response = self.helper.post_json(client, '/api/v1/orders',
+                                         {'username': 'simon', 'item_name': 'chips', 'quantity': 1})
         assert response.status_code == 200
         orders_in.clear_orders()
 
+    def test_post_empty_data(self, client):
+        response = self.helper.post_json(client, 'api/v1/orders', {})
+        assert response.status_code == 200
+        assert response.data == "Empty Order"
+
+    def test_post_incomplete_order(self, client):
+        response = self.helper.post_json(client, 'api/v1/orders',
+                                         {'username': '', 'item_name': 'chips', 'quantity': 1})
+        assert response.status_code == 200
+        assert response.data == "Incomplete Order"
 
     def test_one_order_api(self, client):
-        helper = HelpAPI()
-        response1 = helper.post_json(client, '/api/v1/orders',
-                                     {'username': 'peter',
-                                      'item_name': 'chips + chicken',
-                                      'quantity': 1})
+        response1 = self.helper.post_json(client, '/api/v1/orders',
+                                          {'username': 'peter',
+                                           'item_name': 'chips + chicken',
+                                           'quantity': 1})
         response2 = client.get('/api/v1/orders/1')
         assert response1.status_code == 200
         assert response2.status_code == 200
         orders_in.clear_orders()
 
     def test_update_order_api(self, client):
-        helper = HelpAPI()
-        response1 = helper.post_json(client, '/api/v1/orders',
-                                     {'username': 'phiona', 'item_name': 'pork', 'quantity': 1})
-        response2 = helper.put_json(client, '/api/v1/orders/1',
-                                    {'username': 'phiona', 'item_name': 'pizza', 'quantity': 1})
+        response1 = self.helper.post_json(client, '/api/v1/orders',
+                                          {'username': 'phiona',
+                                           'item_name': 'pork',
+                                           'quantity': 1})
+        response2 = self.helper.put_json(client, '/api/v1/orders/1',
+                                         {'username': 'phiona',
+                                          'item_name': 'pizza',
+                                          'quantity': 1})
         assert response1.status_code == 200
         assert response2.status_code == 200
         orders_in.clear_orders()
 
     def test_delete_order_api(self, client):
-        helper = HelpAPI()
-        response1 = helper.post_json(client, '/api/v1/orders',
-                                     {'username': 'wilful', 'item_name': 'matooke', 'quantity': 1})
-        response2 = helper.delete_json(client, '/api/v1/orders/1')
+        response1 = self.helper.post_json(client, '/api/v1/orders',
+                                          {'username': 'wilful',
+                                           'item_name': 'matooke',
+                                           'quantity': 1})
+        response2 = self.helper.delete_json(client, '/api/v1/orders/1')
         assert response1.status_code == 200
         assert response2.status_code == 200
         orders_in.clear_orders()
@@ -90,7 +98,7 @@ class TestAPI():
 
 #TEST ORDERS
 class TestOrder():
- def test_place_order(self):
+    def test_place_order(self):
         new_order = order.Order()
         new_order.place_new_order("Emma", "Pizza", 2)
         assert new_order.ORDERS == [

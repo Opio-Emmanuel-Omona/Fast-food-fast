@@ -54,13 +54,13 @@ class TestAPI():
     def test_post_empty_data(self, client):
         response = self.helper.post_json(client, 'api/v1/orders', {})
         assert response.status_code == 200
-        assert response.data == "Empty Order"
+        assert b"Empty Order" in response.data
 
     def test_post_incomplete_order(self, client):
         response = self.helper.post_json(client, 'api/v1/orders',
                                          {'username': '', 'item_name': 'chips', 'quantity': 1})
         assert response.status_code == 200
-        assert response.data == "Incomplete Order"
+        assert b"Incomplete Order" in response.data
 
     def test_one_order_api(self, client):
         response1 = self.helper.post_json(client, '/api/v1/orders',

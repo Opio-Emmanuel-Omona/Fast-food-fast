@@ -135,6 +135,7 @@ def signin():
 @app.route('/api/v2/users/orders', methods=['POST'])
 @token_required
 def place_orders():
+    #First check in the database whether the order exixts and then simply update the order
     connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
     cursor = connection.cursor()
     sql = "INSERT INTO \"order\" (username, item_name, quantity) VALUES('"+request.json['username']+"','"+request.json['item_name']+"','"+request.json['quantity']+"');"
@@ -147,8 +148,18 @@ def place_orders():
 @app.route('/api/v2/users/orders', methods=['GET'])
 @token_required
 def order_history():
-    pass
+    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    cursor = connection.cursor()
+    sql = "SELECT username, item_name FROM \"order\";"
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    #decdode the username from the token
+    history = []
+    for row in rows:
+        if row[0] == request.json['username']: # username
+            history.append(row)
 
+    return jsonify({'user': '', 'history': history})
 
 @app.route('/api/v2/menu', methods=['POST'])
 @admin_required
@@ -176,6 +187,22 @@ def menu():
     connection.commit()
     connection.close()
     return jsonify({'menu': menu})
+
+
+@app.route('/api/v2/orders', methods=['GET'])
+@admin_required
+def orders():
+    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    cursor = connection.cursor()
+    sql = "SELECT * FROM \"order\";"
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    orders = []
+    for row in rows:
+        orders.append({'username': row[1], 'item_name': row[2], 'quantity': row[3]})
+    connection.commit()
+    connection.close()
+    return jsonify({'orders': orders})
 
 
 if __name__ == "__main__":

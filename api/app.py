@@ -95,7 +95,7 @@ def register():
     cursor.execute(sql)
     connection.commit()
     connection.close()
-    return ""
+    return request.json['username'] + "Account created successfully"
 
 
 @app.route('/api/v2/auth/login', methods=['POST'])
@@ -154,6 +154,22 @@ def add_menu():
     connection.commit()
     connection.close()
     return "Menu item successfully added" 
+
+
+@app.route('/api/v2/menu', methods=['GET'])
+@token_required
+def menu():
+    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    cursor = connection.cursor()
+    sql = "SELECT * FROM \"menu\";"
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    menu = []
+    for row in rows:
+        menu.append(row[1])
+    connection.commit()
+    connection.close()
+    return jsonify({'menu': menu})
 
 
 if __name__ == "__main__":

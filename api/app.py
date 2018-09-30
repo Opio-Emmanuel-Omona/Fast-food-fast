@@ -138,7 +138,7 @@ def place_orders():
     #First check in the database whether the order exixts and then simply update the order
     connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
     cursor = connection.cursor()
-    sql = "INSERT INTO \"order\" (username, item_name, quantity) VALUES('"+request.json['username']+"','"+request.json['item_name']+"','"+request.json['quantity']+"');"
+    sql = "INSERT INTO \"order\" (username, item_name, quantity, status) VALUES('"+request.json['username']+"','"+request.json['item_name']+"','"+request.json['quantity']+"', 'New');"
     cursor.execute(sql)
     connection.commit()
     connection.close()
@@ -219,6 +219,18 @@ def fetch_specific_order(order_id):
     connection.commit()
     connection.close()
     return jsonify({'order': order})
+
+
+@app.route('/api/v2/orders/<string:order_id>', methods=['PUT'])
+@admin_required
+def updated_order_status(order_id):
+    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    cursor = connection.cursor()
+    sql = "UPDATE \"order\" SET status = '"+request.json['status_name']+"' WHERE order_id = '"+order_id+"';"
+    cursor.execute(sql)
+    connection.commit()
+    connection.close()
+    return "Order status successfully altered"
 
 
 if __name__ == "__main__":

@@ -157,7 +157,7 @@ def order_history():
     history = []
     for row in rows:
         if row[0] == request.json['username']: # username
-            history.append(row)
+            history.append({'item_name': row[1]})
 
     return jsonify({'user': '', 'history': history})
 
@@ -173,8 +173,34 @@ def add_menu():
     return "Menu item successfully added" 
 
 
+#admin can edit food item
+@app.route('/api/v2/menu/<string:item_id>', methods=['PUT'])
+@admin_required
+def edit_menu(item_id):
+    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    cursor = connection.cursor()
+    sql = "UPDATE \"menu\" set item_name = '"+request.json['item_name']+"' WHERE item_id = "+item_id+";"
+    cursor.execute(sql)
+    connection.commit()
+    connection.close()
+    return "item number "+ item_id +"successfully updated"
+
+
+#admin can delete the food item
+@app.route('/api/v2/menu/<string:item_id>', methods=['DELETE'])
+@admin_required
+def delete_food_item(item_id):
+    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    cursor = connection.cursor()
+    sql = "DELETE FROM \"menu\" WHERE item_id = "+item_id+";"
+    cursor.execute(sql)
+    connection.commit()
+    connection.close()
+    return "item number "+ item_id +"successfully deleted"
+
+
 @app.route('/api/v2/menu', methods=['GET'])
-@token_required
+@token_required # admin should also be allowed to view this
 def menu():
     connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
     cursor = connection.cursor()

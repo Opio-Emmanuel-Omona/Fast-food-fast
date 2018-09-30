@@ -191,7 +191,7 @@ def menu():
 
 @app.route('/api/v2/orders', methods=['GET'])
 @admin_required
-def orders():
+def fetch_all_orders():
     connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
     cursor = connection.cursor()
     sql = "SELECT * FROM \"order\";"
@@ -199,10 +199,26 @@ def orders():
     rows = cursor.fetchall()
     orders = []
     for row in rows:
-        orders.append({'username': row[1], 'item_name': row[2], 'quantity': row[3]})
+        orders.append({'order_id': row[0], 'username': row[1], 'item_name': row[2], 'quantity': row[3], 'status': row[4]})
     connection.commit()
     connection.close()
     return jsonify({'orders': orders})
+
+
+@app.route('/api/v2/orders/<int:order_id>', methods=['GET'])
+@admin_required
+def fetch_specific_order(order_id):
+    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    cursor = connection.cursor()
+    sql = "SELECT * FROM \"order\" WHERE order_id = '"+order_id+"';"
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    order = []
+    for row in rows:
+        order.append({'order_id': row[0], 'username': row[1], 'item_name': row[2], 'quantity': row[3], 'status': row[4]})
+    connection.commit()
+    connection.close()
+    return jsonify({'order': order})
 
 
 if __name__ == "__main__":

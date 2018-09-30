@@ -205,7 +205,7 @@ def fetch_all_orders():
     return jsonify({'orders': orders})
 
 
-@app.route('/api/v2/orders/<int:order_id>', methods=['GET'])
+@app.route('/api/v2/orders/<string:order_id>', methods=['GET'])
 @admin_required
 def fetch_specific_order(order_id):
     connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")

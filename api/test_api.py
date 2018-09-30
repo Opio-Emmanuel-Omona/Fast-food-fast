@@ -40,11 +40,6 @@ class TestAPI():
         response = client.get('/')
         assert b'Hello World!' in response.data
 
-    def test_json(self, client):
-        response = self.helper.post_json(client, '/add', {'key': 'value'})
-        assert response.status_code == 200
-        assert self.helper.json_of_response(response) == {'answer': 'value' * 2}
-
     def test_get_orders_api(self, client):
         response = client.get('/api/v1/orders')
         assert response.status_code == 200
@@ -116,6 +111,12 @@ class TestDB():
                               {'username': 'phiona',
                                'password': 'passwords'})
         assert response.status_code == 401
+
+    def test_admin_login(self, client):
+        response = self.helper.post_json(client, '/api/v2/auth/login',
+                                         {'username': 'admin',
+                                          'password': 'password'})
+        assert response.status_code == 200
 
 
 

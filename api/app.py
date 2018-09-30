@@ -14,6 +14,7 @@ orders = order.Order()
 
 
 app.config['SECRET_KEY'] = 'thisisthesecretkey'
+app.config['ADMIN_KEY'] = 'thisistheadminkey'
 
 class JsonResponse(Response):  # pylint: disable=too-many-ancestors
     def __init__(self, json_dict, status=200):
@@ -35,17 +36,24 @@ def token_required(f):
 
     return decorated
 
+def admin_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.args.get('token') #http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 403
+        try:
+            data = jwt.decode(token, app.config['ADMIN_KEY'])
+        except:
+            return jsonify({'message': 'Token is invalid!'}), 403
+        return f(*args, **kwargs)
+
+    return decorated
+
 
 @app.route("/")
 def hello():
     return "Hello World!"
-
-
-@app.route('/add', methods=['POST'])
-def add():
-    json = request.get_json()
-    resp = JsonResponse(json_dict={'answer': json['key'] * 2}, status=200)
-    return resp
 
 
 @app.route('/api/v1/orders', methods=['GET'])
@@ -107,7 +115,16 @@ def signin():
                                 app.config['SECRET_KEY'])
             connection.commit()
             connection.close()
-            return jsonify({'token': token})
+            return jsonify({'user': request.json['username'], 'token': token})
+
+    #ADMIN login
+    if request.json['username'] == 'admin' and request.json['password'] == 'password':
+        token = jwt.encode({'user': request.json['username'],
+                            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+                            app.config['ADMIN_KEY'])
+        connection.commit()
+        connection.close()
+        return jsonify({'user': request.json['username'], 'token': token})
 
     connection.commit()
     connection.close()
@@ -124,7 +141,19 @@ def place_orders():
     cursor.execute(sql)
     connection.commit()
     connection.close()
-    return "" #the order placed
+    return "Order has been placed" #the order placed
+
+
+@app.route('/api/v2/menu', methods=['POST'])
+@admin_required
+def add_menu():
+    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    cursor = connection.cursor()
+    sql = "INSERT INTO \"menu\" (item_name) VALUES('"+request.json['item_name']+"');"
+    cursor.execute(sql)
+    connection.commit()
+    connection.close()
+    return "Menu item successfully added" 
 
 
 if __name__ == "__main__":

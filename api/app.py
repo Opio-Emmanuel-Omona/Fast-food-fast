@@ -144,6 +144,12 @@ def place_orders():
     return "Order has been placed" #the order placed
 
 
+@app.route('/api/v2/users/orders', methods=['GET'])
+@token_required
+def order_history():
+    pass
+
+
 @app.route('/api/v2/menu', methods=['POST'])
 @admin_required
 def add_menu():

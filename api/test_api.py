@@ -118,6 +118,15 @@ class TestDB():
                                           'password': 'password'})
         assert response.status_code == 200
 
+    def test_add_menu_item(self, client):
+        pass
+
+    def test_place_order(self, client):
+        pass
+
+    def test_order_history(self, client):
+        pass
+
 
 
 if __name__ == "__main__":

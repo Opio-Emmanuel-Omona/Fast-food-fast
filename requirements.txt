@@ -33,6 +33,7 @@ numpy==1.14.0
 pathlib2==2.3.2
 pep8==1.7.1
 pluggy==0.7.1
+psycopg2==2.7.5
 py==1.6.0
 pycodestyle==2.4.0
 pycparser==2.18

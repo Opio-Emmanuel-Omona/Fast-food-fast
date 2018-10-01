@@ -1,5 +1,5 @@
 '''The main application'''
-from flask import Flask, jsonify, request, Response, json, make_response
+from flask import Flask, jsonify, request, Response, json
 from functools import wraps
 import psycopg2
 import jwt
@@ -16,16 +16,20 @@ orders = order.Order()
 app.config['SECRET_KEY'] = 'thisisthesecretkey'
 app.config['ADMIN_KEY'] = 'thisistheadminkey'
 
+
 class JsonResponse(Response):  # pylint: disable=too-many-ancestors
     def __init__(self, json_dict, status=200):
         super(JsonResponse, self).__init__(response=json.dumps(json_dict),
-                                           status=status, mimetype='application/json')
+                                           status=status,
+                                           mimetype='application/json')
 
 
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.args.get('token') #http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
+        # http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
+        token = request.args.get('token')
+
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403
         try:
@@ -36,10 +40,12 @@ def token_required(f):
 
     return decorated
 
+
 def admin_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.args.get('token') #http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
+        # http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
+        token = request.args.get('token')
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403
         try:
@@ -76,7 +82,10 @@ def place_order():
 @app.route('/api/v1/orders/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
     orders.update_order(
-        order_id, request.json['username'], request.json['item_name'], request.json['quantity'])
+        order_id,
+        request.json['username'],
+        request.json['item_name'],
+        request.json['quantity'])
     return jsonify({'orders': orders.ORDERS})
 
 
@@ -88,8 +97,12 @@ def delete_order(order_id):
 
 @app.route('/api/v2/auth/signup', methods=['POST'])
 def register():
-    #connect add the data to the database
-    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    # connect add the data to the database
+    connection = psycopg2.connect(database="fast_food_fast_db",
+                                  user="postgres",
+                                  password="P@ss1234",
+                                  host="127.0.0.1",
+                                  port="5432")
     cursor = connection.cursor()
     sql = "INSERT INTO \"user\" (username, email, phone_no, password) VALUES('"+request.json['username']+"','"+request.json['email']+"','"+request.json['phone_no']+"','"+request.json['password']+"');"
     cursor.execute(sql)
@@ -100,24 +113,29 @@ def register():
 
 @app.route('/api/v2/auth/login', methods=['POST'])
 def signin():
-    #check if the creditentials posted are in the database
-    connection = psycopg2.connect(database="fast_food_fast_db", user="postgres", password="P@ss1234", host="127.0.0.1", port="5432")
+    # check if the creditentials posted are in the database
+    connection = psycopg2.connect(database="fast_food_fast_db",
+                                  user="postgres",
+                                  password="P@ss1234",
+                                  host="127.0.0.1",
+                                  port="5432")
     cursor = connection.cursor()
     sql = "SELECT username, password FROM \"user\";"
     cursor.execute(sql)
     rows = cursor.fetchall()
     for row in rows:
         if row[0] == request.json['username'] and row[1] == request.json['password']:
-            #then login
-            #give token based authentication to this user
-            token = jwt.encode({'user': request.json['username'],
-                                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
-                                app.config['SECRET_KEY'])
+            # then login
+            # give token based authentication to this user
+            token = jwt.encode({
+                'user': request.json['username'],
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+                app.config['SECRET_KEY'])
             connection.commit()
             connection.close()
             return jsonify({'user': request.json['username'], 'token': token})
 
-    #ADMIN login
+    # ADMIN login
     if request.json['username'] == 'admin' and request.json['password'] == 'password':
         token = jwt.encode({'user': request.json['username'],
                             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},

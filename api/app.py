@@ -28,14 +28,16 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         # http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
-        token = request.args.get('token')
+        # token = request.args.get('token')
+        token = request.headers.get('Authorization')
 
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403
         try:
-            data = jwt.decode(token, app.config['SECRET_KEY'])
+            # token shouldn't start with Bearer
+            data = jwt.decode(token[7:], app.config['SECRET_KEY'])
         except:
-            return jsonify({'message': 'Token is invalid!'}), 403
+            return jsonify({'message': 'Token is invalid!', 'token': token}), 403
         return f(*args, **kwargs)
 
     return decorated
@@ -45,11 +47,12 @@ def admin_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         # http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
-        token = request.args.get('token')
+        # token = request.args.get('token')
+        token = request.headers.get('Authorization')
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403
         try:
-            data = jwt.decode(token, app.config['ADMIN_KEY'])
+            data = jwt.decode(token[7:], app.config['ADMIN_KEY'])
         except:
             return jsonify({'message': 'Token is invalid!'}), 403
         return f(*args, **kwargs)

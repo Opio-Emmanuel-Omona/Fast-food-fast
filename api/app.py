@@ -32,10 +32,10 @@ def token_required(f):
         # http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
         # token = request.args.get('token')
 
-        if app.config['TESTING']:
-            token = request.json['token']
-        else:
+        if app.config['TESTING'] == False:
             token = request.headers.get('Authorization')
+        else:
+            token = request.json['token']
 
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403
@@ -54,10 +54,10 @@ def admin_required(f):
     def decorated(*args, **kwargs):
         # http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
         # token = request.args.get('token')
-        if app.config['TESTING']:
-            token = request.json['token']
-        else:
+        if app.config['TESTING'] == False:
             token = request.headers.get('Authorization')
+        else:
+            token = request.json['token']
 
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403
@@ -175,3 +175,4 @@ def updated_order_status(order_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+    app.config['TESTING'] = False

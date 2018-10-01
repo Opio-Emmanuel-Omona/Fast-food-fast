@@ -5,8 +5,12 @@ import psycopg2
 import jwt
 import datetime
 import order
+import database
+
+
 app = Flask(__name__)  # pylint: disable=invalid-name
 orders = order.Order()
+test_db = database.DatabaseConnection()
 
 
 # pylint: disable=missing-docstring
@@ -112,17 +116,7 @@ def delete_order(order_id):
 @app.route('/api/v2/auth/signup', methods=['POST'])
 def register():
     # connect add the data to the database
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
-    sql = "INSERT INTO \"user\" (username, email, phone_no, password) VALUES('"+request.json['username']+"','"+request.json['email']+"','"+request.json['phone_no']+"','"+request.json['password']+"');"
-    cursor.execute(sql)
-    connection.commit()
-    connection.close()
+    test_db.create_user(request.json)
     return request.json['username'] + "Account created successfully"
 
 

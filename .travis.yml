@@ -1,11 +1,16 @@
 language: python
 python:
-  - "3.6.0"
+  - "2.7.14"
 install:
   - pip install -r requirements.txt
   - pip install pytest
   - pip install pytest-cov
   - pip install coveralls
+services:
+  - postgresql
+before_script:
+  - psql -c "CREATE USER Emma WITH PASSWORD 'Password';" -U postgres
+  - psql -c 'create database fast_food_fast_db;' -U postgres
 script: 
   - pytest --cov=api/
   - coverage report -m

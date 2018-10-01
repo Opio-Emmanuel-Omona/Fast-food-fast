@@ -3,6 +3,7 @@ import json
 import pytest
 from app import app
 import order
+import database
 
 
 # pylint: disable=missing-docstring
@@ -136,6 +137,7 @@ class TestOrder():
 # DATABASE TESTS
 class TestDB():
     helper = HelpAPI()
+    test_db = database.DatabaseConnection()
 
     def test_register_new_user(self, client):
         response = self.helper.post_json(

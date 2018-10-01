@@ -18,14 +18,6 @@ app.config['SECRET_KEY'] = 'thisisthesecretkey'
 app.config['ADMIN_KEY'] = 'thisistheadminkey'
 
 
-class JsonResponse(Response):  # pylint: disable=too-many-ancestors
-    def __init__(self, json_dict, status=200):
-        super(JsonResponse, self).__init__(
-            response=json.dumps(json_dict),
-            status=status,
-            mimetype='application/json')
-
-
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):

@@ -170,9 +170,14 @@ class DatabaseConnection():
         return jsonify({'order': order})
 
     def update_order_status(self, user_dict):
-        sql = "UPDATE \"order\" SET status = '"+user_dict['status_name']+"' WHERE order_id = '"+user_dict['order_id']+"';"
-        self.cursor.execute(sql)
-        self.connection.commit()
+        if user_dict['order_id'] == '0':
+            sql = "UPDATE \"order\" SET status = '"+user_dict['status_name']+"' WHERE username = '"+user_dict['username']+"' AND item_name = '"+user_dict['item_name']+"';"
+            self.cursor.execute(sql)
+            self.connection.commit()
+        else:
+            sql = "UPDATE \"order\" SET status = '"+user_dict['status_name']+"' WHERE order_id = '"+user_dict['order_id']+"';"
+            self.cursor.execute(sql)
+            self.connection.commit()
 
     def close_connection(self):
         self.connection.close()

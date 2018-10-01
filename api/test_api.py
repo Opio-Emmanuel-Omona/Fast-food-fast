@@ -229,8 +229,61 @@ class TestDB():
         assert response1.status_code == 200
         assert response2.status_code == 201
 
-    def test_order_history(self, client):
-        pass
+    # def test_order_history(self, client):
+    #     response1 = self.helper.post_json(
+    #         client,
+    #         '/api/v2/auth/login',
+    #         {
+    #             'username': 'phiona',
+    #             'password': 'password'
+    #         })
+
+    #     response2 = client.get('/api/v2/users/orders')
+
+    def test_update_order_status(self, client):
+        # user first places an order
+        response1 = self.helper.post_json(
+            client,
+            '/api/v2/auth/login',
+            {
+                'username': 'phiona',
+                'password': 'password'
+            })
+
+        response2 = self.helper.post_json(
+            client,
+            '/api/v2/users/orders',
+            {
+                'username': response1.json['username'],
+                'item_name': 'Fried Eggs',
+                'quantity': '1',
+                'token': response1.json['token']
+            }
+        )
+        assert response1.status_code == 200
+        assert response2.status_code == 201
+
+        # admin then updates it
+        response3 = self.helper.post_json(
+            client,
+            '/api/v2/auth/login',
+            {
+                'username': 'admin',
+                'password': 'password'
+            }
+        )
+        response4 = self.helper.put_json(
+            client,
+            '/api/v2/orders/0',
+            {
+                'username': response1.json['username'],
+                'item_name': 'Fried Eggs',
+                'status_name': 'Processing',
+                'token': response3.json['token']
+            }
+        )
+        assert response3.status_code == 200
+        assert response4.status_code == 200
 
 
 if __name__ == "__main__":

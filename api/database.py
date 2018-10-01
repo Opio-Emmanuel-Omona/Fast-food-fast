@@ -95,6 +95,7 @@ class DatabaseConnection():
                 },
                 'thisistheadminkey')
             self.connection.commit()
+            print token
             return jsonify({'user': user_dict['username'], 'token': token})
 
         return jsonify({'answer': 401}), 401

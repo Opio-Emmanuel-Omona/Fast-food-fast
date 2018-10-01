@@ -32,18 +32,23 @@ def token_required(f):
         # http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
         # token = request.args.get('token')
 
-        if app.config['TESTING'] == False:
+        if not app.config['TESTING']:
             token = request.headers.get('Authorization')
+            if not token:
+                return jsonify({'message': 'Token is missing!'}), 403
+            try:
+                jwt.decode(token[7:], app.config['SECRET_KEY'])
+            except:
+                return jsonify({'message': 'Token is invalid!'}), 403
         else:
             token = request.json['token']
-
-        if not token:
-            return jsonify({'message': 'Token is missing!'}), 403
-        try:
-            # token shouldn't start with Bearer
-            jwt.decode(token[7:], app.config['SECRET_KEY'])
-        except:
-            return jsonify({'message': 'Token is invalid!', 'token': token}), 403
+            if not token:
+                return jsonify({'message': 'Token is missing!'}), 403
+            try:
+                jwt.decode(token, app.config['SECRET_KEY'])
+            except:
+                return jsonify({'message': 'Token is invalid!'}), 403
+        
         return f(*args, **kwargs)
 
     return decorated
@@ -54,17 +59,23 @@ def admin_required(f):
     def decorated(*args, **kwargs):
         # http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
         # token = request.args.get('token')
-        if app.config['TESTING'] == False:
+        if not app.config['TESTING']:
             token = request.headers.get('Authorization')
+            if not token:
+                return jsonify({'message': 'Token is missing!'}), 403
+            try:
+                jwt.decode(token[7:], app.config['ADMIN_KEY'])
+            except:
+                return jsonify({'message': 'Token is invalid!'}), 403
         else:
             token = request.json['token']
-
-        if not token:
-            return jsonify({'message': 'Token is missing!'}), 403
-        try:
-            jwt.decode(token[7:], app.config['ADMIN_KEY'])
-        except:
-            return jsonify({'message': 'Token is invalid!'}), 403
+            if not token:
+                return jsonify({'message': 'Token is missing!'}), 403
+            try:
+                jwt.decode(token, app.config['ADMIN_KEY'])
+            except:
+                return jsonify({'message': 'Token is invalid!'}), 403
+        
         return f(*args, **kwargs)
 
     return decorated
@@ -125,12 +136,24 @@ def signin():
 @app.route('/api/v2/users/orders', methods=['POST'])
 @token_required
 def place_orders():
-    token = request.headers.get('Authorization')
-    data = jwt.decode(token[7:], app.config['SECRET_KEY'])
+    if not app.config['TESTING']:
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 403
+            
+        data = jwt.decode(token[7:], app.config['SECRET_KEY'])
+            
+    else:
+        token = request.json['token']
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 403
+        
+        data = jwt.decode(token, app.config['SECRET_KEY'])
+        
     user_dict = request.json
     user_dict['data'] = data
     test_db.add_order(user_dict)
-    return "Order has been placed"
+    return "Order has been placed", 201
 
 
 @app.route('/api/v2/users/orders', methods=['GET'])

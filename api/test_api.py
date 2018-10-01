@@ -199,6 +199,7 @@ class TestDB():
             '/api/v2/menu',
             {
                 'item_name': 'admin_item',
+                'price': '5000',
                 'token': response1.json['token']
             }
         )
@@ -226,7 +227,7 @@ class TestDB():
             }
         )
         assert response1.status_code == 200
-        assert response2.status_code == 200
+        assert response2.status_code == 201
 
     def test_order_history(self, client):
         pass

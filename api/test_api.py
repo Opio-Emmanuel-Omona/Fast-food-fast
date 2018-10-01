@@ -184,49 +184,49 @@ class TestDB():
         )
         assert response.status_code == 200
 
-    # def test_add_menu_item(self, client):
-    #     # Login as admin
-    #     response1 = self.helper.post_json(
-    #         client,
-    #         '/api/v2/auth/login',
-    #         {
-    #             'username': 'admin',
-    #             'password': 'password'
-    #         }
-    #     )
-    #     response2 = self.helper.post_json(
-    #         client,
-    #         '/api/v2/menu',
-    #         {
-    #             'item_name': 'admin_item',
-    #             'token': response1.json['token']
-    #         }
-    #     )
-    #     assert response1.status_code == 200
-    #     assert response2.status_code == 200
+    def test_add_menu_item(self, client):
+        # Login as admin
+        response1 = self.helper.post_json(
+            client,
+            '/api/v2/auth/login',
+            {
+                'username': 'admin',
+                'password': 'password'
+            }
+        )
+        response2 = self.helper.post_json(
+            client,
+            '/api/v2/menu',
+            {
+                'item_name': 'admin_item',
+                'token': response1.json['token']
+            }
+        )
+        assert response1.status_code == 200
+        assert response2.status_code == 200
 
-    # def test_place_order(self, client):
-    #     # Ensure that you are logged in as user
-    #     response1 = self.helper.post_json(
-    #         client,
-    #         '/api/v2/auth/login',
-    #         {
-    #             'username': 'phiona',
-    #             'password': 'password'
-    #         })
+    def test_place_order(self, client):
+        # Ensure that you are logged in as user
+        response1 = self.helper.post_json(
+            client,
+            '/api/v2/auth/login',
+            {
+                'username': 'phiona',
+                'password': 'password'
+            })
 
-    #     response2 = self.helper.post_json(
-    #         client,
-    #         '/api/v2/users/orders',
-    #         {
-    #             'username': response1.json['username'],
-    #             'item_name': 'Fried Eggs',
-    #             'quantity': '1',
-    #             'token': response1.json['token']
-    #         }
-    #     )
-    #     assert response1.status_code == 200
-    #     assert response2.status_code == 200
+        response2 = self.helper.post_json(
+            client,
+            '/api/v2/users/orders',
+            {
+                'username': response1.json['username'],
+                'item_name': 'Fried Eggs',
+                'quantity': '1',
+                'token': response1.json['token']
+            }
+        )
+        assert response1.status_code == 200
+        assert response2.status_code == 200
 
     def test_order_history(self, client):
         pass

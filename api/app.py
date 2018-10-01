@@ -1,17 +1,14 @@
 '''The main application'''
 from flask import Flask, jsonify, request, Response, json
 from functools import wraps
-import psycopg2
 import jwt
-import datetime
 import order
-import database
+from database import DatabaseConnection
 
 
 app = Flask(__name__)  # pylint: disable=invalid-name
 orders = order.Order()
-test_db = database.DatabaseConnection()
-
+test_db = DatabaseConnection()
 
 # pylint: disable=missing-docstring
 # pylint: disable=redefined-outer-name
@@ -44,7 +41,7 @@ def token_required(f):
             return jsonify({'message': 'Token is missing!'}), 403
         try:
             # token shouldn't start with Bearer
-            data = jwt.decode(token[7:], app.config['SECRET_KEY'])
+            jwt.decode(token[7:], app.config['SECRET_KEY'])
         except:
             return jsonify({'message': 'Token is invalid!', 'token': token}), 403
         return f(*args, **kwargs)
@@ -65,7 +62,7 @@ def admin_required(f):
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403
         try:
-            data = jwt.decode(token[7:], app.config['ADMIN_KEY'])
+            jwt.decode(token[7:], app.config['ADMIN_KEY'])
         except:
             return jsonify({'message': 'Token is invalid!'}), 403
         return f(*args, **kwargs)
@@ -117,241 +114,62 @@ def delete_order(order_id):
 def register():
     # connect add the data to the database
     test_db.create_user(request.json)
-    return request.json['username'] + "Account created successfully"
+    return request.json['username'] + " account created successfully"
 
 
 @app.route('/api/v2/auth/login', methods=['POST'])
 def signin():
-    # check if the creditentials posted are in the database
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
-    sql = "SELECT username, password FROM \"user\";"
-    cursor.execute(sql)
-    rows = cursor.fetchall()
-    for row in rows:
-        if row[0] == request.json['username'] and row[1] == request.json['password']:
-            # then login
-            # give token based authentication to this user
-            token = jwt.encode({
-                'username': request.json['username'],
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
-                app.config['SECRET_KEY'])
-            connection.commit()
-            connection.close()
-            return jsonify({'username': request.json['username'], 'token': token})
-
-    # ADMIN login
-    if request.json['username'] == 'admin' and request.json['password'] == 'password':
-        token = jwt.encode(
-            {
-                'username': request.json['username'],
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
-            },
-            app.config['ADMIN_KEY'])
-        connection.commit()
-        connection.close()
-        return jsonify({'user': request.json['username'], 'token': token})
-
-    connection.commit()
-    connection.close()
-    resp = JsonResponse(json_dict={'answer': 401}, status=401)
-    return resp  # login failed
+    return test_db.signin(request.json)
 
 
 @app.route('/api/v2/users/orders', methods=['POST'])
 @token_required
 def place_orders():
-    # First check in the database whether the order exixts
-    # and then simply update the order
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
     token = request.headers.get('Authorization')
     data = jwt.decode(token[7:], app.config['SECRET_KEY'])
-    sql = "INSERT INTO \"order\" (username, item_name, quantity, status) VALUES('"+data['username']+"','"+request.json['item_name']+"','"+request.json['quantity']+"', 'New');"
-    cursor.execute(sql)
-    connection.commit()
-    connection.close()
+    user_dict = request.json
+    user_dict['data'] = data
+    test_db.add_order(user_dict)
     return "Order has been placed"
 
 
 @app.route('/api/v2/users/orders', methods=['GET'])
 @token_required
 def order_history():
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
-    sql = "SELECT username, item_name FROM \"order\";"
-    cursor.execute(sql)
-    rows = cursor.fetchall()
-    # decdode the username from the token
-    history = []
-    token = request.headers.get('Authorization')
-    data = jwt.decode(token[7:], app.config['SECRET_KEY'])
-    for row in rows:
-        if row[0] == data['username']:  # username
-            history.append({'item_name': row[1]})
-
-    return jsonify({'username': data['username'], 'history': history})
+    return test_db.order_history()
 
 
 @app.route('/api/v2/menu', methods=['POST'])
 @admin_required
 def add_menu():
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
-    sql = "INSERT INTO \"menu\" (item_name) VALUES('"+request.json['item_name']+"');"
-    cursor.execute(sql)
-    connection.commit()
-    connection.close()
+    test_db.add_menu(request.json)
     return "Menu item successfully added"
 
 
-# admin can edit food item
-@app.route('/api/v2/menu/<string:item_id>', methods=['PUT'])
-@admin_required
-def edit_menu(item_id):
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
-    sql = "UPDATE \"menu\" set item_name = '"+request.json['item_name']+"' WHERE item_id = "+item_id+";"
-    cursor.execute(sql)
-    connection.commit()
-    connection.close()
-    return "item number " + item_id +" successfully updated"
-
-
-# admin can delete the food item
-@app.route('/api/v2/menu/<string:item_id>', methods=['DELETE'])
-@admin_required
-def delete_food_item(item_id):
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
-    sql = "DELETE FROM \"menu\" WHERE item_id = "+item_id+";"
-    cursor.execute(sql)
-    connection.commit()
-    connection.close()
-    return "item number " + item_id + " successfully deleted"
-
-
 @app.route('/api/v2/menu', methods=['GET'])
-@token_required  # admin should also be allowed to view this
+@token_required
 def menu():
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
-    sql = "SELECT * FROM \"menu\";"
-    cursor.execute(sql)
-    rows = cursor.fetchall()
-    menu = []
-    for row in rows:
-        menu.append(row[1])
-    connection.commit()
-    connection.close()
-    return jsonify({'menu': menu})
+    return test_db.menu()
 
 
 @app.route('/api/v2/orders', methods=['GET'])
 @admin_required
 def fetch_all_orders():
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
-    sql = "SELECT * FROM \"order\";"
-    cursor.execute(sql)
-    rows = cursor.fetchall()
-    orders = []
-    for row in rows:
-        orders.append(
-            {
-                'order_id': row[0],
-                'username': row[1],
-                'item_name': row[2],
-                'quantity': row[3],
-                'status': row[4]
-            })
-    connection.commit()
-    connection.close()
-    return jsonify({'orders': orders})
+    return test_db.fetch_all_orders()
 
 
 @app.route('/api/v2/orders/<string:order_id>', methods=['GET'])
 @admin_required
 def fetch_specific_order(order_id):
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
-    sql = "SELECT * FROM \"order\" WHERE order_id = '"+order_id+"';"
-    cursor.execute(sql)
-    rows = cursor.fetchall()
-    order = []
-    for row in rows:
-        order.append(
-            {
-                'order_id': row[0],
-                'username': row[1],
-                'item_name': row[2],
-                'quantity': row[3],
-                'status': row[4]
-            })
-    connection.commit()
-    connection.close()
-    return jsonify({'order': order})
+    return test_db.fetch_specific_order(order_id)
 
 
 @app.route('/api/v2/orders/<string:order_id>', methods=['PUT'])
 @admin_required
 def updated_order_status(order_id):
-    connection = psycopg2.connect(
-        database="fast_food_fast_db",
-        user="postgres",
-        password="P@ss1234",
-        host="127.0.0.1",
-        port="5432")
-    cursor = connection.cursor()
-    sql = "UPDATE \"order\" SET status = '"+request.json['status_name']+"' WHERE order_id = '"+order_id+"';"
-    cursor.execute(sql)
-    connection.commit()
-    connection.close()
+    user_dict = request.json
+    user_dict['order_id'] = order_id
+    test_db.update_order_status(user_dict)
     return "Order status successfully altered"
 
 

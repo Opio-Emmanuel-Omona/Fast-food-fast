@@ -175,5 +175,3 @@ class DatabaseConnection():
 
     def close_connection(self):
         self.connection.close()
-
-DatabaseConnection()

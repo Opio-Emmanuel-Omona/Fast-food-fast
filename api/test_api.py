@@ -29,6 +29,26 @@ class HelpAPI():
             data=json.dumps(json_dict),
             content_type='application/json')
 
+    def post_json_with_token(self, client, url, json_dict, token):
+        return client.post(
+            url,
+            data=json.dumps(json_dict),
+            headers=dict(
+                Authorization='Bearer ' + token
+            ),
+            content_type='application/json'
+        )
+
+    def put_json_with_token(self, client, url, json_dict, token):
+        return client.put(
+            url,
+            data=json.dumps(json_dict),
+            headers=dict(
+                Authorization='Bearer ' + token
+            ),
+            content_type='application/json'
+        )
+
     def put_json(self, client, url, json_dict):
         return client.put(
             url,
@@ -195,18 +215,15 @@ class TestDB():
                 'password': 'password'
             }
         )
-        response2 = client.post(
+        response2 = self.helper.post_json_with_token(
+            client,
             '/api/v2/menu',
-            data=json.dumps(
-                {
-                    'item_name': 'admin_item',
-                    'price': '5000',
-                }
-            ),
-            headers=dict(
-                Authorization='Bearer ' + response1.json['token']
-            ),
-            content_type='application/json')
+            {
+                'item_name': 'admin_item',
+                'price': '5000',
+            },
+            response1.json['token']
+        )
         
         assert response1.status_code == 200
         assert response2.status_code == 200
@@ -221,19 +238,15 @@ class TestDB():
                 'password': 'password'
             })
 
-        response2 = client.post(
+        response2 = self.helper.post_json_with_token(
+            client,
             '/api/v2/users/orders',
-            data=json.dumps(
-                {
-                    'username': response1.json['username'],
-                    'item_name': 'Fried Eggs',
-                    'quantity': '1',
-                }
-            ),
-            headers=dict(
-                Authorization='Bearer ' + response1.json['token']
-            ),
-            content_type='application/json'
+            {
+                'username': response1.json['username'],
+                'item_name': 'Fried Eggs',
+                'quantity': '1',
+            },
+            response1.json['token']
         )
         assert response1.status_code == 200
         assert response2.status_code == 201
@@ -291,19 +304,15 @@ class TestDB():
                 'password': 'password'
             })
 
-        response2 = client.post(
+        response2 = self.helper.post_json_with_token(
+            client,
             '/api/v2/users/orders',
-            data=json.dumps(
-                {
-                    'username': response1.json['username'],
-                    'item_name': 'Fried Eggs',
-                    'quantity': '1'
-                }
-            ),
-            headers=dict(
-                Authorization='Bearer ' + response1.json['token']
-            ),
-            content_type='application/json'
+            {
+                'username': response1.json['username'],
+                'item_name': 'Fried Eggs',
+                'quantity': '1'
+            },
+            response1.json['token']
         )
         assert response1.status_code == 200
         assert response2.status_code == 201
@@ -317,21 +326,15 @@ class TestDB():
                 'password': 'password'
             }
         )
-        response4 = client.put(
+        response4 = self.helper.put_json_with_token(
+            client,
             '/api/v2/orders/0',
-            data=json.dumps(
-                {
-                    'username': response1.json['username'],
-                    'item_name': 'Fried Eggs',
-                    'status_name': 'Processing',
-                    'token': response3.json['token']
-                }
-            ),
-            headers=dict(
-                Authorization='Bearer ' + response3.json['token']
-            ),
-            content_type='application/json'
-
+            {
+                'username': response1.json['username'],
+                'item_name': 'Fried Eggs',
+                'status_name': 'Processing',
+            },
+            response3.json['token']
         )
         assert response3.status_code == 200
         assert response4.status_code == 200

@@ -1,4 +1,3 @@
-'''ORDER MODULE'''
 class Order():
     '''Handles all orders'''
     ORDERS = []

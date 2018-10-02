@@ -9,13 +9,16 @@ import database
 # pylint: disable=missing-docstring
 # pylint: disable=redefined-outer-name
 orders_in = order.Order()
+test_db = database.DatabaseConnection()
 
 
 @pytest.fixture
 def client():
     '''define a test client'''
-    app.config['TESTING'] = True
-    test_client = app.test_client()
+    with app.app_context():
+        app.config['TESTING'] = True
+        test_client = app.test_client()
+    
     return test_client
 
 
@@ -137,7 +140,6 @@ class TestOrder():
 # DATABASE TESTS
 class TestDB():
     helper = HelpAPI()
-    test_db = database.DatabaseConnection()
 
     def test_register_new_user(self, client):
         response = self.helper.post_json(

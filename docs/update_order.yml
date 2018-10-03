@@ -7,7 +7,14 @@ parameters:
     in: path
     required: true
     type: string
-    description: Update the status of an order
+    default: 1
+    description: Update the for this id
+  - name: status
+    in: body
+    required: true
+    type: string
+    default: New
+    description: Update with a status
 responses:
   204:
     description: Order status succesfully updated

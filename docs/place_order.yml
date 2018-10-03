@@ -17,7 +17,10 @@ responses:
       properties:
         item_name:
           type: string
-          default: item    
+          default: item  
+        quantity:
+          type: string
+          default: "1"  
   400:
     description: Order not in the menu
     schema:

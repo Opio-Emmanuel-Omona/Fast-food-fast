@@ -1,0 +1,13 @@
+Order History
+---
+tags:
+  - Admin Access
+parameters:
+  - name: body
+    in: body
+    description: Admin can view all the orders placed
+responses:
+  200:
+    description: Succesfully viewed orders
+security:
+    - TokenHeader: []

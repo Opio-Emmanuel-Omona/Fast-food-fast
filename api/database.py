@@ -9,16 +9,29 @@ import datetime
 
 
 class DatabaseConnection():
-    def __init__(self):
-        self.connection = psycopg2.connect(
-            database="fast_food_fast_db",
-            user="postgres",
-            password="P@ss1234",
-            host="127.0.0.1",
-            port="5432"
-        )
-        self.cursor = self.connection.cursor()
-        self.drop_tables()
+    def __init__(self, value):
+        if value:
+            self.connection = psycopg2.connect(
+                database="test_fast_food_fast_db",
+                user="postgres",
+                password="P@ss1234",
+                host="127.0.0.1",
+                port="5432"
+            )
+            self.cursor = self.connection.cursor()
+            print "Connected to test_fast_food_fast"
+            self.drop_tables()
+        else:
+            self.connection = psycopg2.connect(
+                database="fast_food_fast_db",
+                user="postgres",
+                password="P@ss1234",
+                host="127.0.0.1",
+                port="5432"
+            )
+            self.cursor = self.connection.cursor()
+            print "connected to fast_food_fast"
+
         self.create_user_table()
         self.create_order_table()
         self.create_menu_table()

@@ -1,0 +1,38 @@
+Place Order
+---
+tags:
+  - User Access
+parameters:
+  - name: body
+    in: body
+    type: object
+    required: true
+    description: Add a new order
+responses:
+  201:
+    description: Login Succesfull
+    schema:
+      id: place order
+      type: object
+      properties:
+        item_name:
+          type: string
+          default: item    
+  400:
+    description: Order not in the menu
+    schema:
+      id: invalid name
+      properties:
+        item_name:
+          type: string
+          default: item
+  422:
+    description: Empty order
+    schema:
+      id: Empty order
+      properties:
+        item_name:
+          type: string
+security:
+    - TokenHeader: []
+        

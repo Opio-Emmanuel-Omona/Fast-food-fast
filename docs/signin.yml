@@ -1,0 +1,22 @@
+Login
+---
+tags:
+  - User Authentication
+parameters:
+  - name: body
+    in: body
+    type: object
+    required: true
+    description: Signing In
+responses:
+  200:
+    description: Login Succesfull
+    schema:
+      id: sign in
+      type: object
+      properties:
+        username:
+          type: string
+          default: username
+        password:
+          type: string

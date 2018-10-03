@@ -9,7 +9,7 @@ import database
 # pylint: disable=missing-docstring
 # pylint: disable=redefined-outer-name
 orders_in = order.Order()
-test_db = database.DatabaseConnection()
+test_db = database.DatabaseConnection(True)
 
 
 @pytest.fixture

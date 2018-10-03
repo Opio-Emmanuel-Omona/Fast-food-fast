@@ -1,0 +1,16 @@
+Specific Order
+---
+tags:
+  - Admin Access
+parameters:
+  - name: order_id
+    in: path
+    required: true
+    type: string
+    default: 1
+    description: Admin can fetch a specific order
+responses:
+  200:
+    description: Succesfully viewed order
+security:
+    - TokenHeader: []

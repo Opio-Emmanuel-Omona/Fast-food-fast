@@ -35,6 +35,7 @@ class DatabaseConnection():
         self.create_user_table()
         self.create_order_table()
         self.create_menu_table()
+        self.creat_status_table()
 
     def create_user_table(self):
         sql = (
@@ -77,6 +78,18 @@ class DatabaseConnection():
         self.cursor.execute(sql)
         self.connection.commit()
         print ("Order table create")
+
+    def create_status_table(self):
+        sql = (
+            '''
+            CREATE TABLE IF NOT EXISTS "status"(
+                status_name character varying(15) PRIMARY KEY
+            )
+            '''
+        )
+        self.cursor.execute(sql)
+        self.connection.commit()
+        print ("Status table create")
 
     def create_user(self, user_dict):
         ''' add user to table '''

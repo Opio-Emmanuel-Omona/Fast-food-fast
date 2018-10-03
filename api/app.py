@@ -24,7 +24,9 @@ swagger = Swagger(
         }
     })
 orders = order.Order()
-test_db = DatabaseConnection(False)
+
+if not app.config['TESTING']:
+    test_db = DatabaseConnection(False)
 
 # pylint: disable=missing-docstring
 # pylint: disable=redefined-outer-name

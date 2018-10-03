@@ -6,6 +6,11 @@ parameters:
   - name: body
     in: body
     description: Admin can view a specific order
+  - name: order_id
+        in: path
+        type: string
+        required: true
+        default: all
 responses:
   200:
     description: Succesfully viewed order

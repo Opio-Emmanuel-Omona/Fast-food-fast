@@ -35,7 +35,7 @@ class DatabaseConnection():
         self.create_user_table()
         self.create_order_table()
         self.create_menu_table()
-        self.creat_status_table()
+        self.create_status_table()
 
     def create_user_table(self):
         sql = (

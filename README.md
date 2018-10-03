@@ -5,6 +5,8 @@ Fast-Food-Fast is a food delivery service app for a restaurant. (V2) Using Persi
 
 [![Coverage Status](https://coveralls.io/repos/github/Opio-Emmanuel-Omona/Fast-food-fast/badge.svg?branch=api_v2)](https://coveralls.io/github/Opio-Emmanuel-Omona/Fast-food-fast?branch=api_v2)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
+
 
 Different Endpoints have been created for the user and admin. The table below shows the different endpoints and methods used to access them. Append the endpoint to the base URL of the application to access them. So in a chronological order.
 

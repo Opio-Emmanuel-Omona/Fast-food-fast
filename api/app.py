@@ -25,15 +25,13 @@ swagger = Swagger(
     })
 orders = order.Order()
 
-if not app.config['TESTING']:
-    test_db = DatabaseConnection(False)
-
 # pylint: disable=missing-docstring
 # pylint: disable=redefined-outer-name
 
 
 app.config['SECRET_KEY'] = 'thisisthesecretkey'
 app.config['ADMIN_KEY'] = 'thisistheadminkey'
+test_db = DatabaseConnection(True)
 
 
 def token_required(f):
@@ -128,7 +126,7 @@ def register():
 @app.route('/api/v2/auth/login', methods=['POST'])
 @swag_from('../docs/signin.yml')
 def signin():
-    return test_db.signin(request.json), 200
+    return test_db.signin(request.json)
 
 
 @app.route('/api/v2/users/orders', methods=['POST'])
@@ -140,7 +138,8 @@ def place_orders():
         return jsonify({'message': 'Token is missing!'}), 403
     if token[0] == 'B':
         data = jwt.decode(token[7:], app.config['SECRET_KEY'])
-    data = jwt.decode(token, app.config['SECRET_KEY'])
+    else:
+        data = jwt.decode(token, app.config['SECRET_KEY'])
         
     user_dict = request.json
     user_dict.update(data)
@@ -205,3 +204,4 @@ def updated_order_status(order_id):
 if __name__ == "__main__":
     app.run(debug=True)
     app.config['TESTING'] = False
+    test_db = DatabaseConnection(False)

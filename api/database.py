@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify
 import psycopg2
 import jwt
 import datetime

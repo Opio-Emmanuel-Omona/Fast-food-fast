@@ -3,14 +3,12 @@ Specific Order
 tags:
   - Admin Access
 parameters:
-  - name: body
-    in: body
-    description: Admin can view a specific order
   - name: order_id
         in: path
         type: string
         required: true
         default: all
+        description: Admin can fetch a specific order
 responses:
   200:
     description: Succesfully viewed order

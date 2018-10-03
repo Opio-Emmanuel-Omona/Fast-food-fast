@@ -69,10 +69,6 @@ class TestAPI():
     # Tests Begin
     helper = HelpAPI()
 
-    def test_dummy(self, client):
-        response = client.get('/')
-        assert b'Hello World!' in response.data
-
     def test_get_orders_api(self, client):
         response = client.get('/api/v1/orders')
         assert response.status_code == 200

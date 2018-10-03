@@ -1,5 +1,5 @@
 '''The main application'''
-from flask import Flask, jsonify, request, Response, json, redirect
+from flask import Flask, jsonify, request, redirect
 from functools import wraps
 from flasgger import Swagger, swag_from
 import jwt
@@ -17,7 +17,7 @@ swagger = Swagger(
         },
         "securityDefinitions": {
             "TokenHeader": {
-                "type": "token",
+                "type": "apiKey",
                 "name": "Authorization",
                 "in": "header"
             }
@@ -44,14 +44,14 @@ def token_required(f):
 
         token = request.headers.get('Authorization')
         if not token:
-            return jsonify({'message': 'Token is missing!'}), 403
+            return jsonify({'message': 'Missing token!'}), 403
         try:
             if token[0] == 'B':
                 jwt.decode(token[7:], app.config['SECRET_KEY'])
             else:
                 jwt.decode(token, app.config['SECRET_KEY'])
         except:
-            return jsonify({'message': 'Token is invalid!'}), 403
+            return jsonify({'message': 'Invalid Token!'}), 403
         return f(*args, **kwargs)
     return decorated
 
@@ -143,7 +143,7 @@ def place_orders():
     data = jwt.decode(token, app.config['SECRET_KEY'])
         
     user_dict = request.json
-    user_dict['data'] = data
+    user_dict.update(data)
     test_db.add_order(user_dict)
     return jsonify({'message': 'Order has been placed'}), 201
 
@@ -152,7 +152,15 @@ def place_orders():
 @swag_from('../docs/order_history.yml')
 @token_required
 def order_history():
-    return test_db.order_history(), 200
+    token = request.headers.get('Authorization')
+    if not token:
+        return jsonify({'message': 'Token is missing!'}), 403
+    if token[0] == 'B':
+        data = jwt.decode(token[7:], app.config['SECRET_KEY'])
+    data = jwt.decode(token, app.config['SECRET_KEY'])
+    history = test_db.order_history(data)
+
+    return jsonify({'username': data['username'], 'history': history}), 200
 
 
 @app.route('/api/v2/menu', methods=['POST'])

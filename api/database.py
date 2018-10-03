@@ -92,13 +92,17 @@ class DatabaseConnection():
         print ("Status table create")
 
     def create_user(self, user_dict):
-        ''' add user to table '''
+        '''
+        add user to table
+        '''
         sql = "INSERT INTO \"user\"(username, email, phone_no, password) VALUES('"+user_dict['username']+"','"+user_dict['email']+"','"+user_dict['phone_no']+"','"+user_dict['password']+"');"
         self.cursor.execute(sql)
         self.connection.commit()
 
     def signin(self, user_dict):
-        '''user logs in'''
+        '''
+        user logs in
+        '''
         sql = "SELECT username, password FROM \"user\";"
         self.cursor.execute(sql)
         rows = self.cursor.fetchall()
@@ -132,20 +136,18 @@ class DatabaseConnection():
         self.cursor.execute(sql)
         self.connection.commit()
 
-    def order_history(self):
+    def order_history(self, user_dict):
         sql = "SELECT username, item_name FROM \"order\";"
         self.cursor.execute(sql)
         rows = self.cursor.fetchall()
         # decdode the username from the token
         history = []
-        token = request.headers.get('Authorization')
-        data = jwt.decode(token[7:], 'thisisthescretkey')
         for row in rows:
-            if row[0] == data['username']:  # username
+            if row[0] == user_dict['username']:  # username
                 history.append({'item_name': row[1]})
         
         self.connection.commit()
-        return jsonify({'username': data['username'], 'history': history})
+        return history
 
     def add_menu(self, menu_dict):
         sql = "INSERT INTO \"menu\" (item_name, price) VALUES('"+menu_dict['item_name']+"', '"+menu_dict['price']+"');"
@@ -158,7 +160,8 @@ class DatabaseConnection():
         rows = self.cursor.fetchall()
         menu = []
         for row in rows:
-            menu.append(row[1])
+            item = {'item_name': row[0], 'price': row[1]}
+            menu.append(item)
         self.connection.commit()
         return jsonify({'menu': menu})
 

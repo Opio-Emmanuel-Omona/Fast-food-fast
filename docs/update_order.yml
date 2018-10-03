@@ -1,0 +1,43 @@
+Update Order
+---
+tags:
+  - Admin Access
+parameters:
+  - name: order_id
+    in: path
+    required: true
+    type: string
+    default: 1
+    description: Update the for this id
+  - name: status
+    in: body
+    required: true
+    type: string
+    default: New
+    description: Update with a status
+responses:
+  204:
+    description: Order status succesfully updated
+    schema:
+      id: update order
+      type: object
+      properties:
+        status_name:
+          type: string
+          default: status    
+  400:
+    description: No order matching the given id
+    schema:
+      properties:
+        item_name:
+          type: string
+          default: item
+  422:
+    description: Empty status provided
+    schema:
+      properties:
+        item_name:
+          type: string
+security:
+    - TokenHeader: []
+        

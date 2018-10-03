@@ -21,16 +21,16 @@ class DatabaseConnection():
             self.cursor = self.connection.cursor()
             print "Connected to test_fast_food_fast"
             self.drop_tables()
-        else:
-            self.connection = psycopg2.connect(
-                database="fast_food_fast_db",
-                user="postgres",
-                password="P@ss1234",
-                host="127.0.0.1",
-                port="5432"
-            )
-            self.cursor = self.connection.cursor()
-            print "connected to fast_food_fast"
+        # else:
+        #     self.connection = psycopg2.connect(
+        #         database="fast_food_fast_db",
+        #         user="postgres",
+        #         password="P@ss1234",
+        #         host="127.0.0.1",
+        #         port="5432"
+        #     )
+        #     self.cursor = self.connection.cursor()
+        #     print "connected to fast_food_fast"
 
         self.create_user_table()
         self.create_order_table()

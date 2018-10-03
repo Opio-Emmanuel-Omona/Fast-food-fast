@@ -5,7 +5,6 @@ tags:
 parameters:
   - name: body
     in: body
-    type: object
     required: true
     description: Registering a new user
 responses:

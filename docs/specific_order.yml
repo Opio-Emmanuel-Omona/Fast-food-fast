@@ -4,11 +4,10 @@ tags:
   - Admin Access
 parameters:
   - name: order_id
-        in: path
-        type: string
-        required: true
-        default: all
-        description: Admin can fetch a specific order
+    in: path
+    required: true
+    default: all
+    description: Admin can fetch a specific order
 responses:
   200:
     description: Succesfully viewed order

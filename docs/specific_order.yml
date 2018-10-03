@@ -6,6 +6,7 @@ parameters:
   - name: order_id
     in: path
     required: true
+    type: string
     default: all
     description: Admin can fetch a specific order
 responses:

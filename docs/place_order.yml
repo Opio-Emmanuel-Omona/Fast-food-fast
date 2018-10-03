@@ -6,6 +6,7 @@ parameters:
   - name: body
     in: body
     required: true
+    type: string
     description: Add a new order
 responses:
   201:

@@ -1,35 +1,33 @@
-Place Order
+Update Order
 ---
 tags:
-  - User Access
+  - Admin Access
 parameters:
   - name: body
     in: body
     type: object
     required: true
-    description: Add a new order
+    description: Update the status of an order
 responses:
-  201:
-    description: Order succesfully placed
+  204:
+    description: Order status succesfully updated
     schema:
-      id: place order
+      id: update order
       type: object
       properties:
-        item_name:
+        status_name:
           type: string
-          default: item    
+          default: status    
   400:
-    description: Order not in the menu
+    description: No order matching the given id
     schema:
-      id: invalid name
       properties:
         item_name:
           type: string
           default: item
   422:
-    description: Empty order
+    description: Empty status provided
     schema:
-      id: Empty order
       properties:
         item_name:
           type: string

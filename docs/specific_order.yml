@@ -1,0 +1,13 @@
+Specific Order
+---
+tags:
+  - Admin Access
+parameters:
+  - name: body
+    in: body
+    description: Admin can view a specific order
+responses:
+  200:
+    description: Succesfully viewed order
+security:
+    - TokenHeader: []

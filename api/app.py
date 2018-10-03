@@ -154,10 +154,11 @@ def order_history():
 
 
 @app.route('/api/v2/menu', methods=['POST'])
+@swag_from('../docs/add_menu.yml')
 @admin_required
 def add_menu():
     test_db.add_menu(request.json)
-    return "Menu item successfully added"
+    return jsonify({'message': 'Menu item successfully added'}), 201
 
 
 @app.route('/api/v2/menu', methods=['GET'])
@@ -175,12 +176,14 @@ def fetch_all_orders():
 
 
 @app.route('/api/v2/orders/<string:order_id>', methods=['GET'])
+@swag_from('../docs/specific_order.yml')
 @admin_required
 def fetch_specific_order(order_id):
     return test_db.fetch_specific_order(order_id)
 
 
 @app.route('/api/v2/orders/<string:order_id>', methods=['PUT'])
+@swag_from('../docs/update_order.yml')
 @admin_required
 def updated_order_status(order_id):
     user_dict = request.json

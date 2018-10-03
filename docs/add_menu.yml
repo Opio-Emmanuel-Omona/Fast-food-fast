@@ -1,0 +1,34 @@
+Add Menu Item
+---
+tags:
+  - Admin Access
+parameters:
+  - name: body
+    in: body
+    type: object
+    required: true
+    description: Add a new menu item
+responses:
+  201:
+    description: Menu item created
+    schema:
+      id: add menu item
+      type: object
+      properties:
+        item_name:
+          type: string
+          default: item
+        price:
+          type: string  
+  422:
+    description: Empty menu item
+    schema:
+      properties:
+        item_name:
+          type: string
+          default: item
+        price:
+          type: string
+security:
+    - TokenHeader: []
+        

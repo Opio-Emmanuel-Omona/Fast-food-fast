@@ -1,4 +1,3 @@
-'''ORDER MODULE'''
 class Order():
     '''Handles all orders'''
     ORDERS = []
@@ -23,9 +22,10 @@ class Order():
                 "quantity": quantity
             }
             self.ORDERS.append(order_dict)
-            self.order_id += 1
         else:
             order[0]['quantity'] += quantity
+
+        self.order_id += 1
 
     def update_order(self, order_id, username, item_name, quantity):
         '''change the username item_name and quantity but not the id'''

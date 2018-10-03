@@ -2,6 +2,7 @@
 from flask import Flask, jsonify, request, redirect
 from functools import wraps
 from flasgger import Swagger, swag_from
+import re
 import jwt
 import order
 from database import DatabaseConnection
@@ -118,9 +119,19 @@ def delete_order(order_id):
 @swag_from('../docs/signup.yml')
 def register():
     # connect add the data to the database
-    test_db.create_user(request.json)
-    message = request.json['username'] + " account created successfully"
-    return jsonify({'message': message}), 201
+    data = request.json
+    if not data:
+        return jsonify({'message': 'No data sent'}), 400
+    if not data['username'] or not data['phone_no'] or not data['password'] or not data['email']:
+        return jsonify({'message': 'Missing Fields'}), 400
+    if (' ' in data['username'] or ' ' in data['email']):
+        return jsonify({'message': 'Username or email cannot have spaces'}), 400
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", data['email']):
+        return jsonify({'message': 'Invalid Email'}), 400
+    status = test_db.create_user(data)
+    if status['status']:
+        return jsonify(status), 201
+    return jsonify(status), 400
 
 
 @app.route('/api/v2/auth/login', methods=['POST'])
@@ -204,4 +215,3 @@ def updated_order_status(order_id):
 if __name__ == "__main__":
     app.run(debug=True)
     app.config['TESTING'] = False
-    test_db = DatabaseConnection(False)

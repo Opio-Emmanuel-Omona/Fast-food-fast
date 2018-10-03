@@ -95,9 +95,32 @@ class DatabaseConnection():
         '''
         add user to table
         '''
-        sql = "INSERT INTO \"user\"(username, email, phone_no, password) VALUES('"+user_dict['username']+"','"+user_dict['email']+"','"+user_dict['phone_no']+"','"+user_dict['password']+"');"
+        sql = (
+            '''
+            SELECT username, email from "user";
+            '''
+        )
         self.cursor.execute(sql)
+        rows = self.cursor.fetchall()
+        for row in rows:
+            if row[0] == user_dict['username']:
+                return {'message': 'username already taken',
+                        'status': False}
+            if row[1] == user_dict['email']:
+                return {'message': 'email already taken', 'status':False}
+        sql = (
+            '''
+            INSERT INTO "user"(username, email, phone_no, password)
+            VALUES(%s, %s, %s, %s)
+            '''
+        )
+        self.cursor.execute(sql, [
+                                    user_dict['username'],
+                                    user_dict['email'],
+                                    user_dict['phone_no'],
+                                    user_dict['password']])
         self.connection.commit()
+        return {'message': user_dict['username'] + ' created succesfully', 'status': True}
 
     def signin(self, user_dict):
         '''

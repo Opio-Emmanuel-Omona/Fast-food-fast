@@ -131,7 +131,7 @@ def register():
     status = test_db.create_user(data)
     if status['status']:
         return jsonify(status), 201
-    return jsonify(status), 400
+    return jsonify(status), 409
 
 
 @app.route('/api/v2/auth/login', methods=['POST'])

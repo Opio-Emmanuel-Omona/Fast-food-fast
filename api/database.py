@@ -19,7 +19,7 @@ class DatabaseConnection():
                 port="5432"
             )
             self.cursor = self.connection.cursor()
-            print "Connected to test_fast_food_fast"
+            print ("Connected to test_fast_food_fast")
             self.drop_tables()
         # else:
         #     self.connection = psycopg2.connect(

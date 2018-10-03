@@ -38,9 +38,6 @@ test_db = DatabaseConnection(True)
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        # http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
-        # token = request.args.get('token')
-
         token = request.headers.get('Authorization')
         if not token:
             return jsonify({'message': 'Missing token!'}), 403
@@ -58,8 +55,6 @@ def token_required(f):
 def admin_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        # http:127.0.0.1/5000/route?token=eyvjabd1e1bkjbcodklcnskdvbsn
-        # token = request.args.get('token')
         token = request.headers.get('Authorization')
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403

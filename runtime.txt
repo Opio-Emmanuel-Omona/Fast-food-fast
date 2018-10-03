@@ -1,2 +1,2 @@
 python -V
-Python 2.7.14
+Python 2.7

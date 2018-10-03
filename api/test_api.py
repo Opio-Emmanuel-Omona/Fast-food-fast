@@ -82,7 +82,7 @@ class TestAPI():
                 'item_name': 'chips',
                 'quantity': 1
             })
-        assert response.status_code == 200
+        assert response.status_code == 201
         orders_in.clear_orders()
 
     def test_one_order_api(self, client):
@@ -95,7 +95,7 @@ class TestAPI():
                 'quantity': 1
             })
         response2 = client.get('/api/v1/orders/1')
-        assert response1.status_code == 200
+        assert response1.status_code == 201
         assert response2.status_code == 200
         orders_in.clear_orders()
 
@@ -116,7 +116,7 @@ class TestAPI():
                 'item_name': 'pizza',
                 'quantity': 1
             })
-        assert response1.status_code == 200
+        assert response1.status_code == 201
         assert response2.status_code == 200
         orders_in.clear_orders()
 
@@ -132,7 +132,7 @@ class TestAPI():
         response2 = self.helper.delete_json(
             client,
             '/api/v1/orders/1')
-        assert response1.status_code == 200
+        assert response1.status_code == 201
         assert response2.status_code == 200
         orders_in.clear_orders()
 
@@ -166,7 +166,7 @@ class TestDB():
                 'phone_no': '+256758363563',
                 'password': 'password'
             })
-        assert response.status_code == 200
+        assert response.status_code == 201
 
     def test_login_new_user(self, client):
         response = self.helper.post_json(
@@ -222,7 +222,7 @@ class TestDB():
         )
         
         assert response1.status_code == 200
-        assert response2.status_code == 200
+        assert response2.status_code == 201
 
     def test_place_order(self, client):
         # Ensure that you are logged in as user

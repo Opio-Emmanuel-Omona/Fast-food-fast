@@ -158,7 +158,7 @@ class DatabaseConnection():
                 'lkjhgfdsapoiuytrewq')
             self.connection.commit()
             print(token)
-            return {'user': user_dict['username'],
+            return {'username': user_dict['username'],
                     'token': token,
                     'status': True}
 

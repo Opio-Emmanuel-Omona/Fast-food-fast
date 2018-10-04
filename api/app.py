@@ -140,6 +140,7 @@ def signin():
     if (' ' in data['username']):
         return jsonify({'message': 'Username cannot have spaces'}), 422
     status = DatabaseConnection().signin(data)
+    print(status)
     if status['status']:
         return jsonify(status)
     return jsonify(status), 401

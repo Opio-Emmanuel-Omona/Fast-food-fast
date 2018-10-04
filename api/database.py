@@ -53,8 +53,7 @@ class DatabaseConnection():
         )
         self.cursor.execute(sql)
         self.connection.commit()
-        self.after_commit()
-        print ("User table create")
+        print ("User table created")
 
     def create_menu_table(self):
         sql = (
@@ -67,7 +66,6 @@ class DatabaseConnection():
         )
         self.cursor.execute(sql)
         self.connection.commit()
-        self.after_commit()
         print ("Menu table create")
 
     def create_order_table(self):
@@ -84,7 +82,6 @@ class DatabaseConnection():
         )
         self.cursor.execute(sql)
         self.connection.commit()
-        self.after_commit()
         print ("Order table create")
 
     def create_status_table(self):
@@ -97,7 +94,6 @@ class DatabaseConnection():
         )
         self.cursor.execute(sql)
         self.connection.commit()
-        self.after_commit()
         print ("Status table create")
 
     def create_user(self, user_dict):
@@ -130,7 +126,6 @@ class DatabaseConnection():
                                     user_dict['phone_no'],
                                     user_dict['password']])
         self.connection.commit()
-        self.after_commit()
         return {'message': user_dict['username'] + ' created succesfully',
                 'status': True}
 
@@ -141,7 +136,6 @@ class DatabaseConnection():
         sql = "SELECT username, password FROM \"user\";"
         self.cursor.execute(sql)
         self.connection.commit()
-        self.after_commit()
         rows = self.cursor.fetchall()
         print("Before row")
         for row in rows:
@@ -183,7 +177,6 @@ class DatabaseConnection():
         self.cursor.execute(sql, [user_dict['item_name']])
         rows = self.cursor.fetchall()
         self.connection.commit()
-        self.after_commit()
         if rows:
             sql = (
                 '''
@@ -193,7 +186,6 @@ class DatabaseConnection():
             self.cursor.execute(sql, [user_dict['username'], user_dict['item_name']])
             rows = self.cursor.fetchall()
             self.connection.commit()
-            self.after_commit()
             if not rows:
                 sql = (
                     '''
@@ -207,7 +199,6 @@ class DatabaseConnection():
                                             user_dict['quantity']
                                         ])
                 self.connection.commit()
-                self.after_commit()
                 return {'message': 'Order has been placed', 'status': True}
             return {'message': 'Order already exists', 'status': False}
         return {'message': 'Order item not in menu', 'status': False}
@@ -223,7 +214,6 @@ class DatabaseConnection():
                 history.append({'item_name': row[1]})
         
         self.connection.commit()
-        self.after_commit()
         return history
 
     def add_menu(self, menu_dict):
@@ -236,7 +226,6 @@ class DatabaseConnection():
         self.cursor.execute(sql, [menu_dict['item_name']])
         rows = self.cursor.fetchall()
         self.connection.commit()
-        self.after_commit()
         if rows:
             return {'message': 'Item already in menu',
                     'status': False}
@@ -248,7 +237,6 @@ class DatabaseConnection():
         )
         self.cursor.execute(sql, [menu_dict['item_name'], menu_dict['price']])
         self.connection.commit()
-        self.after_commit()
         return {'message': 'item succesfully added to menu', 'status': True}
 
     def menu(self):
@@ -260,7 +248,6 @@ class DatabaseConnection():
             item = {'item_name': row[0], 'price': row[1]}
             menu.append(item)
         self.connection.commit()
-        self.after_commit()
         return jsonify({'menu': menu})
 
     def fetch_all_orders(self):
@@ -278,7 +265,6 @@ class DatabaseConnection():
                     'status': row[4]
                 })
         self.connection.commit()
-        self.after_commit()
         return jsonify({'orders': orders})
 
     def fetch_specific_order(self, order_id):
@@ -296,7 +282,6 @@ class DatabaseConnection():
                     'status': row[4]
                 })
         self.connection.commit()
-        self.after_commit()
         return jsonify({'order': order})
 
     def update_order_status(self, user_dict):
@@ -308,7 +293,6 @@ class DatabaseConnection():
             )
             self.cursor.execute(sql, [user_dict['status_name'], user_dict['username'], user_dict['item_name']])
             self.connection.commit()
-            self.after_commit()
         else:
             sql = (
                 '''
@@ -318,7 +302,6 @@ class DatabaseConnection():
             self.cursor.execute(sql, [user_dict['order_id']])
             rows = self.cursor.fetchall()
             self.connection.commit()
-            self.after_commit()
             if rows:
                 # check for the status
                 sql = (
@@ -329,7 +312,6 @@ class DatabaseConnection():
                 self.cursor.execute(sql, [user_dict['status_name']])
                 rows = self.cursor.fetchall()
                 self.connection.commit()
-                self.after_commit()
                 if rows:
                     sql = (
                         '''
@@ -338,17 +320,11 @@ class DatabaseConnection():
                     )
                     self.cursor.execute(sql)
                     self.connection.commit() 
-                    self.after_commit()
                 else:       
                     return {'message': 'wrong status provided', 'status': False}
             else:
                 return {'message': 'Order doesn\'t exist', 'status': False}
-        return {'message': 'Order status succefully updated', 'status': True}
-
-    def after_commit(self):
-        self.connection.close()
-        self.conn()
-        
+        return {'message': 'Order status succefully updated', 'status': True}   
 
     def drop_tables(self):
         # First delete all the tests data
@@ -358,14 +334,10 @@ class DatabaseConnection():
         sql4 = ('''DROP TABLE IF EXISTS "status";''')
         self.cursor.execute(sql1)
         self.connection.commit()
-        self.after_commit()
         self.cursor.execute(sql2)
         self.connection.commit()
-        self.after_commit()
         self.cursor.execute(sql3)
         self.connection.commit()
-        self.after_commit()
         self.cursor.execute(sql4)
         self.connection.commit()
-        self.after_commit()
         print("All tables dropped")

@@ -1,3 +1,5 @@
+from tests.help import json
+
 class Order_old:
     '''Handles all orders'''
     ORDERS = []
@@ -45,35 +47,11 @@ class Order_old:
         '''returns a specific order'''
         order = [
             ordering for ordering in self.ORDERS if ordering['order_id'] == order_id]
-        return order
+        return order, 200
 
     def clear_orders(self):
         '''resets the orders to empty'''
         self.ORDERS = []
 
-
-
-    def delete_order(order_id):
-            orders.delete_order(order_id)
-            return jsonify({'orders': orders.ORDERS}), 200
-
-    def update_order(order_id):
-        orders.update_order(
-            order_id,
-            request.json['username'],
-            request.json['item_name'],
-            request.json['quantity'])
-        return jsonify({'orders': orders.ORDERS}), 200
-
-    def place_order():
-        orders.place_new_order(
-            request.json['username'],
-            request.json['item_name'],
-            request.json['quantity'])
-        return jsonify({'orders': orders.ORDERS}), 201
-
-    def one_order(order_id):
-        return jsonify({'orders': orders.get_order(order_id)}), 200
-
-    def all_orders():
-        return jsonify({'orders': orders.ORDERS}), 200
+    def get_all_orders(self):
+        return self.ORDERS

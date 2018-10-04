@@ -1,4 +1,8 @@
+from flask import json
+
 class HelpAPI():
+    def __init__(self):
+        pass
     # Helper methods for json tests
     def post_json(self, client, url, json_dict):
         return client.post(

@@ -1,3 +1,5 @@
+from help import HelpAPI
+
 class TestDB():
     helper = HelpAPI()
 

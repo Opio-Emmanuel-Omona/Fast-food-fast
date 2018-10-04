@@ -3,13 +3,13 @@ import json
 import pytest
 from app import app
 import order
-import database
+# import database
 
 
 # pylint: disable=missing-docstring
 # pylint: disable=redefined-outer-name
 orders_in = order.Order()
-test_db = database.DatabaseConnection()
+# test_db = database.DatabaseConnection()
 
 
 @pytest.fixture

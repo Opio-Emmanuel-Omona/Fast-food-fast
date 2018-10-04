@@ -17,17 +17,19 @@ class DatabaseConnection():
             host="ec2-54-235-90-0.compute-1.amazonaws.com",
             port="5432"
         )
-
-        # self.connection = psycopg2.connect(
-        #     database="test_fast_food_fast_db",
-        #     user="postgres",
-        #     password="P@ss1234",
-        #     host="127.0.0.1",
-        #     port="5432"
-        # )
-
         self.cursor = self.connection.cursor()
         print ("Connected to test_fast_food_fast")
+
+    # def conn(self):
+    #     self.connection = psycopg2.connect(
+    #         database="test_fast_food_fast_db",
+    #         user="postgres",
+    #         password="P@ss1234",
+    #         host="127.0.0.1",
+    #         port="5432"
+    #     )
+    #     self.cursor = self.connection.cursor()
+    #     print ("Connected to test_fast_food_fast")
     
     def setup(self):
         self.drop_tables()

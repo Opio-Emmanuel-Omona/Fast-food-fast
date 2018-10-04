@@ -283,13 +283,42 @@ class DatabaseConnection():
 
     def update_order_status(self, user_dict):
         if user_dict['order_id'] == '0':
-            sql = "UPDATE \"order\" SET status = '"+user_dict['status_name']+"' WHERE username = '"+user_dict['username']+"' AND item_name = '"+user_dict['item_name']+"';"
-            self.cursor.execute(sql)
+            sql = (
+                '''
+                UPDATE "order" SET status = %s WHERE username = %s AND item_name = %s;
+                '''
+            )
+            self.cursor.execute(sql, [user_dict['status_name'], user_dict['username'], user_dict['item_name']])
             self.connection.commit()
         else:
-            sql = "UPDATE \"order\" SET status = '"+user_dict['status_name']+"' WHERE order_id = '"+user_dict['order_id']+"';"
-            self.cursor.execute(sql)
+            sql = (
+                '''
+                SELECT * FROM "order" WHERE order_id = %s;
+                '''
+            )
+            self.cursor.execute(sql, [user_dict['order_id']])
+            rows = self.cursor.fetchall()
             self.connection.commit()
+            if rows:
+                # check for the status
+                sql = (
+                    '''
+                    SELECT * FROM "status" WHERE status_name = %s;
+                    '''
+                )
+                self.cursor.execute(sql, [user_dict['status_name']])
+                rows = self.cursor.fetchall()
+                self.connection.commit()
+                if rows:
+                    sql = (
+                        '''
+                        UPDATE "order" SET status = %s WHERE order_id = %s;
+                        '''
+                    )
+                    self.cursor.execute(sql)
+                    self.connection.commit()
+                return {'message': 'wrong status provided', 'status': False}
+            return {'message': 'Order doesn\'t exist', 'status': False}
 
     def drop_tables(self):
         # First delete all the tests data

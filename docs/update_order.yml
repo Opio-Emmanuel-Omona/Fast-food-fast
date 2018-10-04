@@ -32,8 +32,15 @@ responses:
         item_name:
           type: string
           default: item
+  409:
+    description: Wrong status provided 
+    schema:
+      properties:
+        item_name:
+          type: string
+          default: item
   422:
-    description: Empty status provided
+    description: Unprocessable data
     schema:
       properties:
         item_name:

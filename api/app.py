@@ -135,7 +135,7 @@ def signin():
     data = request.json
     if not data:
         return jsonify({'message': 'No data sent'}), 422
-    if not data['username'] or not data['phone_no'] or not data['password'] or not data['email']:
+    if not data['username'] or not data['password']:
         return jsonify({'message': 'Missing Fields'}), 422
     if (' ' in data['username'] or ' ' in data['email']):
         return jsonify({'message': 'Username cannot have spaces'}), 422
@@ -198,7 +198,7 @@ def add_menu():
     status = test_db.add_menu(data)
     if status['status']:
         return jsonify(status), 201
-    return jsoify(status), 409
+    return jsonify(status), 409
 
 
 @app.route('/api/v2/menu', methods=['GET'])
@@ -227,9 +227,18 @@ def fetch_specific_order(order_id):
 @admin_required
 def updated_order_status(order_id):
     user_dict = request.json
+    if not user_dict:
+        return jsonify({'message': 'No data sent'}), 422
+    if not user_dict['status_name']:
+        return jsonify({'message': 'Missing Fields'}), 422
     user_dict['order_id'] = order_id
-    test_db.update_order_status(user_dict)
-    return jsonify({'message': 'Order status successfully altered'}), 200
+    status = test_db.update_order_status(user_dict)
+    if status['status']:
+        return jsonify(status), 200
+    elif ('wrong status' in status['message']):
+        return jsonify(status), 409
+    else:
+        return jsonify(status), 400
 
 
 if __name__ == "__main__":

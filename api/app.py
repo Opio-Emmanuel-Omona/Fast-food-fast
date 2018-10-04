@@ -39,6 +39,7 @@ if __name__ != "__main__":
 else:
     DatabaseConnection().setuptables()
 
+
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):

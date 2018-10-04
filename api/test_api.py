@@ -266,42 +266,38 @@ class TestDB():
         assert response3.status_code == 200
         assert response4.status_code == 201
 
-    # def test_order_history(self, client):
-    #     response1 = self.helper.post_json(
-    #         client,
-    #         '/api/v2/auth/login',
-    #         {
-    #             'username': 'phiona',
-    #             'password': 'password'
-    #         })
+    def test_order_history(self, client):
+        response1 = self.helper.post_json(
+            client,
+            '/api/v2/auth/login',
+            {
+                'username': 'phiona',
+                'password': 'password'
+            })
 
-    #     response2 = client.get(
-    #         '/api/v2/users/orders',
-    #         headers=dict(
-    #             Authorization='Bearer ' + response1.json['token']
-    #         )
-    #     )
-    #     assert response1.status_code == 200
-    #     assert response2.status_code == 200
+        response2 = client.get(
+            '/api/v2/users/orders',
+            headers={'Authorization': response1.json['token']}
+        )
+        assert response1.status_code == 200
+        assert response2.status_code == 200
 
-    # def test_fetch_specific_order(self):
-    #     # login as admin
-    #     response1 = self.helper.post_json(
-    #         client,
-    #         '/api/v2/auth/login',
-    #         {
-    #             'username': 'phiona',
-    #             'password': 'password'
-    #         })
+    def test_fetch_specific_order(self):
+        # login as admin
+        response1 = self.helper.post_json(
+            client,
+            '/api/v2/auth/login',
+            {
+                'username': 'phiona',
+                'password': 'password'
+            })
 
-    #     response2 = client.get(
-    #         '/api/v2/orders/0',
-    #         headers=dict(
-    #             Authorization='Bearer ' + response1.json['token']
-    #         )
-    #     )
-    #     assert response1.status_code == 200
-    #     assert response2.status_code == 200
+        response2 = client.get(
+            '/api/v2/orders/0',
+            headers={'Authorization': response1.json['token']}
+        )
+        assert response1.status_code == 200
+        assert response2.status_code == 200
 
     # def test_fetch_all_orders(self):
     #     pass

@@ -5,7 +5,11 @@ import datetime
 
 
 class DatabaseConnection():
-    def __init__(self):
+    def __init__(self, app=None):
+        if app is not None:
+            self.con()
+
+    def con(self):
         self.connection = psycopg2.connect(
             database="d1gsphqjdqboj",
             user="mdmwbruvsybhid",

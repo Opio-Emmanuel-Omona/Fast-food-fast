@@ -1,4 +1,6 @@
 from help import HelpAPI
+from api.views import app
+import pytest
 
 class TestDB():
     helper = HelpAPI()

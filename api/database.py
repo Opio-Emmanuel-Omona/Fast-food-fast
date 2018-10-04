@@ -7,10 +7,10 @@ import datetime
 class DatabaseConnection():
     def __init__(self):
         self.connection = psycopg2.connect(
-            database="dbl266vd3qqlbf",
-            user="chfghjgahbfyas",
-            password="3ba4acea9b6f740a4921e942dbac80b4b67a48cc129d849348724c29aed218c0",
-            host="ec2-107-21-126-193.compute-1.amazonaws.com",
+            database="d1gsphqjdqboj",
+            user="mdmwbruvsybhid",
+            password="f0c9227626d43bb84fe23d5c27268389da396a5a667cb86a14a735f983fce9d9",
+            host="ec2-54-235-90-0.compute-1.amazonaws.com",
             port="5432"
         )
 

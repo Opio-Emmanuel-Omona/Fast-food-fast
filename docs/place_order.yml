@@ -21,8 +21,8 @@ responses:
         quantity:
           type: string
           default: "1"  
-  404:
-    description: Order not in the menu
+  409:
+    description: Order conflict
     schema:
       properties:
         item_name:

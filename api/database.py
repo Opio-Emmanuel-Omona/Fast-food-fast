@@ -173,20 +173,31 @@ class DatabaseConnection():
         )
         self.cursor.execute(sql, [user_dict['item_name']])
         rows = self.cursor.fetchall()
+        self.connection.commit()
         if rows:
             sql = (
                 '''
-                INSERT INTO "order"(username, item_name, quantity, status)
-                VALUES(%s, %s, %s, 'New');
+                SELECT * FROM "order" WHERE username = %s AND item_name = %s;
                 '''
             )
-            self.cursor.execute(sql, [
-                                        user_dict['username'],
-                                        user_dict['item_name'],
-                                        user_dict['quantity']
-                                    ])
+            self.cursor.execute(sql, [user_dict['username'], user_dict['item_name']])
+            rows = self.cursor.fetchall()
             self.connection.commit()
-            return {'message': 'Order has been placed', 'status': True}
+            if not rows:
+                sql = (
+                    '''
+                    INSERT INTO "order"(username, item_name, quantity, status)
+                    VALUES(%s, %s, %s, 'New');
+                    '''
+                )
+                self.cursor.execute(sql, [
+                                            user_dict['username'],
+                                            user_dict['item_name'],
+                                            user_dict['quantity']
+                                        ])
+                self.connection.commit()
+                return {'message': 'Order has been placed', 'status': True}
+            return {'message': 'Order already exists', 'status': Flase}
         return {'message': 'Order item not in menu', 'status': False}
 
     def order_history(self, user_dict):
@@ -203,9 +214,27 @@ class DatabaseConnection():
         return history
 
     def add_menu(self, menu_dict):
-        sql = "INSERT INTO \"menu\" (item_name, price) VALUES('"+menu_dict['item_name']+"', '"+menu_dict['price']+"');"
-        self.cursor.execute(sql)
+        # First check if the item is already in the menu
+        sql = (
+            '''
+            SELECT * FROM "menu" WHERE item_name = %s;
+            '''
+        )
+        self.cursor.execute(sql, [menu_dict['item_name']])
+        rows = self.cursor.fetchall()
         self.connection.commit()
+        if rows:
+            return {'message': 'Item already in menu',
+                    'status': False}
+        sql = (
+            '''
+            INSERT INTO "menu"(item_name, price)
+            VALUES(%s, %s);
+            '''
+        )
+        self.cursor.execute(sql, [menu_dict['item_name'], menu_dict['price']])
+        self.connection.commit()
+        return {'message': 'item succesfully added to menu', 'status': True}
 
     def menu(self):
         sql = "SELECT * FROM \"menu\";"

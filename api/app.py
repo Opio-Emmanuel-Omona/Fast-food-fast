@@ -156,7 +156,7 @@ def place_orders():
     if token[0] == 'B':
         payload = jwt.decode(token[7:], app.config['SECRET_KEY'])
     else:
-        payload = jwt.decode(token, app.config['SECRET_KEY']
+        payload = jwt.decode(token, app.config['SECRET_KEY'])
     
     # validate the input
     data = request.json
@@ -166,9 +166,9 @@ def place_orders():
         return jsonify({'message': 'Missing Fields'}), 422
     data.update(payload)
     status = test_db.add_order(data)
-    if status:
+    if status['status']:
         return jsonify(status), 201
-    return jsonify(status), 404
+    return jsonify(status), 409
 
 
 @app.route('/api/v2/users/orders', methods=['GET'])
@@ -190,8 +190,15 @@ def order_history():
 @swag_from('../docs/add_menu.yml')
 @admin_required
 def add_menu():
-    test_db.add_menu(request.json)
-    return jsonify({'message': 'Menu item successfully added'}), 201
+    data = request.json
+    if not data:
+        return jsonify({'message': 'Empty Menu'}), 422
+    if not data['item_name'] or not data['price']:
+        return jsonify({'message': 'Missing Fields'}), 422
+    status = test_db.add_menu(data)
+    if status['status']:
+        return jsonify(status), 201
+    return jsoify(status), 409
 
 
 @app.route('/api/v2/menu', methods=['GET'])

@@ -29,6 +29,15 @@ responses:
           default: item
         price:
           type: string
+  409:
+    description: Conflict in menu
+    schema:
+      properties:
+        item_name:
+          type: string
+          default: item
+        price:
+          type: string
 security:
     - TokenHeader: []
         

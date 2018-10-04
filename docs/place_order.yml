@@ -20,7 +20,9 @@ responses:
           default: item  
         quantity:
           type: string
-          default: "1"  
+          default: "1"
+  403:
+    description: Forbidden
   409:
     description: Order conflict
     schema:

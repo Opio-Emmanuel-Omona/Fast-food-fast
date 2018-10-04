@@ -1,4 +1,4 @@
-from api.views import jsonify, request
+from api.views import request
 from api.database import DatabaseConnection
 
 
@@ -10,13 +10,13 @@ class Menu:
     def add_menu(self):
         data = request.json
         if not data:
-            return jsonify({'message': 'Empty Menu'}), 422
+            return {'message': 'Empty Menu'}, 422
         if not data['item_name'] or not data['price']:
-            return jsonify({'message': 'Missing Fields'}), 422
+            return {'message': 'Missing Fields'}, 422
         status = self.mydatabase.add_menu(data)
         if status['status']:
-            return jsonify(status), 201
-        return jsonify(status), 409
+            return status, 201
+        return status, 409
 
     def get_menu(self):
         return self.mydatabase.menu(), 200

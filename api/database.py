@@ -1,4 +1,3 @@
-from flask import jsonify
 import psycopg2
 import jwt
 import datetime
@@ -36,13 +35,6 @@ class DatabaseConnection():
         )
         self.cursor = self.connection.cursor()
         print ("Connected to test_fast_food_fast")
-    
-    def setup(self):
-        self.drop_tables()
-        self.create_user_table()
-        self.create_status_table()
-        self.create_order_table()
-        self.create_menu_table()
     
     def setuptables(self):
         self.create_user_table()
@@ -93,6 +85,15 @@ class DatabaseConnection():
         print ("Order table create")
 
     def create_status_table(self):
+        sql0 = (
+            '''
+            DROP TABLE status
+            '''
+        )
+        self.cursor.execute(sql0)
+        self.connection.commit()
+        print ("Status table populated")
+
         sql = (
             '''
             CREATE TABLE IF NOT EXISTS "status"(
@@ -103,6 +104,16 @@ class DatabaseConnection():
         self.cursor.execute(sql)
         self.connection.commit()
         print ("Status table create")
+
+        sql1 = (
+            '''
+            INSERT INTO "status"(status_name)
+            VALUES('New'), ('Processing'), ('Cancelled'), ('Completed')
+            '''
+        )
+        self.cursor.execute(sql1)
+        self.connection.commit()
+        print ("Status table populated")
 
     def create_user(self, user_dict):
         '''
@@ -256,7 +267,7 @@ class DatabaseConnection():
             item = {'item_name': row[0], 'price': row[1]}
             menu.append(item)
         self.connection.commit()
-        return jsonify({'menu': menu})
+        return {'menu': menu}
 
     def fetch_all_orders(self):
         sql = "SELECT * FROM \"order\";"
@@ -273,7 +284,7 @@ class DatabaseConnection():
                     'status': row[4]
                 })
         self.connection.commit()
-        return jsonify({'orders': orders})
+        return {'orders': orders}
 
     def fetch_specific_order(self, order_id):
         sql = "SELECT * FROM \"order\" WHERE order_id = '"+order_id+"';"
@@ -290,7 +301,7 @@ class DatabaseConnection():
                     'status': row[4]
                 })
         self.connection.commit()
-        return jsonify({'order': order})
+        return {'order': order}
 
     def update_order_status(self, user_dict):
         if user_dict['order_id'] == '0':

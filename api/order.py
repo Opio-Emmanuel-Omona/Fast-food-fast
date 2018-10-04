@@ -1,5 +1,5 @@
 from api.database import DatabaseConnection
-from api.views import request, jsonify
+from api.views import request
 import jwt
 
 
@@ -12,7 +12,7 @@ class Order():
         # validate token
         token = request.headers.get('Authorization')
         if not token:
-            return jsonify({'message': 'Token is missing!'}), 403
+            return {'message': 'Token is missing!'}, 403
         if token[0] == 'B':
             payload = jwt.decode(token[7:].encode('utf-8'), 'qwertyuiopasdfghjkl')
         else:
@@ -21,25 +21,25 @@ class Order():
         # validate the input
         data = request.json
         if not data:
-            return jsonify({'message': 'Empty Order'}), 422
+            return {'message': 'Empty Order'}, 422
         if not data['item_name'] or not data['quantity']:
-            return jsonify({'message': 'Missing Fields'}), 422
+            return {'message': 'Missing Fields'}, 422
         data.update(payload)
         status = self.mydatabase.add_order(data)
         if status['status']:
-            return jsonify(status), 201
-        return jsonify(status), 409
+            return status, 201
+        return status, 409
 
     def order_history(self):
         token = request.headers.get('Authorization')
         if not token:
-            return jsonify({'message': 'Token is missing!'}), 403
+            return {'message': 'Token is missing!'}, 403
         if token[0] == 'B':
             data = jwt.decode(token[7:].encode('utf-8'), 'qwertyuiopasdfghjkl')
         data = jwt.decode(token.encode('utf-8'), 'qwertyuiopasdfghjkl')
         history = self.mydatabase.order_history(data)
 
-        return jsonify({'username': data['username'], 'history': history}), 200
+        return {'username': data['username'], 'history': history}, 200
 
     def fetch_all_orders(self):
         return self.mydatabase.fetch_all_orders(), 200
@@ -50,14 +50,14 @@ class Order():
     def updated_order_status(self, order_id):
         user_dict = request.json
         if not user_dict:
-            return jsonify({'message': 'No data sent'}), 422
+            return {'message': 'No data sent'}, 422
         if not user_dict['status_name']:
-            return jsonify({'message': 'Missing Fields'}), 422
+            return {'message': 'Missing Fields'}, 422
         user_dict['order_id'] = order_id
         status = self.mydatabase.update_order_status(user_dict)
         if status['status']:
-            return jsonify(status), 200
+            return status, 200
         elif ('wrong status' in status['message']):
-            return jsonify(status), 409
+            return status, 409
         else:
-            return jsonify(status), 400
+            return status, 400

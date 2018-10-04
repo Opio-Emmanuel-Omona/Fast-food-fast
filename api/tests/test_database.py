@@ -2,6 +2,14 @@ from help import HelpAPI
 from api.views import app
 import pytest
 
+@pytest.fixture
+def client():
+    '''define a test client'''
+    with app.app_context():
+        app.config['TESTING'] = True
+        test_client = app.test_client()   
+    return test_client
+
 class TestDB():
     helper = HelpAPI()
 

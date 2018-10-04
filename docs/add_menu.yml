@@ -8,36 +8,25 @@ parameters:
     required: true
     type: string
     description: Add a new menu item
-responses:
-  201:
-    description: Menu item created
     schema:
       id: add menu item
       type: object
       properties:
         item_name:
           type: string
-          default: item
+          example: chicken
         price:
-          type: string  
+          type: string
+          example: 5000
+responses:
+  201:
+    description: Menu item created
+  403:
+    description: Forbidden
   422:
     description: Empty menu item
-    schema:
-      properties:
-        item_name:
-          type: string
-          default: item
-        price:
-          type: string
   409:
     description: Conflict in menu
-    schema:
-      properties:
-        item_name:
-          type: string
-          default: item
-        price:
-          type: string
 security:
     - TokenHeader: []
         

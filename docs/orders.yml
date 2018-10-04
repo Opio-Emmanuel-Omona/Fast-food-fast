@@ -9,5 +9,7 @@ parameters:
 responses:
   200:
     description: Succesfully viewed orders
+  403:
+  description: Forbidden
 security:
     - TokenHeader: []

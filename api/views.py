@@ -43,14 +43,14 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token = request.headers.get('Authorization')
         if not token:
-            return jsonify({'message': 'Missing token!'}), 403
+            return {'message': 'Missing token!'}, 403
         try:
             if token[0] == 'B':
                 jwt.decode(token[7:].encode('utf-8'), app.config['SECRET_KEY'])
             else:
                 jwt.decode(token.encode('utf-8'), app.config['SECRET_KEY'])
         except:
-            return jsonify({'message': 'Invalid Token!'}), 403
+            return {'message': 'Invalid Token!'}, 403
         return f(*args, **kwargs)
     return decorated
 
@@ -60,14 +60,14 @@ def admin_required(f):
     def decorated(*args, **kwargs):
         token = request.headers.get('Authorization')
         if not token:
-            return jsonify({'message': 'Token is missing!'}), 403
+            return {'message': 'Token is missing!'}, 403
         try:
             if token[0] == 'B':
                 jwt.decode(token[7:].encode('utf-8'), app.config['ADMIN_KEY'])
             else:
                 jwt.decode(token.encode('utf-8'), app.config['ADMIN_KEY'])
         except:
-            return jsonify({'message': 'Token is invalid!'}), 403
+            return {'message': 'Token is invalid!'}, 403
         
         return f(*args, **kwargs)
     return decorated
@@ -76,7 +76,7 @@ def validate_token():
     # validate token
     token = request.headers.get('Authorization')
     if not token:
-        return jsonify({'message': 'Token is missing!'}), 403
+        return {'message': 'Token is missing!'}, 403
     if token[0] == 'B':
         payload = jwt.decode(token[7:].encode('utf-8'), app.config['SECRET_KEY'])
     else:
@@ -84,7 +84,7 @@ def validate_token():
     return payload
 
 class Orders(Resource):
-    @token_required
+    @admin_required
     @swag_from('../docs/orders.yml')
     def get(self):
         return Order().fetch_all_orders() 

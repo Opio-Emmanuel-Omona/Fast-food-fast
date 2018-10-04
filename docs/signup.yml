@@ -1,7 +1,7 @@
 Sign up
 ---
 tags:
-  - User Authentication
+  - Authentication
 parameters:
   - name: body
     in: body

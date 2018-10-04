@@ -126,7 +126,8 @@ class DatabaseConnection():
                                     user_dict['phone_no'],
                                     user_dict['password']])
         self.connection.commit()
-        return {'message': user_dict['username'] + ' created succesfully', 'status': True}
+        return {'message': user_dict['username'] + ' created succesfully',
+                'status': True}
 
     def signin(self, user_dict):
         '''

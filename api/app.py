@@ -43,9 +43,9 @@ def token_required(f):
             return jsonify({'message': 'Missing token!'}), 403
         try:
             if token[0] == 'B':
-                jwt.decode(token[7:], app.config['SECRET_KEY'])
+                jwt.decode(token[7:].encode('utf-8'), app.config['SECRET_KEY'])
             else:
-                jwt.decode(token, app.config['SECRET_KEY'])
+                jwt.decode(token.encode('utf-8'), app.config['SECRET_KEY'])
         except:
             return jsonify({'message': 'Invalid Token!'}), 403
         return f(*args, **kwargs)
@@ -60,9 +60,9 @@ def admin_required(f):
             return jsonify({'message': 'Token is missing!'}), 403
         try:
             if token[0] == 'B':
-                jwt.decode(token[7:], app.config['ADMIN_KEY'])
+                jwt.decode(token[7:].encode('utf-8'), app.config['ADMIN_KEY'])
             else:
-                jwt.decode(token, app.config['ADMIN_KEY'])
+                jwt.decode(token.encode('utf-8'), app.config['ADMIN_KEY'])
         except:
             return jsonify({'message': 'Token is invalid!'}), 403
         
@@ -154,9 +154,9 @@ def place_orders():
     if not token:
         return jsonify({'message': 'Token is missing!'}), 403
     if token[0] == 'B':
-        payload = jwt.decode(token[7:], app.config['SECRET_KEY'])
+        payload = jwt.decode(token[7:].encode('utf-8'), app.config['SECRET_KEY'])
     else:
-        payload = jwt.decode(token, app.config['SECRET_KEY'])
+        payload = jwt.decode(token.encode('utf-8'), app.config['SECRET_KEY'])
     
     # validate the input
     data = request.json
@@ -179,8 +179,8 @@ def order_history():
     if not token:
         return jsonify({'message': 'Token is missing!'}), 403
     if token[0] == 'B':
-        data = jwt.decode(token[7:], app.config['SECRET_KEY'])
-    data = jwt.decode(token, app.config['SECRET_KEY'])
+        data = jwt.decode(token[7:].encode('utf-8'), app.config['SECRET_KEY'])
+    data = jwt.decode(token.encode('utf-8'), app.config['SECRET_KEY'])
     history = test_db.order_history(data)
 
     return jsonify({'username': data['username'], 'history': history}), 200

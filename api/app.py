@@ -32,7 +32,7 @@ orders = order.Order()
 
 app.config['SECRET_KEY'] = 'qwertyuiopasdfghjkl'
 app.config['ADMIN_KEY'] = 'lkjhgfdsapoiuytrewq'
-# test_db = DatabaseConnection(True)
+# test_db = DatabaseConnection()
 
 
 def token_required(f):

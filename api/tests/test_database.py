@@ -3,6 +3,8 @@ from help import HelpAPI
 class TestDB():
     helper = HelpAPI()
 
+    # def client()
+
     def test_register_new_user(self, client):
         response = self.helper.post_json(
             client,

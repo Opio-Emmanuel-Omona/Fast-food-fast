@@ -26,7 +26,7 @@ class TestOrder():
             'Me',
             'Banana',
             1)
-        assert {'order_id':3, 'username':"Me", 'item_name': "Chips", 'quantity':1} in self.order.ORDERS
+        assert {'order_id':3, 'username':"Me", 'item_name': "Banana", 'quantity':1} in self.order.ORDERS
 
     def test_get_one_order(self):
         assert 200 in self.order.get_order(1)

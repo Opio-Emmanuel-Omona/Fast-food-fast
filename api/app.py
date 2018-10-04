@@ -137,7 +137,7 @@ def signin():
         return jsonify({'message': 'No data sent'}), 422
     if not data['username'] or not data['password']:
         return jsonify({'message': 'Missing Fields'}), 422
-    if (' ' in data['username'] or ' ' in data['email']):
+    if (' ' in data['username']):
         return jsonify({'message': 'Username cannot have spaces'}), 422
     status = test_db.signin(data)
     if status['status']:

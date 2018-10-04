@@ -197,7 +197,7 @@ class DatabaseConnection():
                                         ])
                 self.connection.commit()
                 return {'message': 'Order has been placed', 'status': True}
-            return {'message': 'Order already exists', 'status': Flase}
+            return {'message': 'Order already exists', 'status': False}
         return {'message': 'Order item not in menu', 'status': False}
 
     def order_history(self, user_dict):
@@ -316,9 +316,12 @@ class DatabaseConnection():
                         '''
                     )
                     self.cursor.execute(sql)
-                    self.connection.commit()
-                return {'message': 'wrong status provided', 'status': False}
-            return {'message': 'Order doesn\'t exist', 'status': False}
+                    self.connection.commit() 
+                else:       
+                    return {'message': 'wrong status provided', 'status': False}
+            else:
+                return {'message': 'Order doesn\'t exist', 'status': False}
+        return {'message': 'Order status succefully updated', 'status': True}
 
     def drop_tables(self):
         # First delete all the tests data

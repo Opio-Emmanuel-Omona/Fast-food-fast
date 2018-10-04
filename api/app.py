@@ -32,7 +32,7 @@ orders = order.Order()
 
 app.config['SECRET_KEY'] = 'qwertyuiopasdfghjkl'
 app.config['ADMIN_KEY'] = 'lkjhgfdsapoiuytrewq'
-test_db = DatabaseConnection(True)
+# test_db = DatabaseConnection(True)
 
 
 def token_required(f):
@@ -123,7 +123,7 @@ def register():
         return jsonify({'message': 'Username or email cannot have spaces'}), 422
     if not re.match(r"[^@]+@[^@]+\.[^@]+", data['email']):
         return jsonify({'message': 'Invalid Email'}), 422
-    status = test_db.create_user(data)
+    status = DatabaseConnection().create_user(data)
     if status['status']:
         return jsonify(status), 201
     return jsonify(status), 409
@@ -139,7 +139,7 @@ def signin():
         return jsonify({'message': 'Missing Fields'}), 422
     if (' ' in data['username']):
         return jsonify({'message': 'Username cannot have spaces'}), 422
-    status = test_db.signin(data)
+    status = DatabaseConnection().signin(data)
     if status['status']:
         return jsonify(status)
     return jsonify(status), 401
@@ -165,7 +165,7 @@ def place_orders():
     if not data['item_name'] or not data['quantity']:
         return jsonify({'message': 'Missing Fields'}), 422
     data.update(payload)
-    status = test_db.add_order(data)
+    status = DatabaseConnection().add_order(data)
     if status['status']:
         return jsonify(status), 201
     return jsonify(status), 409
@@ -181,7 +181,7 @@ def order_history():
     if token[0] == 'B':
         data = jwt.decode(token[7:].encode('utf-8'), app.config['SECRET_KEY'])
     data = jwt.decode(token.encode('utf-8'), app.config['SECRET_KEY'])
-    history = test_db.order_history(data)
+    history = DatabaseConnection().order_history(data)
 
     return jsonify({'username': data['username'], 'history': history}), 200
 
@@ -195,7 +195,7 @@ def add_menu():
         return jsonify({'message': 'Empty Menu'}), 422
     if not data['item_name'] or not data['price']:
         return jsonify({'message': 'Missing Fields'}), 422
-    status = test_db.add_menu(data)
+    status = DatabaseConnection().add_menu(data)
     if status['status']:
         return jsonify(status), 201
     return jsonify(status), 409
@@ -205,21 +205,21 @@ def add_menu():
 @swag_from('../docs/view_menu.yml')
 @token_required
 def menu():
-    return test_db.menu(), 200
+    return DatabaseConnection().menu(), 200
 
 
 @app.route('/api/v2/orders', methods=['GET'])
 @swag_from('../docs/orders.yml')
 @admin_required
 def fetch_all_orders():
-    return test_db.fetch_all_orders(), 200
+    return DatabaseConnection().fetch_all_orders(), 200
 
 
 @app.route('/api/v2/orders/<string:order_id>', methods=['GET'])
 @swag_from('../docs/specific_order.yml')
 @admin_required
 def fetch_specific_order(order_id):
-    return test_db.fetch_specific_order(order_id), 200
+    return DatabaseConnection().fetch_specific_order(order_id), 200
 
 
 @app.route('/api/v2/orders/<string:order_id>', methods=['PUT'])
@@ -232,7 +232,7 @@ def updated_order_status(order_id):
     if not user_dict['status_name']:
         return jsonify({'message': 'Missing Fields'}), 422
     user_dict['order_id'] = order_id
-    status = test_db.update_order_status(user_dict)
+    status = DatabaseConnection().update_order_status(user_dict)
     if status['status']:
         return jsonify(status), 200
     elif ('wrong status' in status['message']):

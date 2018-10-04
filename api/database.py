@@ -7,9 +7,9 @@ import datetime
 class DatabaseConnection():
     def __init__(self, app=None):
         if app is not None:
-            self.con()
+            self.conn()
 
-    def con(self):
+    def conn(self):
         self.connection = psycopg2.connect(
             database="d1gsphqjdqboj",
             user="mdmwbruvsybhid",

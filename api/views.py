@@ -85,46 +85,55 @@ def validate_token():
 
 class Orders(Resource):
     @token_required
+    @swag_from('../docs/orders.yml')
     def get(self):
         return Order().fetch_all_orders() 
 
 
 class OrderX(Resource):
     @admin_required
+    @swag_from('../docs/specific_order.yml')
     def get(self, order_id):
         return Order().fetch_specific_order(order_id)
 
     @admin_required
+    @swag_from('../docs/update_order.yml')
     def put(self, order_id):
         return Order().updated_order_status(order_id)
 
 
 class Menus(Resource):
     @token_required
+    @swag_from('../docs/view_menu.yml')
     def get(self):
         return Menu().get_menu()
 
     @admin_required
+    @swag_from('../docs/add_menu.yml')
     def post(self):
         return Menu().add_menu()
 
 
 class UserOrder(Resource):
     @token_required
+    @swag_from('../docs/order_history.yml')
     def get(self):
         return Order().order_history()
 
     @token_required
+    @swag_from('../docs/place_order.yml')
     def post(self):
         return Order().place_orders()
 
 
 class Login(Resource):
+    @swag_from('../docs/signin.yml')
     def post(self):
         return User().signin()
 
 
 class Signup(Resource):
+    @swag_from('../docs/signup.yml')
     def post(self):
         return User().register()
 
@@ -140,14 +149,3 @@ api.add_resource(Orders, '/api/v2/orders/')
 @app.route("/")
 def hello():
     return redirect('/apidocs')
-
-
-# @swag_from('../docs/signup.yml')
-# @swag_from('../docs/signin.yml')
-# @swag_from('../docs/place_order.yml')
-# @swag_from('../docs/order_history.yml')
-# @swag_from('../docs/add_menu.yml')
-# @swag_from('../docs/view_menu.yml')
-# @swag_from('../docs/orders.yml')
-# @swag_from('../docs/specific_order.yml')
-# @swag_from('../docs/update_order.yml')

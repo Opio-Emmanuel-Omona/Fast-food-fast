@@ -34,11 +34,7 @@ app.config['SECRET_KEY'] = 'qwertyuiopasdfghjkl'
 app.config['ADMIN_KEY'] = 'lkjhgfdsapoiuytrewq'
 # test_db = DatabaseConnection()
 
-if __name__ != "__main__": 
-    DatabaseConnection().setup()
-else:
-    DatabaseConnection().setuptables()
-
+DatabaseConnection().setup()
 
 def token_required(f):
     @wraps(f)

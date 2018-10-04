@@ -116,13 +116,13 @@ def register():
     # connect add the data to the database
     data = request.json
     if not data:
-        return jsonify({'message': 'No data sent'}), 400
+        return jsonify({'message': 'No data sent'}), 422
     if not data['username'] or not data['phone_no'] or not data['password'] or not data['email']:
-        return jsonify({'message': 'Missing Fields'}), 400
+        return jsonify({'message': 'Missing Fields'}), 422
     if (' ' in data['username'] or ' ' in data['email']):
-        return jsonify({'message': 'Username or email cannot have spaces'}), 400
+        return jsonify({'message': 'Username or email cannot have spaces'}), 422
     if not re.match(r"[^@]+@[^@]+\.[^@]+", data['email']):
-        return jsonify({'message': 'Invalid Email'}), 400
+        return jsonify({'message': 'Invalid Email'}), 422
     status = test_db.create_user(data)
     if status['status']:
         return jsonify(status), 201
@@ -134,30 +134,41 @@ def register():
 def signin():
     data = request.json
     if not data:
-        return jsonify({'message': 'No data sent'}), 400
+        return jsonify({'message': 'No data sent'}), 422
     if not data['username'] or not data['phone_no'] or not data['password'] or not data['email']:
-        return jsonify({'message': 'Missing Fields'}), 400
+        return jsonify({'message': 'Missing Fields'}), 422
     if (' ' in data['username'] or ' ' in data['email']):
-        return jsonify({'message': 'Username or email cannot have spaces'}), 400
-    return test_db.signin(data)
+        return jsonify({'message': 'Username cannot have spaces'}), 422
+    status = test_db.signin(data)
+    if status['status']:
+        return jsonify(status)
+    return jsonify(status), 401
 
 
 @app.route('/api/v2/users/orders', methods=['POST'])
 @swag_from('../docs/place_order.yml')
 @token_required
 def place_orders():
+    # validate token
     token = request.headers.get('Authorization')
     if not token:
         return jsonify({'message': 'Token is missing!'}), 403
     if token[0] == 'B':
-        data = jwt.decode(token[7:], app.config['SECRET_KEY'])
+        payload = jwt.decode(token[7:], app.config['SECRET_KEY'])
     else:
-        data = jwt.decode(token, app.config['SECRET_KEY'])
-        
-    user_dict = request.json
-    user_dict.update(data)
-    test_db.add_order(user_dict)
-    return jsonify({'message': 'Order has been placed'}), 201
+        payload = jwt.decode(token, app.config['SECRET_KEY']
+    
+    # validate the input
+    data = request.json
+    if not data:
+        return jsonify({'message': 'Empty Order'}), 422
+    if not data['item_name'] or not data['quantity']:
+        return jsonify({'message': 'Missing Fields'}), 422
+    data.update(payload)
+    status = test_db.add_order(data)
+    if status:
+        return jsonify(status), 201
+    return jsonify(status), 404
 
 
 @app.route('/api/v2/users/orders', methods=['GET'])

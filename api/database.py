@@ -112,7 +112,8 @@ class DatabaseConnection():
                 return {'message': 'username already taken',
                         'status': False}
             if row[1] == user_dict['email']:
-                return {'message': 'email already taken', 'status':False}
+                return {'message': 'email already taken',
+                        'status': False}
         sql = (
             '''
             INSERT INTO "user"(username, email, phone_no, password)
@@ -143,7 +144,9 @@ class DatabaseConnection():
                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
                     'qwertyuiopasdfghjkl')
                 self.connection.commit()
-                return jsonify({'username': user_dict['username'], 'token': token})
+                return {'username': user_dict['username'],
+                        'token': token,
+                        'status': True}
         
         # ADMIN login
         if user_dict['username'] == 'admin' and user_dict['password'] == 'password':
@@ -155,14 +158,36 @@ class DatabaseConnection():
                 'lkjhgfdsapoiuytrewq')
             self.connection.commit()
             print(token)
-            return jsonify({'user': user_dict['username'], 'token': token})
+            return {'user': user_dict['username'],
+                    'token': token,
+                    'status': True}
 
-        return jsonify({'message': 'The username and password do not exist'}), 401
+        return {'message': 'The username and password do not exist',
+                'status': False}
 
     def add_order(self, user_dict):
-        sql = "INSERT INTO \"order\" (username, item_name, quantity, status) VALUES('"+user_dict['username']+"','"+user_dict['item_name']+"','"+user_dict['quantity']+"', 'New');"
-        self.cursor.execute(sql)
-        self.connection.commit()
+        sql = (
+            '''
+            SELECT * FROM "menu" WHERE item_name = %s;
+            '''
+        )
+        self.cursor.execute(sql, [user_dict['item_name']])
+        rows = self.cursor.fetchall()
+        if rows:
+            sql = (
+                '''
+                INSERT INTO "order"(username, item_name, quantity, status)
+                VALUES(%s, %s, %s, 'New');
+                '''
+            )
+            self.cursor.execute(sql, [
+                                        user_dict['username'],
+                                        user_dict['item_name'],
+                                        user_dict['quantity']
+                                    ])
+            self.connection.commit()
+            return {'message': 'Order has been placed', 'status': True}
+        return {'message': 'Order item not in menu', 'status': False}
 
     def order_history(self, user_dict):
         sql = "SELECT username, item_name FROM \"order\";"

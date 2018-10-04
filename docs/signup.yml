@@ -58,3 +58,19 @@ responses:
           default: +256700000000
         password:
           type: string
+  422:
+    description: Unprocessable Data
+    schema:
+      type: object
+      properties:
+        username:
+          type: string
+          default: username
+        email:
+          type: string
+          default: username@domain.com
+        phone_no:
+          type: string
+          default: +256700000000
+        password:
+          type: string

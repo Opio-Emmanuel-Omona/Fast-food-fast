@@ -21,21 +21,25 @@ responses:
         quantity:
           type: string
           default: "1"  
-  400:
+  404:
     description: Order not in the menu
     schema:
-      id: invalid name
       properties:
         item_name:
           type: string
           default: item
+        quantity:
+          type: string
+          default: "1"
   422:
-    description: Empty order
+    description: Unprocessable order
     schema:
-      id: Empty order
       properties:
         item_name:
           type: string
+        quantity:
+          type: string
+          default: "1"
 security:
     - TokenHeader: []
         

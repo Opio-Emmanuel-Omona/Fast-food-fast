@@ -40,3 +40,13 @@ responses:
           default: username
         password:
           type: string
+  422:
+    description: Unprocessable Data
+    schema:
+      type: object
+      properties:
+        username:
+          type: string
+          default: username
+        password:
+          type: string

@@ -5,9 +5,16 @@ import datetime
 
 
 class DatabaseConnection():
-    def __init__(self, app=None):
-        if app is not None:
-            self.conn()
+    def __init__(self):
+        self.connection = psycopg2.connect(
+            database="test_fast_food_fast_db",
+            user="postgres",
+            password="P@ss1234",
+            host="127.0.0.1",
+            port="5432"
+        )
+        self.cursor = self.connection.cursor()
+        print ("Connected to test_fast_food_fast")
 
     # def conn(self):
     #     self.connection = psycopg2.connect(
@@ -343,3 +350,7 @@ class DatabaseConnection():
         self.cursor.execute(sql4)
         self.connection.commit()
         print("All tables dropped")
+
+
+db = DatabaseConnection()
+db.setuptables()

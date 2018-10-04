@@ -24,7 +24,6 @@ class DatabaseConnection():
 
         self.cursor = self.connection.cursor()
         print ("Connected to test_fast_food_fast")
-        self.drop_tables()
         # else:
         #     self.connection = psycopg2.connect(
         #         database="fast_food_fast_db",
@@ -35,11 +34,19 @@ class DatabaseConnection():
         #     )
         #     self.cursor = self.connection.cursor()
         #     print "connected to fast_food_fast"
-
+    
+    def setup(self):
+        self.drop_tables()
         self.create_user_table()
+        self.create_status_table()
         self.create_order_table()
         self.create_menu_table()
+    
+    def setuptables(self):
+        self.create_user_table()
         self.create_status_table()
+        self.create_order_table()
+        self.create_menu_table()
 
     def create_user_table(self):
         sql = (
@@ -134,8 +141,11 @@ class DatabaseConnection():
         '''
         sql = "SELECT username, password FROM \"user\";"
         self.cursor.execute(sql)
+        self.connection.commit()
         rows = self.cursor.fetchall()
+        print("Before row")
         for row in rows:
+            print("Afyer row")
             if row[0] == user_dict['username'] and row[1] == user_dict['password']:
                 # then login
                 # give token based authentication to this user
@@ -143,7 +153,6 @@ class DatabaseConnection():
                     'username': user_dict['username'],
                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
                     'qwertyuiopasdfghjkl')
-                self.connection.commit()
                 return {'username': user_dict['username'],
                         'token': token,
                         'status': True}

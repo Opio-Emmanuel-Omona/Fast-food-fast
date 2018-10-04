@@ -168,6 +168,16 @@ class TestDB():
         assert response.status_code == 201
 
     def test_login_new_user(self, client):
+        self.helper.post_json(
+            client,
+            '/api/v2/auth/signup',
+            {
+                'username': 'phiona',
+                'email': 'nanaphiona9@gmail.com',
+                'phone_no': '+256758363563',
+                'password': 'password'
+            })
+
         response = self.helper.post_json(
             client,
             '/api/v2/auth/login',

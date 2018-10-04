@@ -4,20 +4,25 @@ import jwt
 import datetime
 
 
-# app.config['SECRET_KEY'] = 'thisisthesecretkey'
-# app.config['ADMIN_KEY'] = 'thisistheadminkey'
-
-
 class DatabaseConnection():
     def __init__(self, value):
         if value:
+            # self.connection = psycopg2.connect(
+            #     database="dbl266vd3qqlbf",
+            #     user="chfghjgahbfyas",
+            #     password="3ba4acea9b6f740a4921e942dbac80b4b67a48cc129d849348724c29aed218c0",
+            #     host="ec2-107-21-126-193.compute-1.amazonaws.com",
+            #     port="5432"
+            # )
+
             self.connection = psycopg2.connect(
-                database="dbl266vd3qqlbf",
-                user="chfghjgahbfyas",
-                password="3ba4acea9b6f740a4921e942dbac80b4b67a48cc129d849348724c29aed218c0",
-                host="ec2-107-21-126-193.compute-1.amazonaws.com",
+                database="test_fast_food_fast_db",
+                user="postgres",
+                password="P@ss1234",
+                host="127.0.0.1",
                 port="5432"
             )
+
             self.cursor = self.connection.cursor()
             print ("Connected to test_fast_food_fast")
             self.drop_tables()
@@ -136,7 +141,7 @@ class DatabaseConnection():
                 token = jwt.encode({
                     'username': user_dict['username'],
                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
-                    'thisisthesecretkey')
+                    'qwertyuiopasdfghjkl')
                 self.connection.commit()
                 return jsonify({'username': user_dict['username'], 'token': token})
         
@@ -147,12 +152,12 @@ class DatabaseConnection():
                     'username': user_dict['username'],
                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
                 },
-                'thisistheadminkey')
+                'lkjhgfdsapoiuytrewq')
             self.connection.commit()
             print(token)
             return jsonify({'user': user_dict['username'], 'token': token})
 
-        return jsonify({'answer': 401}), 401
+        return jsonify({'message': 'The username and password do not exist'}), 401
 
     def add_order(self, user_dict):
         sql = "INSERT INTO \"order\" (username, item_name, quantity, status) VALUES('"+user_dict['username']+"','"+user_dict['item_name']+"','"+user_dict['quantity']+"', 'New');"

@@ -30,8 +30,8 @@ orders = order.Order()
 # pylint: disable=redefined-outer-name
 
 
-app.config['SECRET_KEY'] = 'thisisthesecretkey'
-app.config['ADMIN_KEY'] = 'thisistheadminkey'
+app.config['SECRET_KEY'] = 'qwertyuiopasdfghjkl'
+app.config['ADMIN_KEY'] = 'lkjhgfdsapoiuytrewq'
 test_db = DatabaseConnection(True)
 
 
@@ -132,7 +132,14 @@ def register():
 @app.route('/api/v2/auth/login', methods=['POST'])
 @swag_from('../docs/signin.yml')
 def signin():
-    return test_db.signin(request.json)
+    data = request.json
+    if not data:
+        return jsonify({'message': 'No data sent'}), 400
+    if not data['username'] or not data['phone_no'] or not data['password'] or not data['email']:
+        return jsonify({'message': 'Missing Fields'}), 400
+    if (' ' in data['username'] or ' ' in data['email']):
+        return jsonify({'message': 'Username or email cannot have spaces'}), 400
+    return test_db.signin(data)
 
 
 @app.route('/api/v2/users/orders', methods=['POST'])

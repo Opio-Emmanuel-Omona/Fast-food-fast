@@ -20,3 +20,23 @@ responses:
           default: username
         password:
           type: string
+  400:
+    description: Bad Request
+    schema:
+      type: object
+      properties:
+        username:
+          type: string
+          default: username
+        password:
+          type: string
+  401:
+    description: Invalid Login
+    schema:
+      type: object
+      properties:
+        username:
+          type: string
+          default: username
+        password:
+          type: string

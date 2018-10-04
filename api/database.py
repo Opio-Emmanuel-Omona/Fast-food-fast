@@ -9,27 +9,27 @@ class DatabaseConnection():
         if app is not None:
             self.conn()
 
-    def conn(self):
-        self.connection = psycopg2.connect(
-            database="d1gsphqjdqboj",
-            user="mdmwbruvsybhid",
-            password="f0c9227626d43bb84fe23d5c27268389da396a5a667cb86a14a735f983fce9d9",
-            host="ec2-54-235-90-0.compute-1.amazonaws.com",
-            port="5432"
-        )
-        self.cursor = self.connection.cursor()
-        print ("Connected to test_fast_food_fast")
-
     # def conn(self):
     #     self.connection = psycopg2.connect(
-    #         database="test_fast_food_fast_db",
-    #         user="postgres",
-    #         password="P@ss1234",
-    #         host="127.0.0.1",
+    #         database="d1gsphqjdqboj",
+    #         user="mdmwbruvsybhid",
+    #         password="f0c9227626d43bb84fe23d5c27268389da396a5a667cb86a14a735f983fce9d9",
+    #         host="ec2-54-235-90-0.compute-1.amazonaws.com",
     #         port="5432"
     #     )
     #     self.cursor = self.connection.cursor()
     #     print ("Connected to test_fast_food_fast")
+
+    def conn(self):
+        self.connection = psycopg2.connect(
+            database="test_fast_food_fast_db",
+            user="postgres",
+            password="P@ss1234",
+            host="127.0.0.1",
+            port="5432"
+        )
+        self.cursor = self.connection.cursor()
+        print ("Connected to test_fast_food_fast")
     
     def setup(self):
         self.drop_tables()

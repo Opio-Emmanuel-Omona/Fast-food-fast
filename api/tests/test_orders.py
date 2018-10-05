@@ -72,27 +72,6 @@ class TestOrders:
         assert response1.status_code == 200
         assert response2.status_code == 200
 
-    # def test_fetch_specific_order(self):
-    #     # login as admin
-    #     response1 = self.helper.post_json(
-    #         client,
-    #         '/api/v2/auth/login',
-    #         {
-    #             'username': 'phiona',
-    #             'password': 'password'
-    #         })
-
-    #     response2 = client.get(
-    #         '/api/v2/orders/0',
-    #         headers={'Authorization': response1.json['token']}
-    #     )
-    #     assert response1.status_code == 200
-    #     assert response2.status_code == 200
-
-    # def test_fetch_all_orders(self):
-    #     pass
-
-
     def test_update_order_status(self, client):
         # admin adds an order to menu
         response1 = self.helper.post_json(

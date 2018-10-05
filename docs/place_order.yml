@@ -8,40 +8,25 @@ parameters:
     required: true
     type: string
     description: Add a new order
-responses:
-  201:
-    description: Order succesfully placed
     schema:
       id: place order
       type: object
       properties:
         item_name:
           type: string
-          default: item  
+          example: Rice  
         quantity:
           type: string
-          default: "1"
+          example: "1"
+responses:
+  201:
+    description: Order succesfully placed
   403:
     description: Forbidden
   409:
     description: Order conflict
-    schema:
-      properties:
-        item_name:
-          type: string
-          default: item
-        quantity:
-          type: string
-          default: "1"
   422:
     description: Unprocessable order
-    schema:
-      properties:
-        item_name:
-          type: string
-        quantity:
-          type: string
-          default: "1"
 security:
     - TokenHeader: []
         

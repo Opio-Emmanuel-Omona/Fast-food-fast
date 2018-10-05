@@ -9,15 +9,14 @@ parameters:
     type: string
     description: Add a new menu item
     schema:
-      id: add menu item
-      type: object
+      id: menu
       properties:
         item_name:
           type: string
           example: chicken
         price:
           type: string
-          example: 5000
+          example: "5000"
 responses:
   201:
     description: Menu item created

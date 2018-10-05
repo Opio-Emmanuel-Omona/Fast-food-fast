@@ -9,6 +9,8 @@ parameters:
     type: string
     default: 1
     description: Admin can fetch a specific order
+    schema:
+      id: fetch specific order
 responses:
   200:
     description: Succesfully viewed order

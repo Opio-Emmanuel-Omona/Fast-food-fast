@@ -24,25 +24,7 @@ class User:
 
     def register(self):
         # connect add the data to the database
-        parser = reqparse.RequestParser()
-        parser.add_argument('username',
-            type=str,
-            required=True,
-            help='Field cannot be blank')
-        parser.add_argument('email',
-            type=str,
-            required=True,
-            help='Field cannot be blank')
-        parser.add_argument('password',
-            type=str,
-            required=True,
-            help='Field cannot be blank')
-        parser.add_argument('phone_no',
-            type=str,
-            required=True,
-            help='Field cannot be blank')
-
-        data = parser.parse_args()
+        data = request.json
         print(data)
         if not data:
             return {'message': 'No data sent'}, 422

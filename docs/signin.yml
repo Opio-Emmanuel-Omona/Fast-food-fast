@@ -8,45 +8,24 @@ parameters:
     required: true
     type: string
     description: Signing In
-responses:
-  200:
-    description: Login Succesfull
     schema:
       id: sign in
       type: object
       properties:
         username:
           type: string
-          default: username
+          example: Emmanuel
         password:
-          type: string
+          example: emma1234
+responses:
+  200:
+    description: Login Succesfull  
   400:
     description: Bad Request
-    schema:
-      type: object
-      properties:
-        username:
-          type: string
-          default: username
-        password:
-          type: string
+  403:
+    description: Forbidden
   401:
     description: Invalid Login
-    schema:
-      type: object
-      properties:
-        username:
-          type: string
-          default: username
-        password:
-          type: string
   422:
     description: Unprocessable Data
-    schema:
-      type: object
-      properties:
-        username:
-          type: string
-          default: username
-        password:
-          type: string
+  

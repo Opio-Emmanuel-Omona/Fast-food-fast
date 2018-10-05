@@ -6,6 +6,8 @@ parameters:
   - name: body
     in: body
     description: User can view the menu
+    schema:
+      id: view menu
 responses:
   200:
     description: Succesfully viewed menu

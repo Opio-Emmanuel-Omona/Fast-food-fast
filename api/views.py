@@ -12,7 +12,7 @@ from database import DatabaseConnection
 
 
 app = Flask(__name__)  # pylint: disable=invalid-name
-swagger = Swagger(
+Swagger(
     app,
     template={
         "info": {

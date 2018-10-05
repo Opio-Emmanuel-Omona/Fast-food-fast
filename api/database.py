@@ -6,25 +6,15 @@ import datetime
 
 class DatabaseConnection():
     def __init__(self):
-        try:
-            Data = "test_fast_food_fast_db"
-            User = "postgres"
-            Password = "P@ss1234"
-            Host = "127.0.0.1"        
-
-            self.connection = psycopg2.connect(database=Data, user=User,
-                password=Password, host=Host, port="5432")
-            self.cursor = self.connection.cursor()
-            print ("Connected to test_fast_food_fast")
-        except:
-            Data = "d64v4cgifl4omb",
-            User = "zpfghsehqzbqjr",
-            Password = "b578a4e87c4e9e0073e825046b92630084e354e09118345736d9eca32e24c4a6",
-            Host = "ec2-54-83-50-145.compute-1.amazonaws.com"
-            self.connection = psycopg2.connect(database=Data, user=User,
-                password=Password, host=Host, port="5432")
-            self.cursor = self.connection.cursor()
-            print ("Connected to test_fast_food_fast")
+        
+        Data = "d64v4cgifl4omb",
+        User = "zpfghsehqzbqjr",
+        Password = "b578a4e87c4e9e0073e825046b92630084e354e09118345736d9eca32e24c4a6",
+        Host = "ec2-54-83-50-145.compute-1.amazonaws.com"
+        self.connection = psycopg2.connect(database=Data, user=User,
+            password=Password, host=Host, port="5432")
+        self.cursor = self.connection.cursor()
+        print ("Connected to test_fast_food_fast")
     
     def setuptables(self):
         self.create_user_table()

@@ -13,6 +13,7 @@ class DatabaseConnection():
             Host = '127.0.0.1'
             self.connection = psycopg2.connect(database=Data, user=User,
                 password=Password, host=Host, port="5432")
+            self.cursor = self.connection.cursor()
         except:
             Data = "d64v4cgifl4omb"
             User = "zpfghsehqzbqjr"

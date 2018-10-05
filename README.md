@@ -8,10 +8,10 @@ Fast-Food-Fast is a food delivery service app for a restaurant. (V2) Using Persi
 [![Maintainability](https://api.codeclimate.com/v1/badges/72822b2801edfcc8895b/maintainability)](https://codeclimate.com/github/Opio-Emmanuel-Omona/Fast-food-fast/maintainability)
 
 
-##Application URL
+## Application URL
 https://fast-food-fast-eomona.herokuapp.com/
 
-#SETUP
+# SETUP
 ## Requirements
     - Python
     - Any Text Editor

@@ -26,21 +26,21 @@ class User:
         # connect add the data to the database
         parser = reqparse.RequestParser()
         parser.add_argument('username',
-                            type=str,
-                            required=True,
-                            help='Field cannot be blank')
+            type=str,
+            required=True,
+            help='Field cannot be blank')
         parser.add_argument('email',
-                            type=str,
-                            required=True,
-                            help='Field cannot be blank')
+            type=str,
+            required=True,
+            help='Field cannot be blank')
         parser.add_argument('password',
-                            type=str,
-                            required=True,
-                            help='Field cannot be blank')
+            type=str,
+            required=True,
+            help='Field cannot be blank')
         parser.add_argument('phone_no',
-                            type=str,
-                            required=True,
-                            help='Field cannot be blank')
+            type=str,
+            required=True,
+            help='Field cannot be blank')
 
         data = parser.parse_args()
         print(data)

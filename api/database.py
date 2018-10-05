@@ -12,10 +12,10 @@ class DatabaseConnection():
         # Host = "127.0.0.1"
 
         # if os.getenv('env') == "testing":
-        Data = "d5o8fq861c6a3t",
-        User = "fusydnrfqrrhhc",
-        Password = "3c8ded1c8e8734a49fd714a370856b0f766becb09fcf853ce9bbc3d85133535e",
-        Host = "ec2-50-17-194-186.compute-1.amazonaws.com"
+        Data = "d64v4cgifl4omb",
+        User = "zpfghsehqzbqjr",
+        Password = "b578a4e87c4e9e0073e825046b92630084e354e09118345736d9eca32e24c4a6",
+        Host = "ec2-54-83-50-145.compute-1.amazonaws.com"
 
         self.connection = psycopg2.connect(
             database=Data,

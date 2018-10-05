@@ -32,7 +32,7 @@ class User:
             return {'message': 'Missing Fields'}, 422
         if (' ' in data['username'] or ' ' in data['email']):
             return {'message': 'Username or email cannot have spaces'}, 422
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", data['email']):
+        if not re.match(r"^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", data['email']):
             return {'message': 'Invalid Email'}, 422
         status = self.mydatabase.create_user(data)
         print(status)

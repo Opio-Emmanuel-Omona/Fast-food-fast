@@ -1,4 +1,4 @@
-from api.views import request
+from api.views import request, reqparse
 import re
 from api.database import DatabaseConnection
 
@@ -6,7 +6,7 @@ from api.database import DatabaseConnection
 class User:
     def __init__(self):
         self.mydatabase = DatabaseConnection()
-        self.mydatabase.create_order_table()
+        self.mydatabase.create_user_table()
 
     def signin(self):
         data = request.json
@@ -24,7 +24,26 @@ class User:
 
     def register(self):
         # connect add the data to the database
-        data = request.json
+        parser = reqparse.RequestParser()
+        parser.add_argument('username',
+                            type=str,
+                            required=True,
+                            help='Field cannot be blank')
+        parser.add_argument('email',
+                            type=str,
+                            required=True,
+                            help='Field cannot be blank')
+        parser.add_argument('password',
+                            type=str,
+                            required=True,
+                            help='Field cannot be blank')
+        parser.add_argument('phone_no',
+                            type=str,
+                            required=True,
+                            help='Field cannot be blank')
+
+        data = parser.parse_args()
+        print(data)
         if not data:
             return {'message': 'No data sent'}, 422
         if not data['username'] or not data['phone_no'] or not data['password'] or not data['email']:

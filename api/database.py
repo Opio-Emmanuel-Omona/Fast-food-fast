@@ -6,23 +6,22 @@ import datetime
 
 class DatabaseConnection():
     def __init__(self):
-        Data="test_fast_food_fast_db",
-        User="postgres",
-        Password="P@ss1234",
-        Host="localhost"
-        
-        print(os.getenv('env'))
+        Data = "test_fast_food_fast_db"
+        User = "postgres"
+        Password = "P@ss1234"
+        Host = "127.0.0.1"
+
         if os.getenv('env') == "testing":
-            Data="d5o8fq861c6a3t",
-            User="fusydnrfqrrhhc",
-            Password="3c8ded1c8e8734a49fd714a370856b0f766becb09fcf853ce9bbc3d85133535e",
-            Host="ec2-50-17-194-186.compute-1.amazonaws.com"
+            Data = "d5o8fq861c6a3t",
+            User = "fusydnrfqrrhhc",
+            Password = "3c8ded1c8e8734a49fd714a370856b0f766becb09fcf853ce9bbc3d85133535e",
+            Host = "ec2-50-17-194-186.compute-1.amazonaws.com"
 
         self.connection = psycopg2.connect(
             database=Data,
-            host=Host,
             user=User,
             password=Password,
+            host=Host,
             port="5432"
         )
         self.cursor = self.connection.cursor()

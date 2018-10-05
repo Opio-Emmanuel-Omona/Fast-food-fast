@@ -11,7 +11,7 @@ def client():
     return test_client
 
 class TestOrders:
-    helper = HelpAPI
+    helper = HelpAPI()
 
     def test_place_order(self, client):
         # Login as admin and add item to menu

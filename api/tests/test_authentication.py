@@ -1,5 +1,6 @@
 from help import HelpAPI
 from api.views import app
+from api.database import DatabaseConnection
 import pytest
 
 @pytest.fixture
@@ -9,6 +10,10 @@ def client():
         app.config['TESTING'] = True
         test_client = app.test_client()   
     return test_client
+
+def tearDown():
+    DatabaseConnection().drop_tables
+    
 
 class TestAuthentication():
     helper = HelpAPI()

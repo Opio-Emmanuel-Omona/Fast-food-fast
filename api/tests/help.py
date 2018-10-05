@@ -7,7 +7,8 @@ class HelpAPI():
     def post_json(self, client, url, json_dict):
         return client.post(
             url,
-            data=json.dumps(json_dict))
+            data=json.dumps(json_dict),
+            content_type='application/json')
 
     def post_json_with_token(self, client, url, json_dict, token):
         return client.post(
@@ -15,7 +16,8 @@ class HelpAPI():
             data=json.dumps(json_dict),
             headers=dict(
                 Authorization='Bearer ' + token
-            )
+            ),
+            content_type='application/json'
         )
 
     def put_json_with_token(self, client, url, json_dict, token):
@@ -24,13 +26,15 @@ class HelpAPI():
             data=json.dumps(json_dict),
             headers=dict(
                 Authorization='Bearer ' + token
-            )
+            ),
+            content_type='application/json'
         )
 
     def put_json(self, client, url, json_dict):
         return client.put(
             url,
-            data=json.dumps(json_dict))
+            data=json.dumps(json_dict),
+            content_type='application/json')
 
     def delete_json(self, client, url):
         return client.delete(url)

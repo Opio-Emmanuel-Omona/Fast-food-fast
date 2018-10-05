@@ -77,7 +77,7 @@ class DatabaseConnection():
     def create_status_table(self):
         sql0 = (
             '''
-            DROP TABLE status
+            DROP TABLE IF EXISTS "status";
             '''
         )
         self.cursor.execute(sql0)
@@ -88,7 +88,7 @@ class DatabaseConnection():
             '''
             CREATE TABLE IF NOT EXISTS "status"(
                 status_name character varying(15) PRIMARY KEY
-            )
+            );
             '''
         )
         self.cursor.execute(sql)
@@ -98,7 +98,7 @@ class DatabaseConnection():
         sql1 = (
             '''
             INSERT INTO "status"(status_name)
-            VALUES('New'), ('Processing'), ('Cancelled'), ('Completed')
+            VALUES('New'), ('Processing'), ('Cancelled'), ('Completed');
             '''
         )
         self.cursor.execute(sql1)

@@ -1,1 +1,1 @@
-web: uwsgi uwsgi.ini
+web: gunicorn --chdir api views:app

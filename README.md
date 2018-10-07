@@ -9,7 +9,7 @@ Fast-Food-Fast is a food delivery service app for a restaurant. (V2) Using Persi
 
 
 ## Application URL
-https://fast-food-fast-eomona.herokuapp.com/
+https://fast-food-fast-emma.herokuapp.com/
 
 # SETUP
 ## Requirements

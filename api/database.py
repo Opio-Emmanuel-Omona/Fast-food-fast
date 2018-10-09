@@ -114,7 +114,8 @@ class DatabaseConnection():
             '''
         )
         self.cursor.execute(sql)
-        rows = self.cursor.fetchall()
+        self.connection.commit()
+        rows = self.cursor.fetchall()    
         for row in rows:
             if row[0] == user_dict['username']:
                 return {'message': 'username already taken',

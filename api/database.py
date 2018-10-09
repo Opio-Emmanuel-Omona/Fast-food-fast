@@ -172,7 +172,7 @@ class DatabaseConnection():
                 },
                 'lkjhgfdsapoiuytrewq')
             print(token)
-            return {'message': 'Admin login successful'
+            return {'message': 'Admin login successful',
                     'username': user_dict['username'],
                     'token': token,
                     'status': True}

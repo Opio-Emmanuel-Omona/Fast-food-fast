@@ -18,6 +18,8 @@ class User:
             return {'message': 'Username cannot have spaces'}, 422
         status = self.mydatabase.signin(data)
         if status['status']:
+            print("Inside login status true")
+            print(status)
             return status, 200
         return status, 401
 

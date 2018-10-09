@@ -17,9 +17,8 @@ class User:
         if (' ' in data['username']):
             return {'message': 'Username cannot have spaces'}, 422
         status = self.mydatabase.signin(data)
-        print(status)
         if status['status']:
-            return status
+            return status, 200
         return status, 401
 
     def register(self):

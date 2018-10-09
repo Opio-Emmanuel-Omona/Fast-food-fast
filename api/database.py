@@ -14,6 +14,7 @@ class DatabaseConnection():
             self.connection = psycopg2.connect(database=Data, user=User,
                 password=Password, host=Host, port="5432")
             self.cursor = self.connection.cursor()
+            print ("Connected to local database")
         except:
             Data = "d64v4cgifl4omb"
             User = "zpfghsehqzbqjr"
@@ -22,7 +23,7 @@ class DatabaseConnection():
             self.connection = psycopg2.connect(database=Data, user=User,
                 password=Password, host=Host, port="5432")
             self.cursor = self.connection.cursor()
-            print ("Connected to test_fast_food_fast")
+            print ("Connected to heroku database")
     
     def setuptables(self):
         self.create_user_table()
@@ -140,13 +141,16 @@ class DatabaseConnection():
         '''
         user logs in
         '''
-        sql = "SELECT username, password FROM \"user\";"
+        sql = (
+            '''
+            SELECT username, password FROM "user";
+            '''
+        )
         self.cursor.execute(sql)
         self.connection.commit()
         rows = self.cursor.fetchall()
         print("Before row")
         for row in rows:
-            print("Afyer row")
             if row[0] == user_dict['username'] and row[1] == user_dict['password']:
                 # then login
                 # give token based authentication to this user

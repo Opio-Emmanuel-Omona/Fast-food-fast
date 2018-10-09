@@ -171,9 +171,9 @@ class DatabaseConnection():
                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
                 },
                 'lkjhgfdsapoiuytrewq')
-            self.connection.commit()
             print(token)
-            return {'username': user_dict['username'],
+            return {'message': 'Admin login successful'
+                    'username': user_dict['username'],
                     'token': token,
                     'status': True}
 

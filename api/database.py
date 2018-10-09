@@ -81,18 +81,18 @@ class DatabaseConnection():
         )
         self.cursor.execute(sql0)
         self.connection.commit()
-        print ("Status table populated")
+        print ("Status table dropped")
 
         sql = (
             '''
             CREATE TABLE IF NOT EXISTS "status"(
-                status_name character varying(15) PRIMARY KEY
+                status_name character varying(15)
             );
             '''
         )
         self.cursor.execute(sql)
         self.connection.commit()
-        print ("Status table create")
+        print ("Status table created")
 
         sql1 = (
             '''

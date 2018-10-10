@@ -160,7 +160,7 @@ class DatabaseConnection():
                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
                     'qwertyuiopasdfghjkl')
                 return {'username': user_dict['username'],
-                        'token': token.encode('utf-8'),
+                        'token': token.decode('utf-8'),
                         'status': True}
         
         # ADMIN login
@@ -174,7 +174,7 @@ class DatabaseConnection():
             print(token)
             return {'message': 'Admin login successful',
                     'username': user_dict['username'],
-                    'token': token.encode('utf-8'),
+                    'token': token.decode('utf-8'),
                     'status': True}
 
         return {'message': 'The username and password do not exist',

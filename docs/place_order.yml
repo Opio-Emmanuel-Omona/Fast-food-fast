@@ -1,0 +1,32 @@
+Place Order
+---
+tags:
+  - User Access
+parameters:
+  - name: body
+    in: body
+    required: true
+    type: string
+    description: Add a new order
+    schema:
+      id: place order
+      type: object
+      properties:
+        item_name:
+          type: string
+          example: Rice  
+        quantity:
+          type: string
+          example: "1"
+responses:
+  201:
+    description: Order succesfully placed
+  403:
+    description: Forbidden
+  409:
+    description: Order conflict
+  422:
+    description: Unprocessable order
+security:
+    - TokenHeader: []
+        

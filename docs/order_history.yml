@@ -1,0 +1,19 @@
+Order History
+Order History
+---
+tags:
+  - User Access
+parameters:
+  - name: body
+    in: body
+    description: User can view their order history
+    schema:
+      id: order history
+responses:
+  200:
+    description: Order history Succesfull
+  403:
+    description: Forbidden
+security:
+  - TokenHeader: []
+        

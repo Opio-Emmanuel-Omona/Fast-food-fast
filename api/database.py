@@ -66,7 +66,7 @@ class DatabaseConnection():
                 item_name character varying(20) NOT NULL,
                 quantity integer NOT NULL,
                 status character(15)
-            )
+            );
             '''
         )
         self.cursor.execute(sql)
@@ -83,24 +83,24 @@ class DatabaseConnection():
         self.connection.commit()
         print ("Status table dropped")
 
-        sql = (
+        sql1 = (
             '''
             CREATE TABLE IF NOT EXISTS "status"(
                 status_name character varying(15)
             );
             '''
         )
-        self.cursor.execute(sql)
+        self.cursor.execute(sql1)
         self.connection.commit()
         print ("Status table created")
 
-        sql1 = (
+        sql2 = (
             '''
             INSERT INTO "status"(status_name)
             VALUES('New'), ('Processing'), ('Cancelled'), ('Completed');
             '''
         )
-        self.cursor.execute(sql1)
+        self.cursor.execute(sql2)
         self.connection.commit()
         print ("Status table populated")
 
@@ -160,7 +160,7 @@ class DatabaseConnection():
                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
                     'qwertyuiopasdfghjkl')
                 return {'username': user_dict['username'],
-                        'token': token,
+                        'token': token.encode('utf-8'),
                         'status': True}
         
         # ADMIN login
@@ -174,7 +174,7 @@ class DatabaseConnection():
             print(token)
             return {'message': 'Admin login successful',
                     'username': user_dict['username'],
-                    'token': token,
+                    'token': token.encode('utf-8'),
                     'status': True}
 
         return {'message': 'The username and password do not exist',

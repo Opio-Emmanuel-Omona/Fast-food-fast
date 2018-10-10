@@ -1,0 +1,36 @@
+Sign up
+---
+tags:
+  - Authentication
+parameters:
+  - name: body
+    in: body
+    required: true
+    type: string
+    description: Registering a new user
+    schema:
+      id: sign up
+      properties:
+        username:
+          type: string
+          example: Emmanuel
+        email:
+          type: string
+          example: emmanuel@gmail.com
+        phone_no:
+          type: string
+          example: "0773480077"
+        password:
+          type: string
+          example: emma1234
+responses:
+  201:
+    description: A new user has been created
+  400:
+    description: Bad Request
+  403:
+    description: Forbidden
+  409:
+    description: Conflict
+  422:
+    description: Unprocessable Data

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fast food fast - Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+    <script src="main.js"></script>
+</head>
+<body>
+    <!-- nav bar -->
+    <header class="site-header mb-4">
+        <nav class="navigation">
+            <div class="center">
+                <a class="in-navigation no-td" href="/">Fast food fast</a>
+                <div style=" align-items:center; display: inline-block">
+                    <div class="navbar-nav fl-pr">
+                        <a class="nav-item nav-link no-td padding-2" href=home.html>Home</a>
+                        <a class="nav-item nav-link no-td" href="about.html">About</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav fr">
+                        <a class="nav-item nav-link no-td padding-2" href="signin.html">Login</a>
+                        <a class="nav-item nav-link no-td" href="signup.html">Register</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- sign up form -->
+    <div>
+        <div class="content-section ml-10 mr-5">
+            <form >
+                <fieldset style="border:0">
+                    <legend><h3>Join Today</h3></legend>
+                    <p class="padding-2"><label>Username</label><br> <input class="form-control" type="text" name="username"/></p>
+                    <p class="padding-2"><label>Email</label><br>  <input class="form-control" type="email" name="email"/></p>
+                    <p class="padding-2"><label>Phone Number</label><br>  <input class="form-control" type="number" name="phoneNumber"/></p>
+                    <p class="padding-2"><label>Password</label> <br>  <input class="form-control" type="password" name="password"/></p>
+                    <p class="padding-2"><label>Confirm Password</label><br> <input class="form-control" type="password" name="confirm_password"/></p>   
+                    <input class="btn" id="submit" name="submit" type="submit" value="Sign Up">                 
+                </fieldset>
+            </form>
+            <p class="text-muted">Already Have An Account? <a class="link" href="signin.html">Sign in</a></p>            
+        </div>
+        <div class="content-section  mr-10 fr-w-25">
+            <img src="images/home.jpg" alt="picture of food" width="100%" height="480px">
+        </div>
+    </div>
+    
+    
+</body>
+</html>

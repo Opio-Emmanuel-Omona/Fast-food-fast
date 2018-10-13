@@ -1,5 +1,5 @@
 '''The main application'''
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, request, redirect, render_template, url_for
 from functools import wraps
 from flasgger import Swagger, swag_from
 from flask_restful import Resource, Api, reqparse
@@ -149,3 +149,11 @@ api.add_resource(Orders, '/api/v2/orders/')
 @app.route("/")
 def hello():
     return redirect('/apidocs')
+
+@app.route("/signuphtml", methods=['GET'])
+def signuphtml():
+    return render_template('signup.html')
+
+@app.route("/signuphtml2", methods=['GET'])
+def signuphtml2():
+    return jsonify({'message': 'Successful'})

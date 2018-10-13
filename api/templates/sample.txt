@@ -1,0 +1,2 @@
+This is a samlpe text that has been fatch
+using the fetch api \n in order to get text.

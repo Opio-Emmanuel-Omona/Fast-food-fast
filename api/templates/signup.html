@@ -37,13 +37,17 @@
                     <legend>
                         <h3>Join Today</h3>
                     </legend>
-                    <p class="padding-2"><label>Username</label><br> <input class="form-control" type="text" name="username" /></p>
-                    <p class="padding-2"><label>Email</label><br> <input class="form-control" type="email" name="email" /></p>
-                    <p class="padding-2"><label>Phone Number</label><br> <input class="form-control" type="number" name="phoneNumber" /></p>
-                    <p class="padding-2"><label>Password</label> <br> <input class="form-control" type="password" name="password" /></p>
+                    <p class="padding-2"><label>Username</label><br> <input id='username' class="form-control" type="text"
+                            name="username" /></p>
+                    <p class="padding-2"><label>Email</label><br> <input id='email' class="form-control" type="email"
+                            name="email" /></p>
+                    <p class="padding-2"><label>Phone Number</label><br> <input id='phone_no' class="form-control" type="number"
+                            name="phoneNumber" /></p>
+                    <p class="padding-2"><label>Password</label> <br> <input id='password' class="form-control" type="password"
+                            name="password" /></p>
                     <p class="padding-2"><label>Confirm Password</label><br> <input class="form-control" type="password"
                             name="confirm_password" /></p>
-                    <input class="btn" id="submit" name="submit" type="submit" value="Sign Up">
+                    <input class="btn" id="submit-signup" name="submit" onclick="addUserAPI(event)" type="submit" value="Sign Up">
                 </fieldset>
             </form>
             <p class="text-muted">Already Have An Account? <a class="link" href="signin.html">Sign in</a></p>
@@ -53,88 +57,7 @@
         </div>
     </div>
 
-    <!-- scripts -->
-    <script>
-        // Listen for clicks in the browser
-        document.getElementById('submit').addEventListener('click', addUserAPI);
-
-        function addUserAPI() {
-            url = 'http://127.0.0.1:5000/signuphtml2';
-
-            // create a request variable and assign a new XMLHttpRequest object to it.
-            var request = new XMLHttpRequest();
-
-            // open a new connection, using the GET request on the  URL endpoint
-            request.open('GET', url, true);
-
-            request.onload = function () {
-                //begin accessing the JSON data here
-                var data = JSON.parse(this.response);
-
-                if (request.status >= 200 && request.status < 400) {
-                    console.log(data);
-
-                } else {
-                    console.log('error');
-                }
-            }
-
-            request.send();
-
-            // const data = new URLSearchParams(new FormData(formElement));
-
-            // for (const pair of new FormData(formElement))
-            // payload = {
-            //     username: "emmanuel",
-            //     email: "emma@gmail.com",
-            //     phone_no: "4324",
-            //     password: "emmanuel"
-            // }
-            // data = {
-            //     method: 'GET',
-            //     mode: 'no-cors',
-            //     // headers: {
-            //     //     'Accept': 'application/json',
-            //     //     'Content-Type': 'application/json'
-            //     // }
-            //     // data: payload
-            // };
-
-            // resp = fetch(url, data)
-            //     .then(function (res) {
-            //         console.log(res);
-            //         console.log(resp);
-            //     })
-
-            // (async () => {
-            //     console.log('fetching the url');
-            //     resp = fetch(url, data);
-            //     console.log('finished');
-            // })(
-            //     function (res) {
-            //         console.log(res);
-            //         console.log(12);
-            //         console.log(resp);
-            //     }
-            // )
-
-
-            // (async () => {
-            //     const rawResponse = await fetch(url,
-            //         {
-            //             method: 'POST',
-            //             body: data,
-            //             headers: {
-            //                 'Accept': 'application/json',
-            //                 'Content-Type': 'application/json'
-            //             }
-            //         })
-            //     console.log(rawResponse);
-            // })();
-
-        }
-    </script>
-
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 

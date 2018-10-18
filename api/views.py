@@ -150,10 +150,15 @@ api.add_resource(Orders, '/api/v2/orders/')
 def hello():
     return redirect('/apidocs')
 
-@app.route("/signuphtml", methods=['GET'])
-def signuphtml():
+@app.route('/signup')
+def signupUI():
     return render_template('signup.html')
 
-@app.route("/signuphtml2", methods=['GET'])
-def signuphtml2():
-    return jsonify({'message': 'Successful'})
+@app.route('/login')
+def loginUI():
+    return render_template('signin.html')
+
+@app.route('/home')
+# @token_required
+def homeUI():
+    return render_template('home.html')

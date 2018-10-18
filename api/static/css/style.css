@@ -103,6 +103,10 @@
     padding-right: 30rem;
 }
 
+.fl{
+    float: left;
+}
+
 .fr {
     float: right;
 }

@@ -64,7 +64,6 @@ function signin(e) {
         });
 }
 
-
 function getOrders() {
     // get all the orderes and display them
     url = 'http://127.0.0.1:5000/api/v2/menu';
@@ -89,12 +88,12 @@ function getOrders() {
                             <img src="images/chips-chicken.jpg" alt="" width="100%" height="100%"></img>
                         </div>
 
-                        <div class="content-area w-50-h-100">
+                        <div id="item_no${+index}" class="content-area w-50-h-100">
                             ${data['menu'][index].item_name}<br>UGX ${data['menu'][index].price}
                         </div>
 
                         <div class="content-area w-50-h-100">
-                            <button class="order-btn">Order<button>
+                            <button class="order-btn" onclick="placeOrder('${data['menu'][index].item_name}')">Order<button>
                         </div>
                     </div>
                 `;
@@ -132,5 +131,30 @@ function orderHistory() {
                 `;
             }
             document.getElementById('order_history').innerHTML = output;
+        });
+}
+
+function placeOrder(item_name) {
+    url = 'http://127.0.0.1:5000/api/v2/users/orders';
+
+    var order_detail = JSON.stringify({
+        item_name: item_name,
+        quantity: 1
+    });
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        },
+        body: order_detail,
+    })
+        .then((response) => response.json())
+        .then(function (data) {
+            //display message to the user
+            console.log(data);
+
+
         });
 }

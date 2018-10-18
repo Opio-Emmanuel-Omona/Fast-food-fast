@@ -102,3 +102,35 @@ function getOrders() {
             document.getElementById('food_items').innerHTML = output;
         });
 }
+
+function orderHistory() {
+    // get the order history and display
+    url = 'http://127.0.0.1:5000/api/v2/users/orders';
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        },
+    })
+        .then((response) => response.json())
+        .then(function (data) {
+            //display history to the user
+            console.log(data);
+
+            let output = '';
+            for (let index = 0; index < data['history'].length; index++) {
+                output += `
+                <div class="content-section d-il-b" style="height:50px;  width: 55%;">
+                    Item: ${data['history'][index].item_name}
+                </div>
+                <!-- date -->
+                <div class="content-section d-il-b" style="height:50px; width: 12%;">
+                    date: 
+                </div>
+                `;
+            }
+            document.getElementById('order_history').innerHTML = output;
+        });
+}

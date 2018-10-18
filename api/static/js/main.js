@@ -54,8 +54,9 @@ function signin(e) {
         .then((response) => response.json())
         .then(function (data) {
             //display message to the user
-            console.log(data);
             alert(data);
+
+            localStorage.setItem('token', data.token)
 
             //then redirect with the token to the home page
             url = 'HTTP://127.0.0.1:5000/home'
@@ -72,14 +73,13 @@ function getOrders() {
         method: 'GET',
         headers: {
             'Content-type': 'application/json',
-            'Authorization': ''
+            'Authorization': localStorage.getItem('token')
         },
     })
         .then((response) => response.json())
         .then(function (data) {
             //display menu to the user
             console.log(data);
-            console.log(data['menu'].length);
 
             let output = '';
             for (let index = 0; index < data['menu'].length; index++) {

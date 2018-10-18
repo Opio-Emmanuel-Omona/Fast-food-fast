@@ -159,6 +159,9 @@ def loginUI():
     return render_template('signin.html')
 
 @app.route('/home')
-# @token_required
 def homeUI():
     return render_template('home.html')
+
+@app.route('/admin')
+def adminUI():
+    return render_template('admin.html')

@@ -1,0 +1,46 @@
+/* style the tablinks */
+.tablinks {
+	border-color: #555;
+	color: white;
+	float: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px 16px;
+	font-size: 17px;
+	width: 25%;
+}
+
+/* Change background color of buttons on hover */
+.tablinks:hover {
+	background-color: #777;
+}
+
+/* Style the tab content */
+.tabcontent {
+	display: none;
+	padding: 100px 2px;
+	height: 100%;
+}
+
+.status{
+	border: 1px solid black;
+}
+
+.ordertabs {
+	background-color: #330000;
+	width: 24%;
+	border: 1px solid #777;
+	float: left;
+	text-align: center;
+}
+
+.orderstatus {
+	height: 400px;
+	overflow-y: scroll;
+}
+
+#colorNew {background-color: blue}
+#colorProcessing {background-color: #FF6600}
+#colorCancelled {background-color: red}
+#colorComplete {background-color: green}

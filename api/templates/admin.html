@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Fast food fast - admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/adminstyle.css') }}" />
 </head>
+
 <body>
     <!-- nav bar -->
     <header class="site-header mb-4">
@@ -28,109 +30,65 @@
             </div>
         </nav>
     </header>
-    
-    <div class="content-section ml-10 mr-10">
-        <h3>Admin</h3>
-        <p>Admin can view the orders placed by other users and can either accept or reject them
-        </p>
-    
-        <p>When an order is accepted, the decline button disaapears and "accept" button becomes "accepted"
-        </p>
-        <p>New Orders are lightcoral (greyish red)<br>
-        Completed Ordes are lightslategray (greyish blue)
-        </p>
-    </div>
 
-    <div class="content-section ml-10 mr-10">
-    <p><h3>Orders Placed</h3></p>
+    <div class="ml-10 mr-10">
+        <!-- Tab Links -->
+        <button class="tablinks" onclick="openpage('Orders', this, '#330000')" id="defaultOpen">Orders</button>
+        <button class="tablinks" onclick="openpage('Menu', this, '#17a2b8')">Menu</button>
 
-    <div id="content-1" class="content-section-no-color bc-lc">
-        <!-- User -->
-        <div class="content-section d-il-b">
-            Username
+        <!-- Tab Content -->
+        <div id="Orders" class="tabcontent">
+            <!-- <h3>Orders</h3> -->
+
+            <!-- all orders by status -->
+            <div>
+                <!-- new -->
+                <div class="ordertabs">
+                    <div id="colorNew" class="status">
+                        <h4>New</h4>
+                    </div>
+                    <div id="new_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+
+                <!-- processing -->
+                <div class="ordertabs">
+                    <div id="colorProcessing" class="status">
+                        <h4>Processing</h4>
+                    </div>
+                    <div id="processing_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+
+                <!-- cancelled -->
+                <div class="ordertabs">
+                    <div id="colorCancelled" class="status">
+                        <h4>Cancelled</h4>
+                    </div>
+                    <div id="cancelled_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+
+                <!-- complete -->
+                <div class="ordertabs">
+                    <div id="colorComplete" class="status">
+                        <h4>Complete</h4>
+                    </div>
+                    <div id="complete_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+            </div>
+            <img id="drag1" src="images/logo.jpg" draggable="true" ondragstart="drag(event)" width="300" height="69">
+            <div id="drag2" draggable="true" ondragstart="drag(event)">
+                <p>Hello guys</p>
+            </div>
+
         </div>
-        <!-- Order -->
-        <div class="content-section d-il-b">
-            Order
-        </div>
-        <!-- Location -->
-        <div class="content-section d-il-b">
-            Location of the User
-        </div>
-        <!-- Decision -->
-        <div class="content-section d-il-b">
-            <button id="accpet-btn-1" onclick="accepted('accpet-btn-1','decline-btn-1','complete-btn-1')" class="decision-btn chart">Accept</button>
-            <button id="decline-btn-1" class="decision-btn red">Decline</button>
-        </div>
-        <!-- Complete order -->
-        <div class="content-section d-il-b">
-            <button id="complete-btn-1" onclick="completed('complete-btn-1','content-1')" class="order-btn mute">Complete order</button>
-        </div>
-    </div>
-    <div id="content-2" class="content-section-no-color bc-lc">
-        <!-- User -->
-        <div class="content-section d-il-b">
-            Username
-        </div>
-        <!-- Order -->
-        <div class="content-section d-il-b">
-            Order
-        </div>
-        <!-- Location -->
-        <div class="content-section d-il-b">
-            Location of the User
-        </div>
-        <!-- Decision -->
-        <div class="content-section d-il-b">
-            <button class="decision-btn chart">Accepted</button>
-            <button class="decision-btn red vis-hid">Decline</button>
-        </div>
-        <!-- Complete order -->
-        <div class="content-section d-il-b">
-            <button id="complete-btn-2" onclick="completed('complete-btn-2','content-2')" class="order-btn">Complete order</button>
-        </div>
-    </div>
-    <div class="content-section-no-color bc-llg">
-        <!-- User -->
-        <div class="content-section d-il-b">
-            Username
-        </div>
-        <!-- Order -->
-        <div class="content-section d-il-b">
-            Order
-        </div>
-        <!-- Location -->
-        <div class="content-section d-il-b">
-            Location of the User
-        </div>
-        <!-- Decision -->
-        <div class="content-section d-il-b">
-            <button class="decision-btn chart">Accepted</button>
-            <button class="decision-btn red vis-hid">Decline</button>
-        </div>
-        <!-- Complete order -->
-        <div class="content-section d-il-b">
-            <button class="order-btn">Completed</button>
+        <div id="Menu" class="tabcontent">
+            <h3>Menu</h3>
+            <p>Add menu item to the menu</p>
         </div>
     </div>
-    </div>
-    
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script type="text/javascript">
+        document.getElementById('defaultOpen').click();
+    </script>
 </body>
-<script>
-    function completed(complete,content) {
-        document.getElementById(complete).innerHTML = "Completed";
-        document.getElementById(content).style.backgroundColor = "lightslategray"
-    }
 
-    function accepted(accept, decline, complete) {
-        document.getElementById(accept).innerHTML ="Accepted";
-        document.getElementById(decline).style.visibility = 'hidden';
-        document.getElementById(complete).style.pointerEvents = "all";
-        document.getElementById(complete).style.color = "#17a2b8";
-        
-    }
-
-    function decline() {
-
-    }
-</script>
+</html>

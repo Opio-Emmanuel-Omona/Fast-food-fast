@@ -56,15 +56,15 @@ function signin(e) {
             //display message to the user
             alert(data);
 
-            localStorage.setItem('token', data.token)
+            localStorage.setItem('token', data.token);
 
             //then redirect with the token to the home page
-            url = 'HTTP://127.0.0.1:5000/home'
+            url = 'HTTP://127.0.0.1:5000/home';
             window.location.href = url;
         });
 }
 
-function getOrders() {
+function getMenu() {
     // get all the orderes and display them
     url = 'http://127.0.0.1:5000/api/v2/menu';
 
@@ -154,7 +154,5 @@ function placeOrder(item_name) {
         .then(function (data) {
             //display message to the user
             console.log(data);
-
-
         });
 }

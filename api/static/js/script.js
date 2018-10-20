@@ -34,6 +34,9 @@ function drop(ev) {
 	ev.preventDefault();
 	var data = ev.dataTransfer.getData("text/html");
 	ev.target.appendChild(document.getElementById(data));
+
+	//update the status of the order
+	updateOrderStatus(data, ev.target.id)
 }
 
 function getOrders() {
@@ -57,7 +60,7 @@ function getOrders() {
 
 			for (let index = 0; index < data['orders'].length; index++) {
 				let output = `
-					<div id="drag${+index}" draggable="true" ondragstart="drag(event)" class="content-section-b">
+					<div id="${data['orders'][index].order_id}" draggable="true" ondragstart="drag(event)" class="content-section-b">
 						${data['orders'][index].order_id}<br>
 						${data['orders'][index].username}<br>
 						${data['orders'][index].item_name}<br>
@@ -84,7 +87,7 @@ function getOrders() {
 		});
 }
 
-function addItem(e){
+function addItem(e) {
 	e.preventDefault();
 
 	url = 'http://127.0.0.1:5000/api/v2/menu';
@@ -94,37 +97,52 @@ function addItem(e){
 		price: document.getElementById('price').value
 	});
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
+	fetch(url, {
+		method: 'POST',
+		headers: {
 			'Content-type': 'application/json',
 			'Authorization': localStorage.getItem('token')
-        },
-        body: menu_detail
-    })
-        .then((response) => response.json())
-        .then(function (data) {
+		},
+		body: menu_detail
+	})
+		.then((response) => response.json())
+		.then(function (data) {
 			console.log(data);
 		});
 }
 
-function updateOrderStatus(orderId, newStatus){
-	url = 'http://127.0.0.1:5000/api/v2/orders/'+orderId;
+function updateOrderStatus(orderId, newStatus) {
+	url = 'http://127.0.0.1:5000/api/v2/orders/' + orderId;
+
+
+	if (newStatus.includes('new')) {
+		newStatus = 'New';
+	}
+	else if (newStatus.includes('processing')) {
+		newStatus = 'Processing';
+	}
+	else if (newStatus.includes('cancel')) {
+		newStatus = 'Cancelled';
+	}
+	else if (newStatus.includes('complete')) {
+		newStatus = 'Completed';
+	}
 
 	var order_detail = JSON.stringify({
 		status_name: newStatus
 	});
 
-    fetch(url, {
-        method: 'PUT',
-        headers: {
+
+	fetch(url, {
+		method: 'PUT',
+		headers: {
 			'Content-type': 'application/json',
 			'Authorization': localStorage.getItem('token')
-        },
-        body: order_detail
-    })
-        .then((response) => response.json())
-        .then(function (data) {
+		},
+		body: order_detail
+	})
+		.then((response) => response.json())
+		.then(function (data) {
 			console.log(data);
 		});
 }

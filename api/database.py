@@ -330,7 +330,7 @@ class DatabaseConnection():
                         UPDATE "order" SET status = %s WHERE order_id = %s;
                         '''
                     )
-                    self.cursor.execute(sql)
+                    self.cursor.execute(sql, [user_dict['status_name'], user_dict['order_id']])
                     self.connection.commit() 
                 else:       
                     return {'message': 'wrong status provided', 'status': False}

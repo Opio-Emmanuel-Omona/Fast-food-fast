@@ -31,10 +31,11 @@ body, html {
 
 .status{
 	border: 1px solid black;
+	color: white;
 }
 
 .ordertabs {
-	background-color: #330000;
+	background-color: #212121;
 	width: 24%;
 	border: 1px solid #777;
 	float: left;
@@ -46,7 +47,7 @@ body, html {
 	overflow-y: scroll;
 }
 
-#colorNew {background-color: blue}
-#colorProcessing {background-color: #FF6600}
-#colorCancelled {background-color: red}
-#colorComplete {background-color: green}
+#colorNew {background-color: #031533 /*blue*/}
+#colorProcessing {background-color: #031533 /*#FF6600*/}
+#colorCancelled {background-color: #031533 /*red*/}
+#colorComplete {background-color: #031533 /*green*/}

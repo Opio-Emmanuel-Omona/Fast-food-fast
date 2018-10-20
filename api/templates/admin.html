@@ -23,7 +23,7 @@
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav fr">
-                        <a class="nav-item nav-link no-td padding-2" href="signin.html">Login</a>
+                        <a class="nav-item nav-link no-td padding-2" href="{{ url_for('static', filename='signin.html') }}">Login</a>
                         <a class="nav-item nav-link no-td" href="signup.html">Register</a>
                     </div>
                 </div>
@@ -33,8 +33,8 @@
 
     <div class="ml-10 mr-10">
         <!-- Tab Links -->
-        <button class="tablinks" onclick="openpage('Orders', this, '#330000')" id="defaultOpen">Orders</button>
-        <button class="tablinks" onclick="openpage('Menu', this, '#17a2b8')">Menu</button>
+        <button class="tablinks" onclick="openpage('Orders', this, '#031533')" id="defaultOpen">Orders</button>
+        <button class="tablinks" onclick="openpage('Menu', this, '#031533')">Menu</button>
 
         <!-- Tab Content -->
         <div id="Orders" class="tabcontent">
@@ -76,11 +76,28 @@
             </div>
         </div>
 
-    </div>
-    <div id="Menu" class="tabcontent">
-        <h3>Menu</h3>
-        <p>Add menu item to the menu</p>
-    </div>
+
+        <div id="Menu" class="tabcontent">
+            <form>
+                <div class="form-control">
+                    <p class="padding-2">
+                        <input type="file" placeholder="image" />
+                    </p>
+
+                    <p class="padding-2">
+                        <label>Item</label><br>
+                        <input id="item_name" class="form-control" type="text" name="item_name" />
+                    </p>
+                    <p class="padding-2">
+                        <label>Price</label><br>
+                        <input id="price" class="form-control" type="text" name="price" />
+                    </p>
+                    <p class="padding-2">
+                        <input class="btn" id="additem-menu" name="submit" onclick="addItem(event)" type="submit" value="Add Item">
+                    </p>
+                </div>
+            </form>
+        </div>
     </div>
     <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script type="text/javascript">

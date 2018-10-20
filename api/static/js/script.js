@@ -84,6 +84,51 @@ function getOrders() {
 		});
 }
 
+function addItem(e){
+	e.preventDefault();
+
+	url = 'http://127.0.0.1:5000/api/v2/menu';
+
+	var menu_detail = JSON.stringify({
+		item_name: document.getElementById('item_name').value,
+		price: document.getElementById('price').value
+	});
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+			'Content-type': 'application/json',
+			'Authorization': localStorage.getItem('token')
+        },
+        body: menu_detail
+    })
+        .then((response) => response.json())
+        .then(function (data) {
+			console.log(data);
+		});
+}
+
+function updateOrderStatus(orderId, newStatus){
+	url = 'http://127.0.0.1:5000/api/v2/orders/'+orderId;
+
+	var order_detail = JSON.stringify({
+		status_name: newStatus
+	});
+
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+			'Content-type': 'application/json',
+			'Authorization': localStorage.getItem('token')
+        },
+        body: order_detail
+    })
+        .then((response) => response.json())
+        .then(function (data) {
+			console.log(data);
+		});
+}
+
 function resetOrderStatusTabs() {
 	document.getElementById('new_order').innerHTML = '';
 	document.getElementById('processing_order').innerHTML = '';

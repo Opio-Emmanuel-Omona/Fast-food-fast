@@ -1,9 +1,9 @@
 # Fast-food-fast
 Fast-Food-Fast is a food delivery service app for a restaurant. (V2) Using Persistant data
 
-[![Build Status](https://travis-ci.com/Opio-Emmanuel-Omona/Fast-food-fast.svg?branch=feedback)](https://travis-ci.com/Opio-Emmanuel-Omona/Fast-food-fast)
+[![Build Status](https://travis-ci.com/Opio-Emmanuel-Omona/Fast-food-fast.svg?branch=frontend)](https://travis-ci.com/Opio-Emmanuel-Omona/Fast-food-fast)
 
-[![Coverage Status](https://coveralls.io/repos/github/Opio-Emmanuel-Omona/Fast-food-fast/badge.svg?branch=feedback)](https://coveralls.io/github/Opio-Emmanuel-Omona/Fast-food-fast?branch=feedback)
+[![Coverage Status](https://coveralls.io/repos/github/Opio-Emmanuel-Omona/Fast-food-fast/badge.svg?branch=frontend)](https://coveralls.io/github/Opio-Emmanuel-Omona/Fast-food-fast?branch=frontend)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/72822b2801edfcc8895b/maintainability)](https://codeclimate.com/github/Opio-Emmanuel-Omona/Fast-food-fast/maintainability)
 

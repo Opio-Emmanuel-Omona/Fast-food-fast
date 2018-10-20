@@ -54,18 +54,30 @@ function signin(e) {
         .then((response) => response.json())
         .then(function (data) {
             //display message to the user
+            console.log(data);
             alert(data);
 
-            localStorage.setItem('token', data.token);
+            if (data.username == 'admin') {
+                localStorage.setItem('token', data.token);
+                url = 'HTTP://127.0.0.1:5000/admin';
+                window.location.href = url;
+            }
+            else if (data.username != null) {
+                localStorage.setItem('token', data.token);
 
-            //then redirect with the token to the home page
-            url = 'HTTP://127.0.0.1:5000/home';
-            window.location.href = url;
+                //then redirect with the token to the home page
+                url = 'HTTP://127.0.0.1:5000/home';
+                window.location.href = url;
+            }
+            else {
+                //error
+            }
+
         });
 }
 
 function getMenu() {
-    // get all the orderes and display them
+    // get the menu and display it
     url = 'http://127.0.0.1:5000/api/v2/menu';
 
     fetch(url, {

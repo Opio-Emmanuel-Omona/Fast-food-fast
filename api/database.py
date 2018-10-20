@@ -86,7 +86,7 @@ class DatabaseConnection():
         sql1 = (
             '''
             CREATE TABLE IF NOT EXISTS "status"(
-                status_name character varying(15)
+                status_name character varying(15) NOT NULL
             );
             '''
         )

@@ -147,9 +147,6 @@ api.add_resource(Orders, '/api/v2/orders/')
 
 
 @app.route("/")
-def hello():
-    return redirect('/apidocs')
-
 @app.route('/signup')
 def signupUI():
     return render_template('signup.html')

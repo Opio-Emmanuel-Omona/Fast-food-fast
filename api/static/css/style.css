@@ -1,3 +1,6 @@
+body, html{
+    background-color: #495057;
+}
 
 .bc-lc {
     background: lightcoral;

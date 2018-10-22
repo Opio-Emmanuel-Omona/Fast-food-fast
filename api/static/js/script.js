@@ -58,32 +58,41 @@ function getOrders() {
 			// refresh the order status
 			resetOrderStatusTabs();
 
-			for (let index = 0; index < data['orders'].length; index++) {
-				let output = `
-					<div id="${data['orders'][index].order_id}" draggable="true" ondragstart="drag(event)" class="content-section-b">
-						${data['orders'][index].order_id}<br>
-						${data['orders'][index].username}<br>
-						${data['orders'][index].item_name}<br>
-						${data['orders'][index].quantity}<br>
-					</div>
-				`;
-				// Using contains because of the extra space in the status
-				if (data['orders'][index].status.includes("New")) {
-					document.getElementById('new_order').innerHTML += output;
-				}
-				else if (data['orders'][index].status.includes('Processing')) {
-					document.getElementById('processing_order').innerHTML += output;
-				}
-				else if (data['orders'][index].status.includes('Cancelled')) {
-					document.getElementById('cancelled_order').innerHTML += output;
-				}
-				else if (data['orders'][index].status.includes('Complete')) {
-					document.getElementById('complete_order').innerHTML += output;
-				}
-				else {
-					//error
+			if(data['orders']){
+				for (let index = 0; index < data['orders'].length; index++) {
+					let output = `
+						<div id="${data['orders'][index].order_id}" draggable="true" ondragstart="drag(event)" class="content-section-b">
+							${data['orders'][index].order_id}<br>
+							${data['orders'][index].username}<br>
+							${data['orders'][index].item_name}<br>
+							${data['orders'][index].quantity}<br>
+						</div>
+					`;
+					// Using contains because of the extra space in the status
+					if (data['orders'][index].status.includes("New")) {
+						document.getElementById('new_order').innerHTML += output;
+					}
+					else if (data['orders'][index].status.includes('Processing')) {
+						document.getElementById('processing_order').innerHTML += output;
+					}
+					else if (data['orders'][index].status.includes('Cancelled')) {
+						document.getElementById('cancelled_order').innerHTML += output;
+					}
+					else if (data['orders'][index].status.includes('Complete')) {
+						document.getElementById('complete_order').innerHTML += output;
+					}
+					else {
+						// error
+					}
 				}
 			}
+			else{
+				// error
+				alert('Please log in as admin');
+				url = "http://127.0.0.1:5000/login"
+				window.location.href = url;
+			}
+			
 		});
 }
 

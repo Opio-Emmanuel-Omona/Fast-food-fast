@@ -216,14 +216,18 @@ class DatabaseConnection():
         return {'message': 'Order item not in menu', 'status': False}
 
     def order_history(self, user_dict):
-        sql = "SELECT username, item_name FROM \"order\";"
+        sql = "SELECT * FROM \"order\";"
         self.cursor.execute(sql)
         rows = self.cursor.fetchall()
         # decdode the username from the token
         history = []
         for row in rows:
-            if row[0] == user_dict['username']:  # username
-                history.append({'item_name': row[1]})
+            if row[1] == user_dict['username']:  # username
+                history.append({
+                    'item_name': row[2],
+                    'quantity': row[3],
+                    'status_name': row[4]
+                    })
         
         self.connection.commit()
         return history

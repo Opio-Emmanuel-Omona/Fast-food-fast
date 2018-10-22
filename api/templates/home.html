@@ -44,6 +44,8 @@
                         <h3 onclick="getMenu()">Available Food</h3>
                     </p>
                 </div>
+                <p id="orderStatusF" class="orderStatus"></p>
+                <p id="orderStatusP" class="orderStatus"></p>
 
                 <div id="food_items" class="content-sction">
 
@@ -61,6 +63,10 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        getMenu();
+        orderHistory();
+    </script>
 
 </body>
 

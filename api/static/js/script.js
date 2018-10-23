@@ -19,7 +19,9 @@ function openpage(pageName, elmnt, color) {
 	elmnt.style.backgroundColor = color;
 
 	//call the method to fetch all the orders
-	getOrders();
+	if (pageName == 'Orders') {
+		getOrders();
+	}
 }
 
 function allowDrop(ev) {
@@ -37,6 +39,40 @@ function drop(ev) {
 
 	//update the status of the order
 	updateOrderStatus(data, ev.target.id)
+}
+
+function dropFile(ev) {
+	ev.preventDefault();
+	document.getElementById('item_name').value = ev.dataTransfer.files[0]['name'].split('.')[0];
+	ev.target.innerHTML = 'Succesfully dropped';
+	upload(ev.dataTransfer.files[0]);
+}
+
+function changeColor(ev) {
+	ev.preventDefault();
+	ev.target.className = "dropzone dragover";
+}
+
+function changeColorBack(ev) {
+	ev.preventDefault();
+	ev.target.className = "dropzone";
+}
+
+function upload(file) {
+	url = 'http://127.0.0.1:5000/upload';
+
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-type': 'application/json',
+			'Authorization': localStorage.getItem('token')
+		},
+		body: file
+	})
+		.then((response) => response.json())
+		.then(function (data) {
+			console.log(data);
+		})
 }
 
 function getOrders() {
@@ -58,7 +94,7 @@ function getOrders() {
 			// refresh the order status
 			resetOrderStatusTabs();
 
-			if(data['orders']){
+			if (data['orders']) {
 				for (let index = 0; index < data['orders'].length; index++) {
 					let output = `
 						<div id="${data['orders'][index].order_id}" draggable="true" ondragstart="drag(event)" class="content-section-b">
@@ -86,13 +122,13 @@ function getOrders() {
 					}
 				}
 			}
-			else{
+			else {
 				// error
 				alert('Please log in as admin');
 				url = "http://127.0.0.1:5000/login"
 				window.location.href = url;
 			}
-			
+
 		});
 }
 
@@ -116,7 +152,16 @@ function addItem(e) {
 	})
 		.then((response) => response.json())
 		.then(function (data) {
-			console.log(data);
+			console.log(data['message']);
+			if (data['message'].includes('succes')) {
+				document.getElementById('validityOK').innerHTML = 'OK';
+				document.getElementById('validityBad').innerHTML = '';
+			}
+			else {
+				document.getElementById('validityBad').innerHTML = data['message'];
+				document.getElementById('validityOK').innerHTML = '';
+				console.log(data['message']);
+			}
 		});
 }
 

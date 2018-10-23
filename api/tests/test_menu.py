@@ -29,7 +29,7 @@ class TestMenu:
                 client,
                 '/api/v2/menu',
                 {
-                    'item_name': 'admin_item',
+                    'item_name': 'Chips + Chicken',
                     'price': '5000',
                 },
                 response1.json['token']

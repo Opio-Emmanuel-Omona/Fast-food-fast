@@ -47,6 +47,20 @@ body, html {
 	overflow-y: scroll;
 }
 
+.validityOK {
+	color: green;
+	font-size: 1rem;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+}
+
+.validityBad {
+	color: red;
+	font-size: 1rem;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+}
+
 #colorNew {background-color: #031533 /*blue*/}
 #colorProcessing {background-color: #031533 /*#FF6600*/}
 #colorCancelled {background-color: #031533 /*red*/}

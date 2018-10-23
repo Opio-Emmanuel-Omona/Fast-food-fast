@@ -157,7 +157,7 @@ class DatabaseConnection():
                 # give token based authentication to this user
                 token = jwt.encode({
                     'username': user_dict['username'],
-                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=45)},
                     'qwertyuiopasdfghjkl')
                 return {'username': user_dict['username'],
                         'token': token.decode('utf-8'),
@@ -168,7 +168,7 @@ class DatabaseConnection():
             token = jwt.encode(
                 {
                     'username': user_dict['username'],
-                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=45)
                 },
                 'lkjhgfdsapoiuytrewq')
             print(token)

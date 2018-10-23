@@ -6,9 +6,9 @@ from flask_restful import Resource, Api, reqparse
 from api.order import Order
 from api.user import User
 from api.menu import Menu
-
-import jwt
 from api.database import DatabaseConnection
+import os
+import jwt
 
 
 app = Flask(__name__)  # pylint: disable=invalid-name
@@ -29,6 +29,8 @@ Swagger(
     })
 
 api = Api(app)
+
+APP_ROOT = app.instance_path
 
 # pylint: disable=missing-docstring
 # pylint: disable=redefined-outer-name
@@ -161,4 +163,18 @@ def homeUI():
 
 @app.route('/admin')
 def adminUI():
+    return render_template('admin.html')
+
+@app.route('/upload', methods=['POST'])
+# @admin_required
+def upload():
+    target = os.path.join(APP_ROOT, '../api/static/images')
+
+    if not os.path.isdir(target):
+        os.mkdir(target)
+
+    filename = request.files.getlist('file')[0].filename
+    destination = target + "/" + filename
+    print(destination)
+    request.files.getlist('file')[0].save(destination)
     return render_template('admin.html')

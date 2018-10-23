@@ -94,15 +94,13 @@ function getMenu() {
         .then((response) => response.json())
         .then(function (data) {
             //display menu to the user
-            console.log(data);
-
             var output = '';
             if (data['menu']) {
                 for (let index = 0; index < data['menu'].length; index++) {
                     output += `
                         <div class="content-section-b">
                             <div class="content-area wh-100">
-                                <img src="images/chips-chicken.jpg" alt="" width="100%" height="100%"></img>
+                                <img src="static/images/${data['menu'][index].item_name}.jpg" alt="Food image" width="100%" height="100%"/>
                             </div>
 
                             <div id="item_no${+index}" class="content-area w-50-h-100">
@@ -114,6 +112,7 @@ function getMenu() {
                             </div>
                         </div>
                     `;
+                    console.log(data['menu'][index].item_name);
                 }
             } else {
                 output = `<p class="error">Please log in to view the menu</p>`;
@@ -139,7 +138,6 @@ function orderHistory() {
             //display history to the user
             var output = '';
             if (data['history']) {
-                console.log(data);
                 if (data['history'].length == 0) {
                     output = `<p class="error">No history available</p>`;
                 }
@@ -197,5 +195,5 @@ function placeOrder(item_name) {
             }
         });
 
-        orderHistory();
+    orderHistory();
 }

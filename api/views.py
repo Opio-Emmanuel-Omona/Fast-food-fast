@@ -165,6 +165,10 @@ def homeUI():
 def adminUI():
     return render_template('admin.html')
 
+@app.route('/about')
+def aboutUI():
+    return render_template('about.html')
+
 @app.route('/upload', methods=['POST'])
 # @admin_required
 def upload():

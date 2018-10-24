@@ -21,13 +21,13 @@
                 <a class="in-navigation no-td" href="/">Fast food fast</a>
                 <div style=" align-items:center; display: inline-block">
                     <div class="navbar-nav fl-pr">
-                        <a class="nav-item nav-link no-td padding-2" href="{{ url_for('home') }}">Home</a>
-                        <a class="nav-item nav-link no-td" href="{{ url_for('about') }}">About</a>
+                        <a class="nav-item nav-link no-td padding-2" href="{{ url_for('homeUI') }}">Home</a>
+                        <a class="nav-item nav-link no-td" href="{{ url_for('aboutUI') }}">About</a>
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav fr">
-                        <a class="nav-item nav-link no-td padding-2" href="{{ url_for('login') }}">Login</a>
-                        <a class="nav-item nav-link no-td" href="{{ url_for('signup') }}">Register</a>
+                        <a class="nav-item nav-link no-td padding-2" href="{{ url_for('loginUI') }}">Login</a>
+                        <a class="nav-item nav-link no-td" href="{{ url_for('signupUI') }}">Register</a>
                     </div>
                 </div>
             </div>
@@ -35,6 +35,11 @@
     </header>
 
     {% block content %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    {% block script %}{% endblock script %}
 
 </body>
 </html>

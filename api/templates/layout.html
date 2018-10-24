@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if title %}
+		<title>Fast Food Fast - {{ title }}</title>
+	{% else %}
+		<title>Fast Food Fast</title>
+	{% endif %}  
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/adminstyle.css') }}" />
+</head>
+
+<body>
+    <!-- nav bar -->
+    <header class="site-header mb-4">
+        <nav class="navigation">
+            <div class="center">
+                <a class="in-navigation no-td" href="/">Fast food fast</a>
+                <div style=" align-items:center; display: inline-block">
+                    <div class="navbar-nav fl-pr">
+                        <a class="nav-item nav-link no-td padding-2" href="{{ url_for('home') }}">Home</a>
+                        <a class="nav-item nav-link no-td" href="{{ url_for('about') }}">About</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav fr">
+                        <a class="nav-item nav-link no-td padding-2" href="{{ url_for('login') }}">Login</a>
+                        <a class="nav-item nav-link no-td" href="{{ url_for('signup') }}">Register</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+</body>
+</html>

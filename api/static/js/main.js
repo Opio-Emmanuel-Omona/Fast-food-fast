@@ -8,6 +8,12 @@ function signup(e) {
         password: document.getElementById('password').value
     });
 
+    if (document.getElementById('password').value != document.getElementById('confirm_password').value) {
+        document.getElementById('error').innerHTML = "Passwords Don't Match";
+        window.location.href = '#formElement'
+        return;
+    }
+
     url = 'http://127.0.0.1:5000/api/v2/auth/signup';
 
     fetch(url, {

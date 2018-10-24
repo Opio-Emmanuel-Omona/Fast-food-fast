@@ -151,11 +151,11 @@ api.add_resource(Orders, '/api/v2/orders/')
 @app.route("/")
 @app.route('/signup')
 def signupUI():
-    return render_template('signup.html')
+    return render_template('signup.html', title='Signup')
 
 @app.route('/login')
 def loginUI():
-    return render_template('signin.html')
+    return render_template('signin.html', title='Login')
 
 @app.route('/home')
 def homeUI():
@@ -163,11 +163,11 @@ def homeUI():
 
 @app.route('/admin')
 def adminUI():
-    return render_template('admin.html')
+    return render_template('admin.html', title='Admin')
 
 @app.route('/about')
 def aboutUI():
-    return render_template('about.html')
+    return render_template('about.html', title='About')
 
 @app.route('/upload', methods=['POST'])
 # @admin_required

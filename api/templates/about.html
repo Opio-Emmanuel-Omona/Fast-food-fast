@@ -1,39 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Fast food fast - about</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
-    <script src="main.js"></script>
-</head>
-<body>
-    <!-- nav bar -->
-    <header class="site-header mb-4">
-        <nav class="navigation">
-            <div class="center">
-                <a class="in-navigation no-td" href="/">Fast food fast</a>
-                <div style=" align-items:center; display: inline-block">
-                    <div class="navbar-nav fl-pr">
-                        <a class="nav-item nav-link no-td padding-2" href=home.html>Home</a>
-                        <a class="nav-item nav-link no-td" href="about.html">About</a>
-                    </div>
-                    <!-- Navbar Right Side -->
-                    <div class="navbar-nav fr">
-                        <a class="nav-item nav-link no-td padding-2" href="signin.html">Login</a>
-                        <a class="nav-item nav-link no-td" href="signup.html">Register</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
+{% extends "layout.html" %}
+{% block content %}
 
-    <div class="content-section ml-10 mr-10">
-        <h3>About Us</h3>
-        <p>Fast food fast is a restuarant delivery aplication where users can 
+<div class="content-section ml-10 mr-10">
+    <h3>About Us</h3>
+    <p>Fast food fast is a restuarant delivery aplication where users can
         order for food and the food is delivered to your door step in record time
-        </p>
+    </p>
+    <div>
+        <img src="{{ url_for('static', filename='images/home.jpg') }}" alt="picture of food" width="100%" height="480px">
     </div>
-    
-</body>
+</div>
+
+
+{% endblock content %}

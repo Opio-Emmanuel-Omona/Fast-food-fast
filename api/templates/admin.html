@@ -1,124 +1,92 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
+{% block content %}
+<div class="ml-10 mr-10">
+    <!-- Tab Links -->
+    <button class="tablinks" onclick="openpage('Orders', this, '#031533')" id="defaultOpen">Orders</button>
+    <button class="tablinks" onclick="openpage('Menu', this, '#031533')">Menu</button>
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Fast food fast - admin</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/style.css') }}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/adminstyle.css') }}" />
-</head>
+    <!-- Tab Content -->
+    <div id="Orders" class="tabcontent">
+        <!-- <h3>Orders</h3> -->
 
-<body>
-    <!-- nav bar -->
-    <header class="site-header mb-4">
-        <nav class="navigation">
-            <div class="center">
-                <a class="in-navigation no-td" href="/">Fast food fast</a>
-                <div style=" align-items:center; display: inline-block">
-                    <div class="navbar-nav fl-pr">
-                        <a class="nav-item nav-link no-td padding-2" href=home.html>Home</a>
-                        <a class="nav-item nav-link no-td" href="about.html">About</a>
-                    </div>
-                    <!-- Navbar Right Side -->
-                    <div class="navbar-nav fr">
-                        <a class="nav-item nav-link no-td padding-2" href="{{ url_for('static', filename='signin.html') }}">Login</a>
-                        <a class="nav-item nav-link no-td" href="signup.html">Register</a>
-                    </div>
+        <!-- all orders by status -->
+        <div>
+            <!-- new -->
+            <div class="ordertabs">
+                <div id="colorNew" class="status">
+                    <h4>New</h4>
                 </div>
+                <div id="new_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
             </div>
-        </nav>
-    </header>
 
-    <div class="ml-10 mr-10">
-        <!-- Tab Links -->
-        <button class="tablinks" onclick="openpage('Orders', this, '#031533')" id="defaultOpen">Orders</button>
-        <button class="tablinks" onclick="openpage('Menu', this, '#031533')">Menu</button>
-
-        <!-- Tab Content -->
-        <div id="Orders" class="tabcontent">
-            <!-- <h3>Orders</h3> -->
-
-            <!-- all orders by status -->
-            <div>
-                <!-- new -->
-                <div class="ordertabs">
-                    <div id="colorNew" class="status">
-                        <h4>New</h4>
-                    </div>
-                    <div id="new_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <!-- processing -->
+            <div class="ordertabs">
+                <div id="colorProcessing" class="status">
+                    <h4>Processing</h4>
                 </div>
-
-                <!-- processing -->
-                <div class="ordertabs">
-                    <div id="colorProcessing" class="status">
-                        <h4>Processing</h4>
-                    </div>
-                    <div id="processing_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                </div>
-
-                <!-- cancelled -->
-                <div class="ordertabs">
-                    <div id="colorCancelled" class="status">
-                        <h4>Cancelled</h4>
-                    </div>
-                    <div id="cancelled_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                </div>
-
-                <!-- complete -->
-                <div class="ordertabs">
-                    <div id="colorComplete" class="status">
-                        <h4>Complete</h4>
-                    </div>
-                    <div id="complete_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                </div>
+                <div id="processing_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
             </div>
-        </div>
 
-
-        <div id="Menu" class="tabcontent">
-            <form Id="upload_form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
-                <div class="form-control">
-                    <h3>Add item to menu</h3>
-                    <!-- make sure they appear inline -->
-                    <div class="inline">
-                        <div class="fl">
-                            <div id="dropzone" class="dropzone" ondrop="dropFile(event)" ondragleave="changeColorBack(event)"
-                                ondragover="changeColor(event)">Drop Image Here</div>
-                        </div>
-                        <div class="fl padding-2">
-                            <p>
-                                <label>Item</label><br>
-                                <input id="item_name" class="form-control" type="text" name="item_name" />
-                            </p>
-                            <p>
-                                <label>Price</label><br>
-                                <input id="price" class="form-control" type="text" name="price" />
-                            </p>
-                            <p>
-                                <button class="btn" onclick="addItem(event)">Check Validity</button>
-                            </p>
-                            <p>
-                                <div id="validityOK" class="validityOK"></div><br>
-                                <div id='validityBad' class="validityBad"></div>
-                            </p>
-                            <p>
-                                <input id='fileinput' type="file" name="file">
-                            </p>
-                            <p>
-                                <input class="btn" id="additem-menu" name="submit" type="submit" value="Add Item">
-                            </p>
-                        </div>
-                    </div>
+            <!-- cancelled -->
+            <div class="ordertabs">
+                <div id="colorCancelled" class="status">
+                    <h4>Cancelled</h4>
                 </div>
-            </form>
+                <div id="cancelled_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            </div>
+
+            <!-- complete -->
+            <div class="ordertabs">
+                <div id="colorComplete" class="status">
+                    <h4>Complete</h4>
+                </div>
+                <div id="complete_order" class="orderstatus" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            </div>
         </div>
     </div>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <script type="text/javascript">
-        document.getElementById('defaultOpen').click();
-    </script>
-</body>
 
-</html>
+
+    <div id="Menu" class="tabcontent">
+        <form Id="upload_form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-control">
+                <h3>Add item to menu</h3>
+                <!-- make sure they appear inline -->
+                <div class="inline">
+                    <div class="fl">
+                        <div id="dropzone" class="dropzone" ondrop="dropFile(event)" ondragleave="changeColorBack(event)"
+                            ondragover="changeColor(event)">Drop Image Here</div>
+                    </div>
+                    <div class="fl padding-2">
+                        <p>
+                            <label>Item</label><br>
+                            <input id="item_name" class="form-control" type="text" name="item_name" />
+                        </p>
+                        <p>
+                            <label>Price</label><br>
+                            <input id="price" class="form-control" type="text" name="price" />
+                        </p>
+                        <p>
+                            <button class="btn" onclick="addItem(event)">Check Validity</button>
+                        </p>
+                        <p>
+                            <div id="validityOK" class="validityOK"></div><br>
+                            <div id='validityBad' class="validityBad"></div>
+                        </p>
+                        <p>
+                            <input id='fileinput' type="file" name="file">
+                        </p>
+                        <p>
+                            <input class="btn" id="additem-menu" name="submit" type="submit" value="Add Item">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+<script type="text/javascript">
+    document.getElementById('defaultOpen').click();
+</script>
+{% endblock script %}

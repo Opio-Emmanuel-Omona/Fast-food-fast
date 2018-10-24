@@ -23,7 +23,7 @@
                 <input class="btn" id="submit-signup" name="submit" onclick="signup(event)" type="submit" value="Sign Up">
             </fieldset>
         </form>
-        <p class="text-muted">Already Have An Account? <a class="link" href="signin.html">Sign in</a></p>
+        <p class="text-muted">Already Have An Account? <a class="link" href="{{ url_for('loginUI') }}">Sign in</a></p>
     </div>
     <div class="content-section  mr-10 fr-w-25">
         <img src="{{ url_for('static', filename='images/home.jpg') }}" alt="picture of food" width="100%" height="480px">

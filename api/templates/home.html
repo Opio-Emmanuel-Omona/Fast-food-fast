@@ -1,73 +1,38 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Fast food fast</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/style.css') }}" />
-</head>
-
-<body>
-    <!-- nav bar -->
-    <header class="site-header mb-4">
-        <nav class="navigation">
-            <div class="center">
-                <a class="in-navigation no-td" href="/">Fast food fast</a>
-                <div style=" align-items:center; display: inline-block">
-                    <div class="navbar-nav fl-pr">
-                        <a class="nav-item nav-link no-td padding-2" href=home.html>Home</a>
-                        <a class="nav-item nav-link no-td" href="about.html">About</a>
-                    </div>
-                    <!-- Navbar Right Side -->
-                    <div class="navbar-nav fr">
-                        <a class="nav-item nav-link no-td padding-2" href="signin.html">Login</a>
-                        <a class="nav-item nav-link no-td" href="signup.html">Register</a>
-                    </div>
-                </div>
+{% extends "layout.html" %}
+{% block content %}
+<!-- home -->
+<div>
+    <div class="ml-10">
+        <div class="search">
+            <input type="text" placeholder="Search...">
+        </div>
+        <div class="content-section mr-5">
+            <div>
+                <p>
+                    <h3 onclick="getMenu()">Available Food</h3>
+                </p>
             </div>
-        </nav>
-    </header>
+            <p id="orderStatusF" class="orderStatus"></p>
+            <p id="orderStatusP" class="orderStatus"></p>
 
-    <!-- home -->
+            <div id="food_items" class="content-sction">
 
-
-    <div>
-        <div class="ml-10">
-            <div class="search">
-                <input type="text" placeholder="Search...">
             </div>
-            <div class="content-section mr-5">
-                <div>
-                    <p>
-                        <h3 onclick="getMenu()">Available Food</h3>
-                    </p>
-                </div>
-                <p id="orderStatusF" class="orderStatus"></p>
-                <p id="orderStatusP" class="orderStatus"></p>
+        </div>
 
-                <div id="food_items" class="content-sction">
+        <!-- right side bar -->
+        <div class="content-section fr-w-25 mr-10">
+            <h3 onclick="orderHistory()">History</h3>
+            <div id="order_history" class="content-section">
 
-                </div>
-            </div>
-
-            <!-- right side bar -->
-            <div class="content-section fr-w-25 mr-10">
-                <h3 onclick="orderHistory()">History</h3>
-                <div id="order_history" class="content-section">
-
-                </div>
             </div>
         </div>
     </div>
-
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script>
-        getMenu();
-        orderHistory();
-    </script>
-
-</body>
-
-</html>
+</div>
+{% endblock content %}
+{% block script %}
+<script>
+    getMenu();
+    orderHistory();
+</script>
+{% endblock script %}

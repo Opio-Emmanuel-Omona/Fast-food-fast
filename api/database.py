@@ -177,7 +177,7 @@ class DatabaseConnection():
                     'token': token.decode('utf-8'),
                     'status': True}
 
-        return {'message': 'The username and password do not exist',
+        return {'message': 'The username or password is incorrect',
                 'status': False}
 
     def add_order(self, user_dict):

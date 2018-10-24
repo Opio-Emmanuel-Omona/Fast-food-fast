@@ -103,8 +103,12 @@ function getMenu() {
                                 <img src="static/images/${data['menu'][index].item_name}.jpg" alt="Food image" width="100%" height="100%"/>
                             </div>
 
-                            <div id="item_no${+index}" class="content-area w-50-h-100">
-                                ${data['menu'][index].item_name}<br>UGX ${data['menu'][index].price}
+                            <div id="item_no${+index}" class="content-area w-100-h-60">
+                                ${data['menu'][index].item_name}<br>
+                                UGX ${data['menu'][index].price}<br>
+                                <div class="inline">
+                                <input id="${data['menu'][index].item_name}" type="number" value="1"/><br>
+                                </div>
                             </div>
 
                             <div class="content-area w-50-h-100">
@@ -167,7 +171,7 @@ function placeOrder(item_name) {
 
     var order_detail = JSON.stringify({
         item_name: item_name,
-        quantity: 1
+        quantity: document.getElementById(item_name).value
     });
 
     fetch(url, {

@@ -4,10 +4,14 @@
     <!-- Tab Links -->
     <button class="tablinks" onclick="openpage('Orders', this, '#031533')" id="defaultOpen">Orders</button>
     <button class="tablinks" onclick="openpage('Menu', this, '#031533')">Menu</button>
+    <div class="search">
+        <input id="searchField" type="text" placeholder="Search..."><button id="search-btn" class="btn" onclick="fetchSpecificOrder()">Search</button>
+    </div>
+
+    <div id='searchResult' class="content-section dis-none"></div>
 
     <!-- Tab Content -->
     <div id="Orders" class="tabcontent">
-        <!-- <h3>Orders</h3> -->
 
         <!-- all orders by status -->
         <div>
@@ -47,6 +51,7 @@
 
 
     <div id="Menu" class="tabcontent">
+
         <form Id="upload_form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
             <div class="form-control">
                 <h3>Add item to menu</h3>

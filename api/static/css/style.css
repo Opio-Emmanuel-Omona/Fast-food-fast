@@ -97,6 +97,10 @@ body, html{
       
 }
 
+.dis-none {
+    display: none;
+}
+
 .dropzone {
     width: 300px;
     height: 300px;
@@ -111,7 +115,7 @@ body, html{
     border-color: black;
 }
 
-.error{
+.error {
     font-size: 1rem;
     font-family: Arial, Helvetica, sans-serif;
     color: red;

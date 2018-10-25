@@ -181,4 +181,4 @@ def upload():
     destination = target + "/" + filename
     print(destination)
     request.files.getlist('file')[0].save(destination)
-    return render_template('admin.html')
+    return render_template('admin.html', title='Admin')

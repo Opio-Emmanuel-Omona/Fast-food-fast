@@ -98,7 +98,6 @@ function getOrders() {
 				for (let index = 0; index < data['orders'].length; index++) {
 					let output = `
 						<div id="${data['orders'][index].order_id}" draggable="true" ondragstart="drag(event)" class="content-section-b">
-							${data['orders'][index].order_id}<br>
 							${data['orders'][index].username}<br>
 							${data['orders'][index].item_name}<br>
 							${data['orders'][index].quantity}<br>
@@ -130,6 +129,40 @@ function getOrders() {
 			}
 
 		});
+}
+
+function fetchSpecificOrder() {
+
+	// get a specific order and display it
+	url = 'http://127.0.0.1:5000/api/v2/orders/' + document.getElementById('searchField').value;
+
+	fetch(url, {
+		method: 'GET',
+		headers: {
+			'Content-type': 'application/json',
+			'Authorization': localStorage.getItem('token')
+		},
+	})
+		.then((response) => response.json())
+		.then(function (data) {
+
+			var output = '';
+			if (data['order'][0]) {
+				console.log(data);
+				output = `Order ID: ${data['order'][0].order_id}<br>
+						  Username: ${data['order'][0].username}<br>
+						  Item Name: ${data['order'][0].item_name}<br>
+						  Quantity: ${data['order'][0].quantity}<br>`
+			}
+			else {
+				console.log(data)
+				document.getElementById('searchResult').style.className = 'error';
+				output = "Order Doesn't exist";
+			}
+			document.getElementById('searchResult').style.display = 'block';
+			document.getElementById('searchResult').innerHTML = output;
+		});
+
 }
 
 function addItem(e) {

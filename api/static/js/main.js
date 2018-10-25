@@ -154,7 +154,7 @@ function orderHistory() {
 
                 for (let index = 0; index < data['history'].length; index++) {
                     output += `
-                    <div class="content-section d-il-b" style="height:50px;  width: 55%;">
+                    <div class="content-section-b d-il-b" style="height:50px;  width: 55%;">
                         Item: ${data['history'][index].item_name}<br>
                         Status: ${data['history'][index].status_name}<br>
                         Quantity: ${data['history'][index].quantity}<br>

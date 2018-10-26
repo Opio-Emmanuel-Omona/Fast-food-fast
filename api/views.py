@@ -11,7 +11,7 @@ import os
 import jwt
 
 
-app = Flask(__name__, template_folder='../UItemplates')  # pylint: disable=invalid-name
+app = Flask(__name__, template_folder='../UI')  # pylint: disable=invalid-name
 Swagger(
     app,
     template={

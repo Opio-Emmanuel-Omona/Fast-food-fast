@@ -74,16 +74,6 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated
 
-def validate_token():
-    # validate token
-    token = request.headers.get('Authorization')
-    if not token:
-        return {'message': 'Token is missing!'}, 403
-    if token[0] == 'B':
-        payload = jwt.decode(token[7:].encode('utf-8'), app.config['SECRET_KEY'])
-    else:
-        payload = jwt.decode(token.encode('utf-8'), app.config['SECRET_KEY'])
-    return payload
 
 class Orders(Resource):
     @admin_required

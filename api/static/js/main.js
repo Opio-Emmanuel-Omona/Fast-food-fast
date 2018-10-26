@@ -67,12 +67,14 @@ function signin(e) {
             if (data.username == 'admin') {
                 // admin user
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('username', data.username);
                 url = 'HTTP://127.0.0.1:5000/admin';
                 window.location.href = url;
             }
             else if (data.username != null) {
                 // other users
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('username', data.username);
                 url = 'HTTP://127.0.0.1:5000/home';
                 window.location.href = url;
             }

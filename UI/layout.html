@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% if title %}
-		<title>Fast Food Fast - {{ title }}</title>
-	{% else %}
-		<title>Fast Food Fast</title>
-	{% endif %}  
+    <title>Fast Food Fast - {{ title }}</title>
+    {% else %}
+    <title>Fast Food Fast</title>
+    {% endif %}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/style.css') }}" />
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/adminstyle.css') }}" />
 </head>
@@ -26,8 +26,8 @@
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav fr">
-                        <a class="nav-item nav-link no-td padding-2" href="{{ url_for('loginUI') }}">Login</a>
-                        <a class="nav-item nav-link no-td" href="{{ url_for('signupUI') }}">Register</a>
+                        <a id='nav-username' class="nav-item nav-link no-td padding-2" href="{{ url_for('loginUI') }}">Login</a>
+                        <a id='nav-email' class="nav-item nav-link no-td" href="{{ url_for('signupUI') }}">Register</a>
                     </div>
                 </div>
             </div>
@@ -38,8 +38,20 @@
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        var username = localStorage.getItem('username');
+
+        if (username == '') {
+
+        }
+        else {
+            document.getElementById('nav-username').innerHTML = username;
+            document.getElementById('nav-email').innerHTML = '';
+        }
+    </script>
 
     {% block script %}{% endblock script %}
 
 </body>
+
 </html>

@@ -1,5 +1,5 @@
 # Fast-food-fast
-Fast-Food-Fast is a food delivery service app for a restaurant. (V2) Using Persistant data
+Fast-Food-Fast is a food delivery service app for a restaurant.
 
 [![Build Status](https://travis-ci.com/Opio-Emmanuel-Omona/Fast-food-fast.svg?branch=frontend)](https://travis-ci.com/Opio-Emmanuel-Omona/Fast-food-fast)
 
@@ -9,13 +9,12 @@ Fast-Food-Fast is a food delivery service app for a restaurant. (V2) Using Persi
 
 
 ## Application URL
-https://fast-food-fast-emma.herokuapp.com/
+https://fast-food-fast-op.herokuapp.com/
 
 # SETUP
 ## Requirements
-    - Python
+    - Python installed
     - Any Text Editor
-    - Pytest
 
 ## Installation and setup
 Run the following in your command line
@@ -27,7 +26,8 @@ Run the following in your command line
     - pip install Flask-RESTful
 
 ## Testing
-From the API documentation at the application url
+The backend of the application can be tested using POSTMAN or the API documentation from this url
+https://fast-food-fast-op.herokuapp.com/apidocs/
 
 
 ## API endpoints for the application

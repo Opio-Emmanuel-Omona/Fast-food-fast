@@ -14,7 +14,7 @@ function signup(e) {
         return;
     }
 
-    url = 'http://127.0.0.1:5000/api/v2/auth/signup';
+    url = 'HTTP://127.0.0.1:5000/api/v2/auth/signup';
 
     fetch(url, {
         method: 'POST',
@@ -25,7 +25,7 @@ function signup(e) {
     })
         .then((response) => response.json())
         .then(function (data) {
-
+            console.log(data);
             if (data.status) {
                 //successful => login
                 url = 'HTTP://127.0.0.1:5000/home';

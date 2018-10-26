@@ -53,36 +53,32 @@
     <div id="Menu" class="tabcontent">
 
         <form Id="upload_form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
-            <div class="form-control">
-                <h3>Add item to menu</h3>
-                <!-- make sure they appear inline -->
+            <div class="form-control wrap">
                 <div class="inline">
-                    <div class="fl">
-                        <div id="dropzone" class="dropzone" ondrop="dropFile(event)" ondragleave="changeColorBack(event)"
-                            ondragover="changeColor(event)">Drop Image Here</div>
-                    </div>
-                    <div class="fl padding-2">
-                        <p>
+                    <h3>Add item to menu</h3>
+                    <div class="tal">
+                        <!-- make sure they appear inline -->
+                        <div class="fl padding-2">
                             <label>Item</label><br>
                             <input id="item_name" class="form-control" type="text" name="item_name" />
-                        </p>
-                        <p>
-                            <label>Price</label><br>
-                            <input id="price" class="form-control" type="text" name="price" />
-                        </p>
-                        <p>
-                            <button class="btn" onclick="addItem(event)">Check Validity</button>
-                        </p>
-                        <p>
-                            <div id="validityOK" class="validityOK"></div><br>
-                            <div id='validityBad' class="validityBad"></div>
-                        </p>
-                        <p>
-                            <input id='fileinput' type="file" name="file">
-                        </p>
-                        <p>
-                            <input class="btn" id="additem-menu" name="submit" type="submit" value="Add Item">
-                        </p>
+                            <p>
+                                <label>Price</label><br>
+                                <input id="price" class="form-control" type="text" name="price" />
+                            </p>
+                            <p>
+                                <button class="btn" onclick="addItem(event)">Check Validity</button>
+                            </p>
+                            <p>
+                                <div id="validityOK" class="validityOK"></div><br>
+                                <div id='validityBad' class="validityBad"></div>
+                            </p>
+                            <p>
+                                <input id='fileinput' type="file" name="file">
+                            </p>
+                            <p>
+                                <input class="btn" id="additem-menu" name="submit" type="submit" value="Add Item">
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

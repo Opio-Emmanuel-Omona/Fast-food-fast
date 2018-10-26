@@ -47,6 +47,10 @@ body, html {
 	overflow-y: scroll;
 }
 
+.tal {
+	text-align: left;
+}
+
 .validityOK {
 	color: green;
 	font-size: 1rem;
@@ -59,6 +63,10 @@ body, html {
 	font-size: 1rem;
 	font-family: Arial, Helvetica, sans-serif;
 	float: left;
+}
+
+.wrap {
+	text-align: center;
 }
 
 #colorNew {background-color: #031533 /*blue*/}

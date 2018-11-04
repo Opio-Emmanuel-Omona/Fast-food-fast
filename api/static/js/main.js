@@ -14,7 +14,7 @@ function signup(e) {
         return;
     }
 
-    url = 'HTTP://fast-food-fast-op.herokuapp.com/api/v2/auth/signup';
+    url = 'HTTPS://fast-food-fast-op.herokuapp.com/api/v2/auth/signup';
 
     fetch(url, {
         method: 'POST',
@@ -28,12 +28,12 @@ function signup(e) {
             console.log(data);
             if (data.status) {
                 //successful => login
-                url = 'HTTP://fast-food-fast-op.herokuapp.com/home';
+                url = 'HTTPS://fast-food-fast-op.herokuapp.com/login';
                 window.location.href = url;
             } else {
                 //display message to the user
                 document.getElementById('error').innerHTML = data.message;
-                url = 'HTTP://fast-food-fast-op.herokuapp.com/#formElement';
+                url = 'HTTPS://fast-food-fast-op.herokuapp.com/#formElement';
                 window.location.href = url;
             }
 
@@ -50,7 +50,7 @@ function signin(e) {
         password: password
     });
 
-    url = 'http://fast-food-fast-op.herokuapp.com/api/v2/auth/login';
+    url = 'HTTPS://fast-food-fast-op.herokuapp.com/api/v2/auth/login';
 
     fetch(url, {
         method: 'POST',
@@ -68,20 +68,20 @@ function signin(e) {
                 // admin user
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('username', data.username);
-                url = 'HTTP://fast-food-fast-op.herokuapp.com/admin';
+                url = 'HTTPS://fast-food-fast-op.herokuapp.com/admin';
                 window.location.href = url;
             }
             else if (data.username != null) {
                 // other users
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('username', data.username);
-                url = 'HTTP://fast-food-fast-op.herokuapp.com/home';
+                url = 'HTTPS://fast-food-fast-op.herokuapp.com/home';
                 window.location.href = url;
             }
             else {
                 // display message to the user
                 document.getElementById('error').innerHTML = data.message;
-                url = 'HTTP://fast-food-fast-op.herokuapp.com/login#formElement';
+                url = 'HTTPS://fast-food-fast-op.herokuapp.com/login#formElement';
                 window.location.href = url;
             }
 
@@ -90,7 +90,7 @@ function signin(e) {
 
 function getMenu() {
     // get the menu and display it
-    url = 'http://fast-food-fast-op.herokuapp.com/api/v2/menu';
+    url = 'HTTPS://fast-food-fast-op.herokuapp.com/api/v2/menu';
 
     fetch(url, {
         method: 'GET',
@@ -136,7 +136,7 @@ function getMenu() {
 
 function orderHistory() {
     // get the order history and display
-    url = 'http://fast-food-fast-op.herokuapp.com/api/v2/users/orders';
+    url = 'HTTPS://fast-food-fast-op.herokuapp.com/api/v2/users/orders';
 
     fetch(url, {
         method: 'GET',
@@ -175,7 +175,7 @@ function orderHistory() {
 }
 
 function placeOrder(item_name) {
-    url = 'http://fast-food-fast-op.herokuapp.com/api/v2/users/orders';
+    url = 'HTTPS://fast-food-fast-op.herokuapp.com/api/v2/users/orders';
 
     var order_detail = JSON.stringify({
         item_name: item_name,

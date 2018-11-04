@@ -59,7 +59,7 @@ function changeColorBack(ev) {
 }
 
 function upload(file) {
-	url = 'http://fast-food-fast-op.herokuapp.com/upload';
+	url = 'HTTPS://fast-food-fast-op.herokuapp.com/upload';
 
 	fetch(url, {
 		method: 'POST',
@@ -77,7 +77,7 @@ function upload(file) {
 
 function getOrders() {
 	// get all the orders and display them according to status
-	url = 'http://fast-food-fast-op.herokuapp.com/api/v2/orders';
+	url = 'HTTPS://fast-food-fast-op.herokuapp.com/api/v2/orders';
 
 	fetch(url, {
 		method: 'GET',
@@ -124,7 +124,7 @@ function getOrders() {
 			else {
 				// error
 				if (confirm('Session timeout\n log in as admin')){
-					url = "http://fast-food-fast-op.herokuapp.com/login"
+					url = "HTTPS://fast-food-fast-op.herokuapp.com/login"
 					window.location.href = url;
 				}
 				
@@ -136,7 +136,7 @@ function getOrders() {
 function fetchSpecificOrder() {
 
 	// get a specific order and display it
-	url = 'http://fast-food-fast-op.herokuapp.com/api/v2/orders/' + document.getElementById('searchField').value;
+	url = 'HTTPS://fast-food-fast-op.herokuapp.com/api/v2/orders/' + document.getElementById('searchField').value;
 
 	fetch(url, {
 		method: 'GET',
@@ -170,7 +170,7 @@ function fetchSpecificOrder() {
 function addItem(e) {
 	e.preventDefault();
 
-	url = 'http://fast-food-fast-op.herokuapp.com/api/v2/menu';
+	url = 'HTTPS://fast-food-fast-op.herokuapp.com/api/v2/menu';
 
 	var menu_detail = JSON.stringify({
 		item_name: document.getElementById('item_name').value,
@@ -201,7 +201,7 @@ function addItem(e) {
 }
 
 function updateOrderStatus(orderId, newStatus) {
-	url = 'http://fast-food-fast-op.herokuapp.com/api/v2/orders/' + orderId;
+	url = 'HTTPS://fast-food-fast-op.herokuapp.com/api/v2/orders/' + orderId;
 
 
 	if (newStatus.includes('new')) {

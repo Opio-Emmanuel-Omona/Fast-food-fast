@@ -2,6 +2,7 @@
 from flask import Flask, jsonify, request, redirect, render_template, url_for
 from functools import wraps
 from flasgger import Swagger, swag_from
+from flask_cors import CORS
 from flask_restful import Resource, Api, reqparse
 from api.order import Order
 from api.user import User
@@ -27,6 +28,7 @@ Swagger(
             }
         }
     })
+CORS(app)
 
 api = Api(app)
 

@@ -6,12 +6,14 @@ from flask_restful import Resource, Api, reqparse
 from api.order import Order
 from api.user import User
 from api.menu import Menu
+from flask_cors import CORS
 
 import jwt
 from api.database import DatabaseConnection
 
 
 app = Flask(__name__)  # pylint: disable=invalid-name
+CORS(app)
 Swagger(
     app,
     template={

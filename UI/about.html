@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="content-section ml-10 mr-10">
+    <h3>About Us</h3>
+    <p>Fast food fast is a restuarant delivery aplication where users can
+        order for food and the food is delivered to your door step in record time
+    </p>
+    <div>
+        <img src="{{ url_for('static', filename='images/home.jpg') }}" alt="picture of food" width="100%" height="480px">
+    </div>
+</div>
+
+
+{% endblock content %}

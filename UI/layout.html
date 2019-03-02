@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if title %}
+    <title id="title">Fast Food Fast - {{ title }}</title>
+    {% else %}
+    <title id="title">Fast Food Fast</title>
+    {% endif %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/adminstyle.css') }}" />
+</head>
+
+<body>
+    <!-- nav bar -->
+    <header class="site-header mb-4">
+        <nav class="navigation">
+            <div class="center">
+                <a class="in-navigation no-td" href="/">Fast food fast</a>
+                <div style=" align-items:center; display: inline-block">
+                    <div class="navbar-nav fl-pr">
+                        <a class="nav-item nav-link no-td padding-2" href="{{ url_for('homeUI') }}">Home</a>
+                        <a class="nav-item nav-link no-td" href="{{ url_for('aboutUI') }}">About</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav fr">
+                        <a id='nav-username' class="nav-item nav-link no-td padding-2" href="{{ url_for('loginUI') }}">Login</a>
+                        <a id='nav-email' class="nav-item nav-link no-td" href="{{ url_for('signupUI') }}">Register</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        var username = localStorage.getItem('username');
+        var title = document.getElementById('title').innerHTML;
+        console.log(title)
+        if (username == '' || title.includes('Login') || title.includes('Signup')) {
+
+        }
+        else {
+            document.getElementById('nav-username').innerHTML = username;
+            document.getElementById('nav-email').innerHTML = '';
+        }
+    </script>
+
+    {% block script %}{% endblock script %}
+
+</body>
+
+</html>

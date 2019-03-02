@@ -1,17 +1,18 @@
 '''The main application'''
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, request, redirect, render_template, url_for
 from functools import wraps
 from flasgger import Swagger, swag_from
+from flask_cors import CORS
 from flask_restful import Resource, Api, reqparse
 from api.order import Order
 from api.user import User
 from api.menu import Menu
-
-import jwt
 from api.database import DatabaseConnection
+import os
+import jwt
 
 
-app = Flask(__name__)  # pylint: disable=invalid-name
+app = Flask(__name__, template_folder='../UI')  # pylint: disable=invalid-name
 Swagger(
     app,
     template={
@@ -27,8 +28,11 @@ Swagger(
             }
         }
     })
+CORS(app)
 
 api = Api(app)
+
+APP_ROOT = app.instance_path
 
 # pylint: disable=missing-docstring
 # pylint: disable=redefined-outer-name
@@ -72,16 +76,6 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated
 
-def validate_token():
-    # validate token
-    token = request.headers.get('Authorization')
-    if not token:
-        return {'message': 'Token is missing!'}, 403
-    if token[0] == 'B':
-        payload = jwt.decode(token[7:].encode('utf-8'), app.config['SECRET_KEY'])
-    else:
-        payload = jwt.decode(token.encode('utf-8'), app.config['SECRET_KEY'])
-    return payload
 
 class Orders(Resource):
     @admin_required
@@ -147,5 +141,36 @@ api.add_resource(Orders, '/api/v2/orders/')
 
 
 @app.route("/")
-def hello():
-    return redirect('/apidocs')
+@app.route('/signup')
+def signupUI():
+    return render_template('signup.html', title='Signup')
+
+@app.route('/login')
+def loginUI():
+    return render_template('signin.html', title='Login')
+
+@app.route('/home')
+def homeUI():
+    return render_template('home.html')
+
+@app.route('/admin')
+def adminUI():
+    return render_template('admin.html', title='Admin')
+
+@app.route('/about')
+def aboutUI():
+    return render_template('about.html', title='About')
+
+@app.route('/upload', methods=['POST'])
+# @admin_required
+def upload():
+    target = os.path.join(APP_ROOT, '../api/static/images')
+
+    if not os.path.isdir(target):
+        os.mkdir(target)
+
+    filename = request.files.getlist('file')[0].filename
+    destination = target + "/" + filename
+    print(destination)
+    request.files.getlist('file')[0].save(destination)
+    return render_template('admin.html', title='Admin')

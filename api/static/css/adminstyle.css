@@ -1,0 +1,75 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: #495057;
+}
+
+/* style the tablinks */
+.tablinks {
+	border-color: #555;
+	color: white;
+	float: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px 16px;
+	font-size: 17px;
+	width: 25%;
+}
+
+/* Change background color of buttons on hover */
+.tablinks:hover {
+	background-color: #777;
+}
+
+/* Style the tab content */
+.tabcontent {
+	display: none;
+	padding: 50px 2px;
+	height: 100%;
+}
+
+.status{
+	border: 1px solid black;
+	color: white;
+}
+
+.ordertabs {
+	background-color: #212121;
+	width: 24%;
+	border: 1px solid #777;
+	float: left;
+	text-align: center;
+}
+
+.orderstatus {
+	height: 400px;
+	overflow-y: scroll;
+}
+
+.tal {
+	text-align: left;
+}
+
+.validityOK {
+	color: green;
+	font-size: 1rem;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+}
+
+.validityBad {
+	color: red;
+	font-size: 1rem;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+}
+
+.wrap {
+	text-align: center;
+}
+
+#colorNew {background-color: #031533 /*blue*/}
+#colorProcessing {background-color: #031533 /*#FF6600*/}
+#colorCancelled {background-color: #031533 /*red*/}
+#colorComplete {background-color: #031533 /*green*/}

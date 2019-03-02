@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- sign up form -->
+<div>
+    <div class="content-section ml-10 mr-5">
+        <form id="formElement" methdod="POST" action="#">
+            <fieldset style="border:0">
+                <legend>
+                    <h3>Join Today</h3>
+                </legend>
+                <p class="error" id="error"></p>
+                <p class="padding-2"><label>Username</label><br> <input id='username' class="form-control" type="text"
+                        name="username" /></p>
+                <p class="padding-2"><label>Email</label><br> <input id='email' class="form-control" type="email"
+                        name="email" /></p>
+                <p class="padding-2"><label>Phone Number</label><br> <input id='phone_no' class="form-control" type="number"
+                        name="phoneNumber"/></p>
+                <p class="padding-2"><label>Password</label> <br> <input id='password' class="form-control" type="password"
+                        name="password" /></p>
+                <p class="padding-2"><label>Confirm Password</label><br> <input id='confirm_password' class="form-control" type="password"
+                        name="confirm_password" /></p>
+                <p id="password_match"></p>
+                <input class="btn" id="submit-signup" name="submit" onclick="signup(event)" type="submit" value="Sign Up">
+            </fieldset>
+        </form>
+        <p class="text-muted">Already Have An Account? <a class="link" href="{{ url_for('loginUI') }}">Sign in</a></p>
+    </div>
+    <div class="content-section  mr-10 fr-w-25">
+        <img src="{{ url_for('static', filename='images/home.jpg') }}" alt="picture of food" width="100%" height="480px">
+    </div>
+</div>
+
+{% endblock content %}

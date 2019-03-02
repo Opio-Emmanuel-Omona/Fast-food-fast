@@ -86,7 +86,7 @@ class DatabaseConnection():
         sql1 = (
             '''
             CREATE TABLE IF NOT EXISTS "status"(
-                status_name character varying(15)
+                status_name character varying(15) NOT NULL
             );
             '''
         )
@@ -157,7 +157,7 @@ class DatabaseConnection():
                 # give token based authentication to this user
                 token = jwt.encode({
                     'username': user_dict['username'],
-                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=45)},
                     'qwertyuiopasdfghjkl')
                 return {'username': user_dict['username'],
                         'token': token.decode('utf-8'),
@@ -168,7 +168,7 @@ class DatabaseConnection():
             token = jwt.encode(
                 {
                     'username': user_dict['username'],
-                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=45)
                 },
                 'lkjhgfdsapoiuytrewq')
             print(token)
@@ -177,7 +177,7 @@ class DatabaseConnection():
                     'token': token.decode('utf-8'),
                     'status': True}
 
-        return {'message': 'The username and password do not exist',
+        return {'message': 'The username or password is incorrect',
                 'status': False}
 
     def add_order(self, user_dict):
@@ -216,14 +216,18 @@ class DatabaseConnection():
         return {'message': 'Order item not in menu', 'status': False}
 
     def order_history(self, user_dict):
-        sql = "SELECT username, item_name FROM \"order\";"
+        sql = "SELECT * FROM \"order\";"
         self.cursor.execute(sql)
         rows = self.cursor.fetchall()
         # decdode the username from the token
         history = []
         for row in rows:
-            if row[0] == user_dict['username']:  # username
-                history.append({'item_name': row[1]})
+            if row[1] == user_dict['username']:  # username
+                history.append({
+                    'item_name': row[2],
+                    'quantity': row[3],
+                    'status_name': row[4]
+                    })
         
         self.connection.commit()
         return history
@@ -330,7 +334,7 @@ class DatabaseConnection():
                         UPDATE "order" SET status = %s WHERE order_id = %s;
                         '''
                     )
-                    self.cursor.execute(sql)
+                    self.cursor.execute(sql, [user_dict['status_name'], user_dict['order_id']])
                     self.connection.commit() 
                 else:       
                     return {'message': 'wrong status provided', 'status': False}

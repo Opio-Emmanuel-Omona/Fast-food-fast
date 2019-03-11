@@ -74,14 +74,6 @@ class DatabaseConnection():
         print ("Order table create")
 
     def create_status_table(self):
-        sql0 = (
-            '''
-            DROP TABLE IF EXISTS "status";
-            '''
-        )
-        self.cursor.execute(sql0)
-        self.connection.commit()
-        print ("Status table dropped")
 
         sql1 = (
             '''

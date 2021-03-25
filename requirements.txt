@@ -39,7 +39,7 @@ PyJWT==1.4.2
 pylint==1.9.3
 pytest==3.8.2
 pytz==2018.5
-PyYAML==5.1
+PyYAML==5.4
 scandir==1.9.0
 singledispatch==3.4.0.3
 six==1.11.0

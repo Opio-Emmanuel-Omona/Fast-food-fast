@@ -29,6 +29,7 @@ Swagger(
             }
         }
     })
+CORS(app)
 
 api = Api(app)
 

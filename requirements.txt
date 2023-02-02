@@ -43,6 +43,6 @@ PyYAML==5.1
 scandir==1.9.0
 singledispatch==3.4.0.3
 six==1.11.0
-Werkzeug==0.15.3
+Werkzeug==0.15.5
 wrapt==1.10.11
 zope.interface==4.5.0
